@@ -7,14 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A29DCF1B21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29DCF1A21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift */; };
 		A2D56BA1219BC6BB00CACB96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BA0219BC6BB00CACB96 /* AppDelegate.swift */; };
 		A2D56BA3219BC6BB00CACB96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BA2219BC6BB00CACB96 /* ViewController.swift */; };
 		A2D56BA6219BC6BB00CACB96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D56BA4219BC6BB00CACB96 /* Main.storyboard */; };
 		A2D56BA8219BC6BD00CACB96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2D56BA7219BC6BD00CACB96 /* Assets.xcassets */; };
 		A2D56BAB219BC6BD00CACB96 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D56BA9219BC6BD00CACB96 /* LaunchScreen.storyboard */; };
+		A2D56BB5219BC85C00CACB96 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BB4219BC85C00CACB96 /* Cards.swift */; };
+		A2D56BB7219BC90F00CACB96 /* HeroSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BB6219BC90F00CACB96 /* HeroSelectController.swift */; };
+		A2D56BBA219BC96B00CACB96 /* DeckOverseer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BB9219BC96B00CACB96 /* DeckOverseer.swift */; };
+		A2D56BBF219BDE2900CACB96 /* CardsDatabase.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2D56BBE219BDE2900CACB96 /* CardsDatabase.plist */; };
+		A2D56BC1219D17DC00CACB96 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BC0219D17DC00CACB96 /* CardCollectionViewCell.swift */; };
+		A2D56BC4219E580F00CACB96 /* ParagonOverseer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BC3219E580F00CACB96 /* ParagonOverseer.swift */; };
+		A2D56BC6219E589B00CACB96 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BC5219E589B00CACB96 /* Power.swift */; };
+		A2D56BC8219E5BD000CACB96 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BC7219E5BD000CACB96 /* Skill.swift */; };
+		A2D56BCB219E5CBD00CACB96 /* Equipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCA219E5CBD00CACB96 /* Equipment.swift */; };
+		A2D56BCD219FB88200CACB96 /* CombatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCC219FB88200CACB96 /* CombatViewController.swift */; };
+		A2D56BCF21A25A1A00CACB96 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCE21A25A1A00CACB96 /* Utility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A29DCF1A21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagonOptionCollectionViewCell.swift; sourceTree = "<group>"; };
 		A2D56B9D219BC6BB00CACB96 /* Haymaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Haymaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D56BA0219BC6BB00CACB96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2D56BA2219BC6BB00CACB96 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +35,17 @@
 		A2D56BA7219BC6BD00CACB96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2D56BAA219BC6BD00CACB96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2D56BAC219BC6BD00CACB96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2D56BB4219BC85C00CACB96 /* Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
+		A2D56BB6219BC90F00CACB96 /* HeroSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroSelectController.swift; sourceTree = "<group>"; };
+		A2D56BB9219BC96B00CACB96 /* DeckOverseer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckOverseer.swift; sourceTree = "<group>"; };
+		A2D56BBE219BDE2900CACB96 /* CardsDatabase.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CardsDatabase.plist; sourceTree = "<group>"; };
+		A2D56BC0219D17DC00CACB96 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
+		A2D56BC3219E580F00CACB96 /* ParagonOverseer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagonOverseer.swift; sourceTree = "<group>"; };
+		A2D56BC5219E589B00CACB96 /* Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
+		A2D56BC7219E5BD000CACB96 /* Skill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		A2D56BCA219E5CBD00CACB96 /* Equipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equipment.swift; sourceTree = "<group>"; };
+		A2D56BCC219FB88200CACB96 /* CombatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombatViewController.swift; sourceTree = "<group>"; };
+		A2D56BCE21A25A1A00CACB96 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,13 +79,57 @@
 			isa = PBXGroup;
 			children = (
 				A2D56BA0219BC6BB00CACB96 /* AppDelegate.swift */,
-				A2D56BA2219BC6BB00CACB96 /* ViewController.swift */,
 				A2D56BA4219BC6BB00CACB96 /* Main.storyboard */,
+				A2D56BC2219D17E100CACB96 /* CollectionViewCells */,
+				A2D56BB8219BC91400CACB96 /* ViewControllers */,
+				A2D56BBB219BC97000CACB96 /* Utilities */,
 				A2D56BA7219BC6BD00CACB96 /* Assets.xcassets */,
 				A2D56BA9219BC6BD00CACB96 /* LaunchScreen.storyboard */,
 				A2D56BAC219BC6BD00CACB96 /* Info.plist */,
 			);
 			path = Haymaker;
+			sourceTree = "<group>";
+		};
+		A2D56BB8219BC91400CACB96 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A2D56BA2219BC6BB00CACB96 /* ViewController.swift */,
+				A2D56BB6219BC90F00CACB96 /* HeroSelectController.swift */,
+				A2D56BCC219FB88200CACB96 /* CombatViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A2D56BBB219BC97000CACB96 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A2D56BB9219BC96B00CACB96 /* DeckOverseer.swift */,
+				A2D56BC3219E580F00CACB96 /* ParagonOverseer.swift */,
+				A2D56BC5219E589B00CACB96 /* Power.swift */,
+				A2D56BC7219E5BD000CACB96 /* Skill.swift */,
+				A2D56BCA219E5CBD00CACB96 /* Equipment.swift */,
+				A2D56BB4219BC85C00CACB96 /* Cards.swift */,
+				A2D56BCE21A25A1A00CACB96 /* Utility.swift */,
+				A2D56BC9219E5BDD00CACB96 /* Plists */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A2D56BC2219D17E100CACB96 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				A2D56BC0219D17DC00CACB96 /* CardCollectionViewCell.swift */,
+				A29DCF1A21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		A2D56BC9219E5BDD00CACB96 /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				A2D56BBE219BDE2900CACB96 /* CardsDatabase.plist */,
+			);
+			path = Plists;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +190,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2D56BBF219BDE2900CACB96 /* CardsDatabase.plist in Resources */,
 				A2D56BAB219BC6BD00CACB96 /* LaunchScreen.storyboard in Resources */,
 				A2D56BA8219BC6BD00CACB96 /* Assets.xcassets in Resources */,
 				A2D56BA6219BC6BB00CACB96 /* Main.storyboard in Resources */,
@@ -135,7 +204,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2D56BC4219E580F00CACB96 /* ParagonOverseer.swift in Sources */,
+				A2D56BB5219BC85C00CACB96 /* Cards.swift in Sources */,
+				A2D56BCD219FB88200CACB96 /* CombatViewController.swift in Sources */,
 				A2D56BA3219BC6BB00CACB96 /* ViewController.swift in Sources */,
+				A2D56BC8219E5BD000CACB96 /* Skill.swift in Sources */,
+				A2D56BCB219E5CBD00CACB96 /* Equipment.swift in Sources */,
+				A2D56BC6219E589B00CACB96 /* Power.swift in Sources */,
+				A2D56BBA219BC96B00CACB96 /* DeckOverseer.swift in Sources */,
+				A2D56BCF21A25A1A00CACB96 /* Utility.swift in Sources */,
+				A2D56BB7219BC90F00CACB96 /* HeroSelectController.swift in Sources */,
+				A29DCF1B21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift in Sources */,
+				A2D56BC1219D17DC00CACB96 /* CardCollectionViewCell.swift in Sources */,
 				A2D56BA1219BC6BB00CACB96 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

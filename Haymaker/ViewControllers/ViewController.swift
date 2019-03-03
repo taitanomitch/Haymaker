@@ -1,0 +1,44 @@
+//
+//  ViewController.swift
+//  Haymaker
+//
+//  Created by Mitchell Taitano on 11/13/18.
+//  Copyright © 2018 Mitchell Taitano. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+
+    @IBOutlet weak var PlayButton: UIButton!
+    
+    
+    
+    // MARK: - Loading Functions
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupPlayButton()
+    }
+    
+    // MARK: - Setup Functions
+    func setupPlayButton() {
+        PlayButton.layer.cornerRadius = 4.0
+        PlayButton.layer.masksToBounds = true
+    }
+    
+    // MARK: - Button Functions
+    @IBAction func PressPlayButton(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "HeroSelectController") as! HeroSelectController
+        self.present(newViewController, animated: true) {
+            
+        }
+    }
+    
+}
+

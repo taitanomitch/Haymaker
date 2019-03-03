@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Card Name</key>
+		<string>New Discovery</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>9</string>
+		<key>Card Event</key>
+		<string>Explorer</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Card Event</key>
+		<string>Explorer</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>New Discovery</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>9</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Responsibility of Power</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Too Many Crises</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>8</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Investigator</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Breakthrough</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Explorer</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Inexplicable Disappearance</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Explorer</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Uncharted Waters</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Investigator</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Setback</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Explorer</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Rift</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Majesty</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Blow for Freedom</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Solider</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Armed Forces</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Investigator</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Strong Evidence</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Repentant</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Redemption</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Investigator</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Compromising Information</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Exemplar</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Link to the Past</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Solider</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Weapons Cache</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Protector</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Endangered Innocents</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Idealist</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Dismissiveness</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Uncontrolled Power</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Out of Control</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Outcast</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Attraction of Attention</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Soldier</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Target of Opportunity</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>2</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Responsibility of Power</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Cry for Help</string>
+		<key>Card Type</key>
+		<string>Intellect</string>
+		<key>Card Value</key>
+		<string>1</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Responsibility of Power</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Warning of Danger</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>9</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Adventurer</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Dramatic Entrance</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>8</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Animal Nature</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Glimmer of Compassion</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Guardian</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Rescue</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Thrill-Seeker</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Costume Damage</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Outcast</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Xenophobic Hysteria</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Repentant</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Accidental Revelation</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Soldier</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Lack of Support</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Adventurer</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Flight of Fancy</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Repentant</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Change of Heart</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Adventurer</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Goons</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Gloryhound</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>The Press Arrives</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Animal Nature</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Something in the Sewers</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Exemplar</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Bigotry</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Protector</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Help From Above</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Youthful Enthusiasm</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Emotional Growth</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Youthful Enthusiasm</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Rookie Mistake</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Youthful Enthusiasm</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Explosion</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Peace of Mind</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Time to Reflect</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>2</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Youthful Enthusiasm</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Baptism by Fire</string>
+		<key>Card Type</key>
+		<string>Agility</string>
+		<key>Card Value</key>
+		<string>1</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Outcast</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Cautious Acceptance</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>9</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Repentant</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Soul Searching</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>8</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Exemplar</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Hero Worship</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Adventurer</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Arduous Labors</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Gloryhound</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Ignored</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Gloryhound</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Public Accolades</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Majesty</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Refusal of Authority</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Responsibility of Power</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Emergency</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Uncontrolled Power</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Overload</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vestige of Humanity</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Energy Flux</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Protector</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Hostage Situation</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Majesty</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Commanding Presence</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Exemplar</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Validation</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Thrill-Seeker</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>No Restrictions</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Thrill-Seeker</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Wild Ride</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vestige of Humanity</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Rememberance of Home</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Idealist</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Like-Minded Alignment</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Gloryhound</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Premature Exposure</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vestige of Humanity</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Power Surge</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>2</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Animal Nature</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Scent of Prey</string>
+		<key>Card Type</key>
+		<string>Strength</string>
+		<key>Card Value</key>
+		<string>1</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Guardian</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Safe Haven</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>9</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Idealist</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Never Say Die</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>8</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Idealist</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Crisis of Faith</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Mentor</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Misguided Soul</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Outcast</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Mistaken Identity</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Mentor</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Negative Influence</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Peace of Mind</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Transcendance</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Guardian</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Personal Tragedy</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Animal Nature</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Humanity Loss</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vestige of Humanity</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Sacrifice</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Guardian</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Significant Other</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Majesty</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Adulation</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Uncontrolled Power</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Mastery</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Uncontrolled Power</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Sudden Transformation</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Protector</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Natural Disaster</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Mentor</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>New Disciples</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Thrill-Seeker</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Reckless Leap</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Peace of Mind</string>
+		<key>Card Luck</key>
+		<string>Neutral</string>
+		<key>Card Name</key>
+		<string>Manipulation</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Peace of Mind</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Fractured Reality</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>2</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Mentor</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Team Unity</string>
+		<key>Card Type</key>
+		<string>Willpower</string>
+		<key>Card Value</key>
+		<string>1</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>World Domination</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Blind Obedience</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>10</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>World Domination</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Pyrrhic Victory</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>9</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>World Domination</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Achilies Heel</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>8</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vengence</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Retributive Strike</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>8</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Demolisher</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Unstable Ground</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>World Domination</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Mass Panic</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>7</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vengence</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Betrayal</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Demolisher</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Structural Collapse</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>6</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Greed</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Chance Windfall</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Demolisher</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Hazmat Leak</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>5</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vengence</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Blinded by Rage</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Vengence</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Cunning Scheme</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>4</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Greed</string>
+		<key>Card Luck</key>
+		<string>Positive</string>
+		<key>Card Name</key>
+		<string>Unprotected Valuables</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Demolisher</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Collateral Damage</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>3</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Greed</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Police Sirens</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>2</string>
+	</dict>
+	<dict>
+		<key>Card Event</key>
+		<string>Greed</string>
+		<key>Card Luck</key>
+		<string>Negative</string>
+		<key>Card Name</key>
+		<string>Worthlessness</string>
+		<key>Card Type</key>
+		<string>Doom</string>
+		<key>Card Value</key>
+		<string>1</string>
+	</dict>
+</array>
+</plist>

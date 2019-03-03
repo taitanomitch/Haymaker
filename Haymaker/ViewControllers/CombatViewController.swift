@@ -1,0 +1,1665 @@
+//
+//  CardPlayViewController.swift
+//  Haymaker
+//
+//  Created by Mitchell Taitano on 11/16/18.
+//  Copyright © 2018 Mitchell Taitano. All rights reserved.
+//
+
+import UIKit
+
+class CombatViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    enum PlayPhase {
+        case selectAttack
+        case edgeAttack
+        case cardSelectAttack
+        case damageToEnemy
+        case enemyAttack
+        case edgeDefend
+        case cardSelectDefend
+        case damageToHero
+        case none
+    }
+    
+    // MARK: - General IBOutlet Variables
+    @IBOutlet weak var ActionLogPickerView: UIPickerView!
+    
+    // MARK: - Card Show Section IBOutlet Variables
+    @IBOutlet weak var TotalValueLabel: UILabel!
+    @IBOutlet weak var PhaseLabel: UILabel!
+    @IBOutlet weak var PlayCardsButton: UIButton!
+    @IBOutlet weak var ActionTypeFrameView: UIView!
+    @IBOutlet weak var ActionTypeColorView: UIView!
+    @IBOutlet weak var ActionTypeValueView: UIView!
+    @IBOutlet weak var CardPlayHolderView: UIView!
+    @IBOutlet weak var CardHandHolderView: UIView!
+    @IBOutlet weak var CardHandImageView: UIImageView!
+    
+    // MARK: - Villain Sheet IBOutlet Variables
+    @IBOutlet weak var VillainImageView: UIImageView!
+    @IBOutlet weak var VillainImageHolderView: UIView!
+    @IBOutlet weak var VillainSheetView: UIView!
+    @IBOutlet weak var VillainStrengthImageView: UIImageView!
+    @IBOutlet weak var VillainAgilityImageView: UIImageView!
+    @IBOutlet weak var VillainIntellectImageView: UIImageView!
+    @IBOutlet weak var VillainWillpowerImageView: UIImageView!
+    @IBOutlet weak var VillainHandSizeLabel: UILabel!
+    @IBOutlet weak var VillainEdgeLabel: UILabel!
+    @IBOutlet weak var VillainStrengthLabel: UILabel!
+    @IBOutlet weak var VillainAgilityLabel: UILabel!
+    @IBOutlet weak var VillainIntellectLabel: UILabel!
+    @IBOutlet weak var VillainWillpowerLabel: UILabel!
+    @IBOutlet weak var VillainAttackDefenseImageView: UIImageView!
+    
+    // MARK: - Hero Sheet IBOutlet Variables
+    @IBOutlet weak var HeroImageView: UIImageView!
+    @IBOutlet weak var HeroImageHolderView: UIView!
+    @IBOutlet weak var HeroSheetView: UIView!
+    @IBOutlet weak var HeroStrengthImageView: UIImageView!
+    @IBOutlet weak var HeroAgilityImageView: UIImageView!
+    @IBOutlet weak var HeroIntellectImageView: UIImageView!
+    @IBOutlet weak var HeroWillpowerImageView: UIImageView!
+    @IBOutlet weak var HeroHandSizeLabel: UILabel!
+    @IBOutlet weak var HeroEdgeLabel: UILabel!
+    @IBOutlet weak var HeroStrengthLabel: UILabel!
+    @IBOutlet weak var HeroAgilityLabel: UILabel!
+    @IBOutlet weak var HeroIntellectLabel: UILabel!
+    @IBOutlet weak var HeroWillpowerLabel: UILabel!
+    @IBOutlet weak var HeroAttackDefenseImageView: UIImageView!
+    
+     // MARK: - Picker Log IBOutlet Variables
+    @IBOutlet weak var ActionLogsHolderView: UIView!
+    
+    // MARK: - IBOutlet Constraint Variables
+    @IBOutlet weak var CollectionViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ActionSelectionViewBottomConstraint: NSLayoutConstraint!
+    
+    // MARK: - Action Selector IBOutlet Variables
+    @IBOutlet weak var ActionSelectorView: UIView!
+    @IBOutlet weak var ActionSelectorBackgroundView: UIView!
+    @IBOutlet weak var StrengthDamageBonusView: UIView!
+    @IBOutlet weak var IntellectDamageBonusView: UIView!
+    @IBOutlet weak var AgilityDamageBonusView: UIView!
+    @IBOutlet weak var WillpowerDamageBonusView: UIView!
+    @IBOutlet weak var StrengthDamageBonusLabel: UILabel!
+    @IBOutlet weak var IntellectDamageBonusLabel: UILabel!
+    @IBOutlet weak var AgilityDamageBonusLabel: UILabel!
+    @IBOutlet weak var WillpowerDamageBonusLabel: UILabel!
+    @IBOutlet weak var StrengthSelectorButton: UIButton!
+    @IBOutlet weak var IntellectSelectorButton: UIButton!
+    @IBOutlet weak var AgilitySelectorButton: UIButton!
+    @IBOutlet weak var WillpowerSelectorButton: UIButton!
+    
+    // MARK: - Card Collection IBOutlet Variables
+    @IBOutlet weak var PlayerCardCollectionView: UICollectionView!
+    @IBOutlet weak var CardsHolderView: UIView!
+    
+    // MARK: - Paragon Variables
+    var HeroParagon: ParagonOverseer = ParagonOverseer()
+    var VillainParagon: ParagonOverseer = ParagonOverseer()
+    
+    // MARK: - Variables
+    var DeckController: DeckOverseer!
+    var CurrentPlayerHandSize: Int = 0
+    var PlayType: ActionType = .none
+    var LogFontSize: CGFloat = 20.0
+    
+    // MARK: - Runtime Variables
+    var InitialAttackType: ActionType = .none
+    var PlayerEdgeCardLocations: [Int] = []
+    var PlayerCardSelectionLocation: [Int] = []
+    var PickerActionLog:[String] = ["Combat Begins!"]
+    var CurrentPhase: PlayPhase = .none
+    var PlayerCardWidth: CGFloat = 0
+    var PlayerCardHeight: CGFloat = 0
+    var TotalPlayValue: Int = 0
+    var EnemyTotalAttackValue: Int = 0
+    var DamageToEnemy: Int = 0
+    var DamageToHero: Int = 0
+    var EnemyUnconscious: Bool = false
+    var HeroUnconscious: Bool = false
+    var CollectionViewIsDisplayed: Bool = false
+    var AnimatingCollectionView: Bool = false
+    var ActionSelectionViewIsDisplayed: Bool = false
+    var AnimatingActionSelectionView: Bool = false
+    var HeroAttacking: Bool = false
+    
+    // MARK: - UI Variables
+    var ScreenHeight: CGFloat = 0
+    var NewCollectionConstraintConstant: CGFloat = 0
+    
+    // MARK: - Constant Variables
+    var indexStr: Int = 0
+    var indexAgi: Int = 1
+    var indexInt: Int = 2
+    var indexWil: Int = 3
+    
+    // MARK: - Loading Functions
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        runSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    
+    // MARK: - Call Setup Functions
+    func runSetup() {
+        setUpAttackOptions()
+        determineInitiative()
+        setupCardSizeUI()
+        setPickerLineColors()
+        updateTotalLabel()
+        setInitialAttackType()
+        setUpCardsButtonView()
+        setUpActionTypeIndicatorFrame()
+        setUpHolderViews()
+        setAttackDefenseImages()
+        setUpCharacterSheetViews()
+        setPlayCardsButtonUI()
+        setPlayCardsButtonText()
+        setPhaseLabelValue()
+        setUpHiddenViewPositions()
+        setInitialActionSelectorViewPosition()
+    }
+    
+    
+    // MARK: - Transition Functions
+    func getDismissTransition() -> CATransition {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        return transition
+    }
+    
+    func displayActionSelectionMenu() {
+        if !AnimatingActionSelectionView {
+            AnimatingActionSelectionView = true
+            ActionSelectionViewIsDisplayed = !ActionSelectionViewIsDisplayed
+            if ActionSelectionViewIsDisplayed {
+                ActionSelectorView.alpha = 1.0
+                ActionSelectionViewBottomConstraint.constant = 0
+            } else {
+                ActionSelectionViewBottomConstraint.constant = NewCollectionConstraintConstant
+            }
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+            AnimatingActionSelectionView = false
+        }
+    }
+    
+    
+    // MARK: - Button Functions
+    @IBAction func pressPlayCardsButton(_ sender: UIButton) {
+        pressNextPhaseButton()
+    }
+    
+    @IBAction func pressDisplayCardsButton(_ sender: UIButton) {
+        if !AnimatingCollectionView && !AnimatingActionSelectionView {
+            AnimatingCollectionView = true
+            
+            if ActionSelectionViewIsDisplayed && CollectionViewIsDisplayed {
+                if ActionSelectorView.alpha == 0.0 {
+                    UIView.animate(withDuration: 0.5) {
+                        self.ActionSelectorView.alpha = 1.0
+                    }
+                } else {
+                    UIView.animate(withDuration: 0.5) {
+                        self.ActionSelectorView.alpha = 0.0
+                    }
+                }
+            } else if ActionSelectionViewIsDisplayed && !CollectionViewIsDisplayed {
+                CollectionViewIsDisplayed = !CollectionViewIsDisplayed
+                if CollectionViewIsDisplayed {
+                    CardsHolderView.alpha = 0.0
+                    CollectionViewBottomConstraint.constant = 0
+                }
+                self.view.layoutIfNeeded()
+                self.CardsHolderView.alpha = 1.0
+                UIView.animate(withDuration: 0.5) {
+                    self.ActionSelectorView.alpha = 0.0
+                }
+            } else {
+                CollectionViewIsDisplayed = !CollectionViewIsDisplayed
+                if CollectionViewIsDisplayed {
+                    CollectionViewBottomConstraint.constant = 0
+                } else {
+                    CollectionViewBottomConstraint.constant = NewCollectionConstraintConstant
+                }
+                UIView.animate(withDuration: 0.5) {
+                    self.view.layoutIfNeeded()
+                }
+            }
+            
+            AnimatingCollectionView = false
+        }
+    }
+
+    func pressNextPhaseButton() {
+        switch CurrentPhase {
+        case .selectAttack:
+            if HeroParagon.CurrentActionType == .strength || HeroParagon.CurrentActionType == .agility || HeroParagon.CurrentActionType == .intellect || HeroParagon.CurrentActionType == .willpower {
+                CurrentPhase = .edgeAttack
+                setPhaseLabelValue()
+                setPlayCardsButtonText()
+                displayActionSelectionMenu()
+                setActionIndicatorColor()
+                setAbilityScoreToPlayValue()
+                updateTotalLabel()
+                addTextToLog(event: "Before Edge: Current Attack (\(TotalPlayValue))")
+            } else if !ActionSelectionViewIsDisplayed {
+                displayActionSelectionMenu()
+            }
+        case .edgeAttack:
+            CurrentPhase = .cardSelectAttack
+            setPhaseLabelValue()
+            setPlayCardsButtonText()
+            
+            if PlayerEdgeCardLocations.count > 0 {
+                addEdgeToTotal()
+                removePlayedEdgeCards()
+                updateTotalLabel()
+                PlayerEdgeCardLocations = []
+            }
+            addTextToLog(event: "After Edge: Current Attack (\(TotalPlayValue))")
+        case .cardSelectAttack:
+            if PlayerCardSelectionLocation.count > 0 {
+                CurrentPhase = .damageToEnemy
+                setPhaseLabelValue()
+                setPlayCardsButtonText()
+                
+                let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
+                TotalPlayValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
+                
+                addTextToLog(event: "Hero Attack! (\(TotalPlayValue))")
+                
+                redrawCards()
+                updateTotalLabel()
+                PlayerCardCollectionView.reloadData()
+                enemyAttemptToDodge()
+                redrawEnemyCards()
+                PlayerCardSelectionLocation = []
+                if DamageToEnemy <= 0 {
+                    CurrentPhase = .enemyAttack
+                    HeroParagon.CurrentActionType = .doom
+                    setActionIndicatorColor()
+                    flipAttackDefenseImages()
+                    resetTotalPlayValue()
+                    updateTotalLabel()
+                    setPhaseLabelValue()
+                    setPlayCardsButtonText()
+                }
+            }
+        case .damageToEnemy:
+            enemyTakeDamage()
+            resetTotalPlayValue()
+            if EnemyUnconscious {
+                addTextToLog(event: "VICTORY!")
+                CurrentPhase = .none
+            } else {
+                CurrentPhase = .enemyAttack
+                HeroParagon.CurrentActionType = .doom
+                updateTotalLabel()
+                setActionIndicatorColor()
+                flipAttackDefenseImages()
+            }
+            setPhaseLabelValue()
+            setPlayCardsButtonText()
+        case .enemyAttack:
+            enemyAttack()
+            addTextToLog(event: "Enemy Attacks: (\(EnemyTotalAttackValue))")
+            
+            CurrentPhase = .edgeDefend
+            setPhaseLabelValue()
+            setPlayCardsButtonText()
+            
+            redrawEnemyCards()
+            setHeroDefenseActionType()
+            setAbilityScoreToPlayValue()
+            updateTotalLabel()
+            addTextToLog(event: "Before Edge: Dodge Value (\(TotalPlayValue))")
+        case .edgeDefend:
+            CurrentPhase = .cardSelectDefend
+            setPhaseLabelValue()
+            setPlayCardsButtonText()
+            
+            if PlayerEdgeCardLocations.count > 0 {
+                addEdgeToTotal()
+                removePlayedEdgeCards()
+                updateTotalLabel()
+                PlayerEdgeCardLocations = []
+            }
+            addTextToLog(event: "After Edge: Dodge Value (\(TotalPlayValue))")
+        case .cardSelectDefend:
+            if PlayerCardSelectionLocation.count > 0 {
+                let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
+                TotalPlayValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
+                redrawCards()
+                updateTotalLabel()
+                PlayerCardCollectionView.reloadData()
+                PlayerCardSelectionLocation = []
+                addTextToLog(event: "Dodge Value: (\(TotalPlayValue))")
+                
+                var heroResistance = 0
+                if VillainParagon.CurrentActionType == .willpower {
+                    heroResistance = HeroParagon.Willpower + HeroParagon.WillpowerResistanceBonus
+                } else {
+                    heroResistance = HeroParagon.Strength + HeroParagon.DamageResistance
+                }
+                
+                if TotalPlayValue > EnemyTotalAttackValue {
+                    CurrentPhase = .selectAttack
+                    HeroParagon.CurrentActionType = .doom
+                    displayActionSelectionMenu()
+                    addTextToLog(event: "Dodged Enemy Attack!")
+                    setActionIndicatorColor()
+                    updateTotalLabel()
+                    flipAttackDefenseImages()
+                } else {
+                    switch VillainParagon.CurrentActionType {
+                    case .strength:
+                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexStr]
+                    case .agility:
+                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexAgi]
+                    case .intellect:
+                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexInt]
+                    case .willpower:
+                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexWil]
+                    default:
+                        break
+                    }
+                    
+                    if EnemyTotalAttackValue - heroResistance <= 0 {
+                        CurrentPhase = .selectAttack
+                        HeroParagon.CurrentActionType = .doom
+                        displayActionSelectionMenu()
+                        addTextToLog(event: "Resisted Damage from Enemy!")
+                        setActionIndicatorColor()
+                        updateTotalLabel()
+                        flipAttackDefenseImages()
+                    } else {
+                        CurrentPhase = .damageToHero
+                        ActionTypeColorView.backgroundColor = ColorUtilities.BlackDoom
+                        DamageToHero = EnemyTotalAttackValue - heroResistance
+                        TotalValueLabel.text = "\(DamageToHero)"
+                        addTextToLog(event: "You take \(DamageToHero) damage!")
+                        
+                        var HandTotal = 0
+                        for i in 0..<DeckController.PlayerHand.count {
+                            HandTotal = HandTotal + DeckController.PlayerHand[i].getValue()
+                        }
+                        
+                        if HandTotal < DamageToHero {
+                            HeroUnconscious = true
+                            flipParagonToUnconscious()
+                            CurrentPhase = .none
+                            addTextToLog(event: "You have feinted...")
+                            addTextToLog(event: "DEFEAT!")
+                            setPlayCardsButtonText()
+                            for _ in 0..<DeckController.PlayerHand.count {
+                                let _ = DeckController.playerPlayCard(atPosition: DeckController.PlayerHand.count - 1)
+                            }
+                            HeroParagon.Handsize = 0
+                            PlayerCardCollectionView.reloadData()
+                            setHandSizeLabels()
+                        }
+                    }
+                }
+                
+                setPhaseLabelValue()
+                setPlayCardsButtonText()
+            }
+        case .damageToHero:
+            if getTotalValueOfSelectedCards() >= DamageToHero {
+                HeroParagon.Handsize = HeroParagon.Handsize - PlayerCardSelectionLocation.count
+                
+                PlayerCardSelectionLocation.sort()
+                PlayerCardSelectionLocation.reverse()
+                for i in 0..<PlayerCardSelectionLocation.count {
+                    let _ = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[i])
+                }
+                PlayerCardSelectionLocation = []
+                PlayerCardCollectionView.reloadData()
+                setHandSizeLabels()
+                
+                if HeroParagon.Handsize == 0 {
+                    HeroUnconscious = true
+                    flipParagonToUnconscious()
+                }
+                
+                if HeroUnconscious {
+                    CurrentPhase = .none
+                    addTextToLog(event: "You have feinted...")
+                    addTextToLog(event: "DEFEAT!")
+                    setPlayCardsButtonText()
+                } else {
+                    CurrentPhase = .selectAttack
+                    HeroParagon.CurrentActionType = .doom
+                    displayActionSelectionMenu()
+                    setActionIndicatorColor()
+                    setPhaseLabelValue()
+                    setPlayCardsButtonText()
+                    flipAttackDefenseImages()
+                    updateTotalLabel()
+                }
+            }
+        case .none:
+            let transition = getDismissTransition()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            self.dismiss(animated: false) {
+                
+            }
+            return
+        }
+    }
+    
+    @IBAction func pressSelectStrengthAction(_ sender: UIButton) {
+        HeroParagon.CurrentActionType = .strength
+        PlayCardsButton.setTitle("Select Strength Attack", for: .normal)
+    }
+    
+    @IBAction func pressSelectIntellectAction(_ sender: UIButton) {
+        HeroParagon.CurrentActionType = .intellect
+        PlayCardsButton.setTitle("Select Intellect Attack", for: .normal)
+    }
+    
+    @IBAction func pressSelectAgilityAction(_ sender: UIButton) {
+        HeroParagon.CurrentActionType = .agility
+        PlayCardsButton.setTitle("Select Agility Attack", for: .normal)
+    }
+    
+    @IBAction func pressSelectWillpowerAction(_ sender: UIButton) {
+        HeroParagon.CurrentActionType = .willpower
+        PlayCardsButton.setTitle("Select Willpower Attack", for: .normal)
+    }
+    
+    
+    // MARK: - Card Playing Functions
+    func setAbilityScoreToPlayValue() {
+        if CurrentPhase == .edgeAttack {
+            switch HeroParagon.CurrentActionType {
+            case .strength:
+                TotalPlayValue = HeroParagon.AttackValues[indexStr]
+            case .agility:
+                TotalPlayValue = HeroParagon.AttackValues[indexAgi]
+            case .intellect:
+                TotalPlayValue = HeroParagon.AttackValues[indexInt]
+            case .willpower:
+                TotalPlayValue = HeroParagon.AttackValues[indexWil]
+            default:
+                TotalPlayValue = 0
+            }
+        } else if CurrentPhase == .edgeDefend {
+            switch HeroParagon.CurrentActionType {
+            case .strength:
+                TotalPlayValue = HeroParagon.Strength
+            case .agility:
+                TotalPlayValue = HeroParagon.Agility + HeroParagon.DodgeBonus
+            case .intellect:
+                TotalPlayValue = HeroParagon.Intellect
+            case .willpower:
+                TotalPlayValue = HeroParagon.Willpower
+            default:
+                TotalPlayValue = 0
+            }
+        }
+    }
+    
+    func addEdgeToTotal() {
+        for i in 0..<PlayerEdgeCardLocations.count {
+            TotalPlayValue = TotalPlayValue + DeckController.PlayerHand[PlayerEdgeCardLocations[i]].getValue()
+        }
+    }
+    
+    func removePlayedEdgeCards() {
+        PlayerEdgeCardLocations.sort()
+        PlayerEdgeCardLocations.reverse()
+        for i in 0..<PlayerEdgeCardLocations.count {
+            let _ = DeckController.playerPlayCard(atPosition: PlayerEdgeCardLocations[i])
+        }
+        PlayerCardCollectionView.reloadData()
+    }
+    
+    func playCardAndReturnTotalValue(card: Card, type: ActionType) -> Int {
+        if card.getActionType() == type {
+            var thisTotalPlayValue = card.getValue()
+            var matchingActionType: Bool = true
+            while(matchingActionType) {
+                let nextCard = DeckController.drawCardAndPlay()
+                thisTotalPlayValue = thisTotalPlayValue + nextCard.getValue()
+                if(nextCard.getActionType() != type) {
+                    matchingActionType = false
+                }
+            }
+            return thisTotalPlayValue
+        } else {
+            return card.getValue()
+        }
+    }
+    
+    func getTotalValueOfSelectedCards() -> Int {
+        var totalValueOfCards = 0
+        for i in 0..<PlayerCardSelectionLocation.count {
+            totalValueOfCards = totalValueOfCards + DeckController.PlayerHand[PlayerCardSelectionLocation[i]].getValue()
+        }
+        return totalValueOfCards
+    }
+    
+    
+    // MARK: - Hero Villain Sheet Functions
+    func setHandSizeLabels() {
+        HeroHandSizeLabel.text = "\(DeckController.getPlayerHandSize())"
+        HeroEdgeLabel.text = "(\(HeroParagon.Edge))"
+        VillainHandSizeLabel.text = "\(DeckController.getEnemyHandSize())"
+        VillainEdgeLabel.text = "(\(VillainParagon.Edge))"
+    }
+    
+    func setUpCharacterSheetViews() {
+        setHandSizeLabels()
+        
+        HeroImageView.image = UIImage(named: HeroParagon.Name)
+        VillainImageView.image = UIImage(named: VillainParagon.Name)
+        HeroSheetView.layer.cornerRadius = 4.0
+        HeroSheetView.layer.masksToBounds = true
+        VillainSheetView.layer.cornerRadius = 4.0
+        VillainSheetView.layer.masksToBounds = true
+        HeroImageHolderView.layer.cornerRadius = 4.0
+        HeroImageHolderView.layer.masksToBounds = true
+        VillainImageHolderView.layer.cornerRadius = 4.0
+        VillainImageHolderView.layer.masksToBounds = true
+        
+        HeroStrengthImageView.layer.cornerRadius = 4.0
+        HeroStrengthImageView.layer.masksToBounds = true
+        HeroStrengthImageView.backgroundColor = ColorUtilities.GreenStrength
+        HeroStrengthImageView.image = HeroStrengthImageView.image!.withRenderingMode(.alwaysTemplate)
+        HeroStrengthImageView.tintColor = UIColor.white
+        HeroStrengthLabel.text = "\(HeroParagon.Strength)"
+        HeroStrengthLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        HeroAgilityImageView.layer.cornerRadius = 4.0
+        HeroAgilityImageView.layer.masksToBounds = true
+        HeroAgilityImageView.image = HeroAgilityImageView.image!.withRenderingMode(.alwaysTemplate)
+        HeroAgilityImageView.tintColor = UIColor.white
+        HeroAgilityImageView.backgroundColor = ColorUtilities.RedAgility
+        HeroAgilityLabel.text = "\(HeroParagon.Agility)"
+        HeroAgilityLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        HeroIntellectImageView.layer.cornerRadius = 4.0
+        HeroIntellectImageView.layer.masksToBounds = true
+        HeroIntellectImageView.image = HeroIntellectImageView.image!.withRenderingMode(.alwaysTemplate)
+        HeroIntellectImageView.tintColor = UIColor.white
+        HeroIntellectImageView.backgroundColor = ColorUtilities.BlueIntellect
+        HeroIntellectLabel.text = "\(HeroParagon.Intellect)"
+        HeroIntellectLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        HeroWillpowerImageView.layer.cornerRadius = 4.0
+        HeroWillpowerImageView.layer.masksToBounds = true
+        HeroWillpowerImageView.image = HeroWillpowerImageView.image!.withRenderingMode(.alwaysTemplate)
+        HeroWillpowerImageView.tintColor = UIColor.white
+        HeroWillpowerImageView.backgroundColor = ColorUtilities.PurpleWillpower
+        HeroWillpowerLabel.text = "\(HeroParagon.Willpower)"
+        HeroWillpowerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        
+        VillainStrengthImageView.layer.cornerRadius = 4.0
+        VillainStrengthImageView.layer.masksToBounds = true
+        VillainStrengthImageView.backgroundColor = ColorUtilities.GreenStrength
+        VillainStrengthImageView.image = HeroStrengthImageView.image!.withRenderingMode(.alwaysTemplate)
+        VillainStrengthImageView.tintColor = UIColor.white
+        VillainStrengthLabel.text = "\(VillainParagon.Strength)"
+        VillainStrengthLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        VillainAgilityImageView.layer.cornerRadius = 4.0
+        VillainAgilityImageView.layer.masksToBounds = true
+        VillainAgilityImageView.image = HeroAgilityImageView.image!.withRenderingMode(.alwaysTemplate)
+        VillainAgilityImageView.tintColor = UIColor.white
+        VillainAgilityImageView.backgroundColor = ColorUtilities.RedAgility
+        VillainAgilityLabel.text = "\(VillainParagon.Agility)"
+        VillainAgilityLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        VillainIntellectImageView.layer.cornerRadius = 4.0
+        VillainIntellectImageView.layer.masksToBounds = true
+        VillainIntellectImageView.image = HeroIntellectImageView.image!.withRenderingMode(.alwaysTemplate)
+        VillainIntellectImageView.tintColor = UIColor.white
+        VillainIntellectImageView.backgroundColor = ColorUtilities.BlueIntellect
+        VillainIntellectLabel.text = "\(VillainParagon.Intellect)"
+        VillainIntellectLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        VillainWillpowerImageView.layer.cornerRadius = 4.0
+        VillainWillpowerImageView.layer.masksToBounds = true
+        VillainWillpowerImageView.image = HeroWillpowerImageView.image!.withRenderingMode(.alwaysTemplate)
+        VillainWillpowerImageView.tintColor = UIColor.white
+        VillainWillpowerImageView.backgroundColor = ColorUtilities.PurpleWillpower
+        VillainWillpowerLabel.text = "\(VillainParagon.Willpower)"
+        VillainWillpowerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+    }
+    
+    func flipAttackDefenseImages() {
+        HeroAttacking = !HeroAttacking
+        if HeroAttacking {
+            HeroAttackDefenseImageView.image = UIImage(named: "Icon_Attack")
+            VillainAttackDefenseImageView.image = UIImage(named: "Icon_Defense")
+        } else {
+            VillainAttackDefenseImageView.image = UIImage(named: "Icon_Attack")
+            HeroAttackDefenseImageView.image = UIImage(named: "Icon_Defense")
+        }
+        UIView.transition(with: HeroAttackDefenseImageView, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        UIView.transition(with: VillainAttackDefenseImageView, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+    }
+    
+    func flipParagonToUnconscious() {
+        if HeroUnconscious {
+            HeroImageView.image = UIImage(named: "Icon_Unconscious")
+            UIView.transition(with: HeroImageView, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        } else if EnemyUnconscious {
+            VillainImageView.image = UIImage(named: "Icon_Unconscious")
+            UIView.transition(with: VillainImageView, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+        }
+    }
+    
+    func setAttackDefenseImages() {
+        if HeroAttacking {
+            HeroAttackDefenseImageView.image = UIImage(named: "Icon_Attack")
+            VillainAttackDefenseImageView.image = UIImage(named: "Icon_Defense")
+        } else {
+            VillainAttackDefenseImageView.image = UIImage(named: "Icon_Attack")
+            HeroAttackDefenseImageView.image = UIImage(named: "Icon_Defense")
+        }
+    }
+    
+    
+    // MARK: - Enemy Damage Functions
+    func enemyTakeDamage() {
+        if DeckController.EnemyHand.count == 0 {
+            EnemyUnconscious = true
+            flipParagonToUnconscious()
+            return
+        }
+        
+        if DamageToEnemy <= 0 {
+            return
+        }
+        
+        var cardsToPay: [Int] = []
+        
+        var singleCardPay: Bool = false
+        for i in 0..<DeckController.EnemyHand.count {
+            
+            if DeckController.EnemyHand[i].getValue() >= DamageToEnemy {
+                if singleCardPay {
+                    if DeckController.EnemyHand[cardsToPay[0]].getValue() < DeckController.EnemyHand[i].getValue() {
+                        cardsToPay.removeAll()
+                        cardsToPay.append(i)
+                    }
+                } else {
+                    singleCardPay = true
+                    cardsToPay.append(i)
+                }
+            }
+        }
+        
+        if !singleCardPay {
+            var positionHolder: [Int] = []
+            var calculationComplete = false
+            while(!calculationComplete) {
+                if DeckController.EnemyHand.count == positionHolder.count {
+                    cardsToPay = []
+                    for i in 0..<DeckController.EnemyHand.count {
+                        cardsToPay.append(i)
+                    }
+                    calculationComplete = true
+                    break
+                }
+                
+                var largestCardPosition = -1
+                var largestCardValue = -1
+                for i in 0..<DeckController.EnemyHand.count {
+                    if !positionHolder.contains(i) {
+                        if DeckController.EnemyHand[i].getValue() > largestCardValue {
+                            largestCardValue = DeckController.EnemyHand[i].getValue()
+                            largestCardPosition = i
+                        } else if DeckController.EnemyHand[i].getValue() == largestCardValue {
+                            if DeckController.EnemyHand[i].getActionType() == .doom  && DeckController.EnemyHand[largestCardPosition].getActionType() != .doom {
+                                largestCardValue = DeckController.EnemyHand[i].getValue()
+                                largestCardPosition = i
+                            }
+                        }
+                    }
+                }
+                if largestCardValue > 0 {
+                    positionHolder.append(largestCardPosition)
+                }
+                
+                var paymentSum = 0
+                for i in 0..<positionHolder.count {
+                    paymentSum = paymentSum + DeckController.EnemyHand[i].getValue()
+                }
+                if paymentSum >= DamageToEnemy {
+                    calculationComplete = true
+                    for i in 0..<positionHolder.count {
+                        for j in 0..<DeckController.EnemyHand.count {
+                            if !positionHolder.contains(j) {
+                                let newValue = paymentSum - DeckController.EnemyHand[positionHolder[i]].getValue() + DeckController.EnemyHand[j].getValue()
+                                if (newValue < paymentSum) && (paymentSum >= DamageToEnemy) {
+                                    positionHolder.remove(at: i)
+                                    positionHolder.append(j)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            cardsToPay = positionHolder
+        }
+        
+        cardsToPay.sort()
+        cardsToPay.reverse()
+        for i in 0..<cardsToPay.count {
+            let _ = DeckController.enemyPlayCard(atPosition: cardsToPay[i])
+        }
+        
+        if DeckController.EnemyHand.count == 0 {
+            EnemyUnconscious = true
+            flipParagonToUnconscious()
+            addTextToLog(event: "Enemy has feinted!")
+        } else {
+            VillainParagon.Handsize = DeckController.EnemyHand.count
+        }
+        setHandSizeLabels()
+    }
+    
+    
+    // MARK: - Enemy Attack Functions
+    func enemyAttack() {
+        VillainParagon.CurrentActionType = determineEnemyAttackType()
+        
+        EnemyTotalAttackValue = 0
+        switch VillainParagon.CurrentActionType {
+        case .strength:
+            EnemyTotalAttackValue = VillainParagon.Strength
+        case .agility:
+            EnemyTotalAttackValue = VillainParagon.Agility
+        case .intellect:
+            EnemyTotalAttackValue = VillainParagon.Intellect
+        case .willpower:
+            EnemyTotalAttackValue = VillainParagon.Willpower
+        default:
+            EnemyTotalAttackValue = 0
+        }
+
+        EnemyTotalAttackValue = EnemyTotalAttackValue + enemyPlayEdgeCards()
+        
+        var cardToPlayPosition = -1
+        var cardMatchingType = false
+        var highestCardValuePosition = -1
+        var highestCardValue = 0
+        var highestMatchingCardPosition = -1
+        var highestMatchingCardValue = 0
+        
+        for i in 0..<DeckController.EnemyHand.count {
+            let cardValue = DeckController.EnemyHand[i].getValue()
+            let cardType = DeckController.EnemyHand[i].getActionType()
+            
+            if cardValue > highestCardValue {
+                highestCardValue = DeckController.EnemyHand[i].getValue()
+                highestCardValuePosition = i
+            }
+            if cardValue > highestMatchingCardValue && VillainParagon.CurrentActionType == cardType {
+                highestMatchingCardValue = DeckController.EnemyHand[i].getValue()
+                highestMatchingCardPosition = i
+                cardMatchingType = true
+            }
+        }
+        
+        if ((cardMatchingType) && (highestCardValue < (highestMatchingCardValue + 5))) {
+            cardToPlayPosition = highestMatchingCardPosition
+        } else {
+            cardToPlayPosition = highestCardValuePosition
+        }
+        
+        EnemyTotalAttackValue = EnemyTotalAttackValue + DeckController.EnemyHand[cardToPlayPosition].getValue()
+        let _ = DeckController.enemyPlayCard(atPosition: cardToPlayPosition)
+    }
+    
+    func determineEnemyAttackType() -> ActionType {
+        var selectedType: ActionType = .none
+        
+        var highestCard = -1
+        var highestStrengthCard = -1
+        var highestAgilityCard = -1
+        var highestIntellectCard = -1
+        var highestWillpowerCard = -1
+        for i in 0..<DeckController.EnemyHand.count {
+            if DeckController.EnemyHand[i].getValue() > highestCard {
+                highestCard = DeckController.EnemyHand[i].getValue()
+            }
+            switch DeckController.EnemyHand[i].getActionType() {
+            case .strength:
+                if DeckController.EnemyHand[i].getValue() > highestStrengthCard {
+                    highestStrengthCard = DeckController.EnemyHand[i].getValue()
+                }
+            case .agility:
+                if DeckController.EnemyHand[i].getValue() > highestAgilityCard {
+                    highestAgilityCard = DeckController.EnemyHand[i].getValue()
+                }
+            case .intellect:
+                if DeckController.EnemyHand[i].getValue() > highestIntellectCard {
+                    highestIntellectCard = DeckController.EnemyHand[i].getValue()
+                }
+            case .willpower:
+                if DeckController.EnemyHand[i].getValue() > highestWillpowerCard {
+                    highestWillpowerCard = DeckController.EnemyHand[i].getValue()
+                }
+            default:
+                break
+            }
+        }
+        
+        let boolStrength = VillainParagon.PossibleAttackTypeList.contains(.strength)
+        let boolAgility = VillainParagon.PossibleAttackTypeList.contains(.agility)
+        let boolIntellect = VillainParagon.PossibleAttackTypeList.contains(.intellect)
+        let boolWillpower = VillainParagon.PossibleAttackTypeList.contains(.willpower)
+        
+        let strengthVal = VillainParagon.Strength + highestStrengthCard
+        let agilityVal = VillainParagon.Agility + highestAgilityCard
+        let intellectVal = VillainParagon.Intellect + highestIntellectCard
+        let willpowerVal = VillainParagon.Willpower + highestWillpowerCard
+        
+        if boolStrength {
+            if !((boolAgility && agilityVal > strengthVal) || (boolIntellect && intellectVal > strengthVal) || (boolWillpower && willpowerVal > strengthVal)) {
+                selectedType = .strength
+            }
+        }
+        if boolAgility {
+            if !((boolStrength && strengthVal > agilityVal) || (boolIntellect && intellectVal > agilityVal) || (boolWillpower && willpowerVal > agilityVal)) {
+                selectedType = .agility
+            }
+        }
+        if boolIntellect {
+            if !((boolStrength && strengthVal > intellectVal) || (boolAgility && agilityVal > intellectVal) || (boolWillpower && willpowerVal > intellectVal)) {
+                selectedType = .intellect
+            }
+        }
+        if boolWillpower {
+            if !((boolStrength && strengthVal > willpowerVal) || (boolAgility && agilityVal > willpowerVal) || (boolIntellect && intellectVal > willpowerVal)) {
+                selectedType = .willpower
+            }
+        }
+        
+        var useHighestCombination = true
+        var highestCombination = -1
+        var combinationType: ActionType = .none
+        if boolStrength && (VillainParagon.Strength + highestCard > highestCombination) {
+            highestCombination = VillainParagon.Strength + highestCard
+            combinationType = .strength
+        }
+        if boolAgility && (VillainParagon.Agility + highestCard > highestCombination) {
+            highestCombination = VillainParagon.Agility + highestCard
+            combinationType = .agility
+        }
+        if boolIntellect && (VillainParagon.Intellect + highestCard > highestCombination) {
+            highestCombination = VillainParagon.Intellect + highestCard
+            combinationType = .intellect
+        }
+        if boolWillpower && (VillainParagon.Willpower + highestCard > highestCombination) {
+            highestCombination = VillainParagon.Willpower + highestCard
+            combinationType = .willpower
+        }
+        
+        if boolStrength && (highestCombination < strengthVal + 5) {
+            useHighestCombination = false
+        }
+        if boolAgility && (highestCombination < agilityVal + 5) {
+            useHighestCombination = false
+        }
+        if boolIntellect && (highestCombination < intellectVal + 5) {
+            useHighestCombination = false
+        }
+        if boolWillpower && (highestCombination < willpowerVal + 5) {
+            useHighestCombination = false
+        }
+        
+        if useHighestCombination {
+            selectedType = combinationType
+        }
+        
+        return selectedType
+    }
+    
+    
+    // MARK: - Enemy Play Functions
+    func enemyPlayEdgeCards() -> Int {
+        
+        //If one card in had, cannot play Edge
+        if DeckController.EnemyHand.count == 1 {
+            return 0
+        }
+        
+        //Gathers the positions of the Edge cards in enemy hand
+        var playableEdgeCardPositions: [Int] = []
+        for i in 0..<DeckController.EnemyHand.count {
+            if DeckController.EnemyHand[i].getValue() <= VillainParagon.Edge {
+                playableEdgeCardPositions.append(i)
+            }
+        }
+        
+        //If no edge cards available, cannot play Edge
+        if playableEdgeCardPositions.count == 0 {
+            return 0
+        }
+        
+        //If all cards in Hand are Edge-Playable, decides the card to save for Action-Play
+        if playableEdgeCardPositions.count == DeckController.EnemyHand.count {
+            var largestValuePosition = -1
+            var largestValue = 0
+            var matchesType = false
+            for i in 0..<playableEdgeCardPositions.count {
+                if matchesType {
+                    if DeckController.EnemyHand[playableEdgeCardPositions[i]].getActionType() == VillainParagon.CurrentActionType && DeckController.EnemyHand[playableEdgeCardPositions[i]].getValue() > largestValue {
+                        largestValuePosition = i
+                        largestValue = DeckController.EnemyHand[playableEdgeCardPositions[i]].getValue()
+                    }
+                } else {
+                    if DeckController.EnemyHand[playableEdgeCardPositions[i]].getActionType() == VillainParagon.CurrentActionType {
+                        matchesType = true
+                        largestValuePosition = i
+                        largestValue = DeckController.EnemyHand[playableEdgeCardPositions[i]].getValue()
+                    } else if DeckController.EnemyHand[playableEdgeCardPositions[i]].getValue() > largestValue {
+                        largestValuePosition = i
+                        largestValue = DeckController.EnemyHand[playableEdgeCardPositions[i]].getValue()
+                    }
+                }
+            }
+            playableEdgeCardPositions.remove(at: largestValuePosition)
+        }
+        
+        var matchingCardTypePositions: [Int] = []
+        for i in 0..<DeckController.EnemyHand.count {
+            if DeckController.EnemyHand[i].getActionType() == VillainParagon.CurrentActionType {
+                matchingCardTypePositions.append(i)
+            }
+        }
+        
+        //Holds total value of played edge cards to return
+        var playValueOfEdgeCards = 0
+        
+        
+        //Checks to for an edge card to hold for Play-Card if needed
+        if matchingCardTypePositions.count == 1 {
+            let valueOfCard = DeckController.EnemyHand[matchingCardTypePositions[0]].getValue()
+            if valueOfCard <= VillainParagon.Edge {
+                var betterCardToPlay = false
+                for i in 0..<DeckController.EnemyHand.count {
+                    if DeckController.EnemyHand[i].getValue() >= valueOfCard + 5 {
+                        betterCardToPlay = true
+                        break
+                    }
+                }
+                if !betterCardToPlay {
+                    playableEdgeCardPositions.removeAll { (intValue) -> Bool in
+                        intValue == matchingCardTypePositions[0]
+                    }
+                }
+            }
+        } else if matchingCardTypePositions.count > 1 {
+            var nonEdgeOfMatchingTypeExists = false
+            for i in 0..<matchingCardTypePositions.count {
+                if DeckController.EnemyHand[matchingCardTypePositions[i]].getValue() > VillainParagon.Edge {
+                    nonEdgeOfMatchingTypeExists = true
+                    break
+                }
+            }
+            if !nonEdgeOfMatchingTypeExists {
+                var largestValue = 0
+                var largestValuePosition = -1
+                for i in 0..<matchingCardTypePositions.count {
+                    let nextValue = DeckController.EnemyHand[matchingCardTypePositions[i]].getValue()
+                    if nextValue > largestValue {
+                        largestValue = nextValue
+                        largestValuePosition = i
+                    }
+                }
+                var betterCardToPlay = false
+                for i in 0..<DeckController.EnemyHand.count {
+                    if DeckController.EnemyHand[i].getValue() >= largestValue + 5 {
+                        betterCardToPlay = true
+                        break
+                    }
+                }
+                if !betterCardToPlay {
+                    playableEdgeCardPositions.removeAll { (intValue) -> Bool in
+                        intValue == matchingCardTypePositions[largestValuePosition]
+                    }
+                }
+            }
+        }
+        
+        playableEdgeCardPositions.sort()
+        playableEdgeCardPositions.reverse()
+        for i in 0..<playableEdgeCardPositions.count {
+            playValueOfEdgeCards = playValueOfEdgeCards + DeckController.EnemyHand[playableEdgeCardPositions[i]].getValue()
+            let _ = DeckController.enemyPlayCard(atPosition: playableEdgeCardPositions[i])
+        }
+        return playValueOfEdgeCards
+    }
+    
+    
+    // MARK: - Enemy Defense Functions
+    func enemyAttemptToDodge() {
+        if HeroParagon.CurrentActionType == .willpower {
+            VillainParagon.CurrentActionType = .willpower
+        } else {
+            VillainParagon.CurrentActionType = .agility
+        }
+        
+        var totalDodgeValue = 0
+        if VillainParagon.CurrentActionType == .agility {
+            totalDodgeValue = VillainParagon.Agility + VillainParagon.DodgeBonus
+        } else {
+            totalDodgeValue = VillainParagon.Willpower
+        }
+        let dodgeAmountNeeded = TotalPlayValue + 1 - totalDodgeValue
+        
+        var canDodgeWithSingleCard = false
+        var hasAgilityCard = false
+        var hasGoodChance = false
+        
+        var lowestSuccessValue = 11
+        var lowestSuccessCard = Card()
+        var lowestHandValue = 11
+        var lowestHandCard = Card()
+        var highestMatchTypeValue = 0
+        var highestMatchTypeCard = Card()
+        var goodOptionCard = Card()
+        
+        for i in 0..<DeckController.EnemyHand.count {
+            if DeckController.EnemyHand[i].getValue() < lowestHandValue {
+                lowestHandValue = DeckController.EnemyHand[i].getValue()
+                lowestHandCard = DeckController.EnemyHand[i]
+            }
+            if DeckController.EnemyHand[i].getValue() > highestMatchTypeValue && DeckController.EnemyHand[i].getActionType() == VillainParagon.CurrentActionType {
+                hasAgilityCard = true
+                highestMatchTypeValue = DeckController.EnemyHand[i].getValue()
+                highestMatchTypeCard = DeckController.EnemyHand[i]
+            }
+            if DeckController.EnemyHand[i].getValue() > dodgeAmountNeeded && DeckController.EnemyHand[i].getValue() < lowestSuccessValue {
+                canDodgeWithSingleCard = true
+                lowestSuccessValue = DeckController.EnemyHand[i].getValue()
+                lowestSuccessCard = DeckController.EnemyHand[i]
+            }
+            let checkValue = dodgeAmountNeeded - DeckController.EnemyHand[i].getValue()
+            let safetyValue = 2 + (arc4random_uniform(1))
+            if checkValue < safetyValue {
+                hasGoodChance = true
+                goodOptionCard = DeckController.EnemyHand[i]
+            }
+        }
+        
+        var enemyDodged = false
+        var cardIndex = -1
+        var playingCard: Card = Card()
+        
+        if canDodgeWithSingleCard {
+            cardIndex = DeckController.EnemyHand.firstIndex(of: lowestSuccessCard)!
+        } else if hasGoodChance {
+            cardIndex = DeckController.EnemyHand.firstIndex(of: goodOptionCard)!
+        } else if hasAgilityCard {
+            cardIndex = DeckController.EnemyHand.firstIndex(of: highestMatchTypeCard)!
+        } else {
+            cardIndex = DeckController.EnemyHand.firstIndex(of: lowestHandCard)!
+        }
+        
+        playingCard = DeckController.enemyPlayCard(atPosition: cardIndex)
+        totalDodgeValue = totalDodgeValue + playCardAndReturnTotalValue(card: playingCard, type: VillainParagon.CurrentActionType)
+        
+        var opponentResistance = 0
+        if HeroParagon.CurrentActionType == .willpower {
+            opponentResistance = VillainParagon.Willpower + VillainParagon.WillpowerResistanceBonus
+        } else {
+            opponentResistance = VillainParagon.Strength + VillainParagon.DamageResistance
+        }
+        
+        if totalDodgeValue > TotalPlayValue {
+            enemyDodged = true
+        } else {
+            enemyDodged = false
+        }
+        
+        if enemyDodged {
+            addTextToLog(event: "Enemy Dodged! (\(totalDodgeValue))")
+            DamageToEnemy = 0
+        } else {
+            switch HeroParagon.CurrentActionType {
+            case .strength:
+                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexStr]
+            case .agility:
+                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexAgi]
+            case .intellect:
+                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexInt]
+            case .willpower:
+                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexWil]
+            default:
+                break
+            }
+            DamageToEnemy = TotalPlayValue - opponentResistance
+            if DamageToEnemy <= 0 {
+                addTextToLog(event: "Enemy Resisted the Damage!")
+            } else {
+                addTextToLog(event: "Enemy Hit For \(DamageToEnemy) Damage!")
+            }
+        }
+    }
+    
+
+    // MARK: - Hand Redraw Functions
+    func redrawCards() {
+        let cardsToDraw = HeroParagon.Handsize - DeckController.PlayerHand.count
+        if cardsToDraw <= 0 {
+            return
+        }
+        for _ in 1...cardsToDraw {
+            DeckController.playerDrawCard()
+        }
+    }
+    
+    func redrawEnemyCards() {
+        let cardsToDraw = VillainParagon.Handsize - DeckController.EnemyHand.count
+        if cardsToDraw <= 0 {
+            return
+        }
+        for _ in 1...cardsToDraw {
+            DeckController.enemyDrawCard()
+        }
+    }
+    
+    
+    // MARK: - Collection View Functions
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let handsize = DeckController.PlayerHand?.count {
+            return handsize
+        } else {
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cardCell : CardCollectionViewCell = PlayerCardCollectionView.dequeueReusableCell(withReuseIdentifier: "CardCollectionViewCell", for: indexPath) as! CardCollectionViewCell
+        cardCell.setUpCardCell(value: DeckController.PlayerHand[indexPath.row].getValue(), type: DeckController.PlayerHand[indexPath.row].getActionType())
+        cardCell.unhighlightCard()
+        switch CurrentPhase {
+        case .edgeAttack, .edgeDefend:
+            if PlayerEdgeCardLocations.contains(indexPath.row) {
+                cardCell.highlightCard()
+            }
+        case .cardSelectAttack, .cardSelectDefend:
+            if PlayerCardSelectionLocation.contains(indexPath.row) {
+                cardCell.highlightCard()
+            }
+        case .selectAttack, .enemyAttack, .damageToEnemy, .damageToHero, .none:
+            break
+        }
+        return cardCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: PlayerCardWidth, height: PlayerCardHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch CurrentPhase {
+        case .selectAttack, .damageToEnemy, .enemyAttack:
+            return
+        case .edgeAttack:
+            if DeckController.PlayerHand[indexPath.row].getValue() <= HeroParagon.Edge {
+                if !PlayerEdgeCardLocations.contains(indexPath.row) {
+                    if PlayerEdgeCardLocations.count + 1 != DeckController.PlayerHand.count {
+                        PlayerEdgeCardLocations.append(indexPath.row)
+                        let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                        thisCard.highlightCard()
+                    }
+                } else {
+                    PlayerEdgeCardLocations.removeAll { (nextInt) -> Bool in
+                        nextInt == indexPath.row
+                    }
+                    let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                    thisCard.unhighlightCard()
+                }
+                
+                setPlayCardsButtonText()
+                var valueOfEdge: Int = 0
+                for i in 0..<PlayerEdgeCardLocations.count {
+                    valueOfEdge = valueOfEdge + DeckController.PlayerHand[PlayerEdgeCardLocations[i]].getValue()
+                }
+                let valueForLabel = TotalPlayValue + valueOfEdge
+                TotalValueLabel.text = "\(valueForLabel)"
+            }
+        case .cardSelectAttack:
+            if !PlayerCardSelectionLocation.contains(indexPath.row) {
+                if(PlayerCardSelectionLocation.count != 0) {
+                    let indexPathToCard = IndexPath(row: PlayerCardSelectionLocation[0], section: 0)
+                    let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPathToCard) as! CardCollectionViewCell
+                    thisCard.unhighlightCard()
+                    PlayerCardSelectionLocation.removeAll()
+                }
+                    
+                PlayerCardSelectionLocation.append(indexPath.row)
+                let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                thisCard.highlightCard()
+                
+                let valueForLabel = TotalPlayValue + DeckController.PlayerHand[indexPath.row].getValue()
+                if DeckController.PlayerHand[indexPath.row].getActionType() == HeroParagon.CurrentActionType {
+                    TotalValueLabel.text = "\(valueForLabel)+"
+                } else {
+                    TotalValueLabel.text = "\(valueForLabel)"
+                }
+            } else {
+                PlayerCardSelectionLocation.removeAll()
+                let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                thisCard.unhighlightCard()
+                updateTotalLabel()
+            }
+            setPlayCardsButtonText()
+        case .edgeDefend:
+            if DeckController.PlayerHand[indexPath.row].getValue() <= HeroParagon.Edge {
+                if !PlayerEdgeCardLocations.contains(indexPath.row) {
+                    if PlayerEdgeCardLocations.count + 1 != DeckController.PlayerHand.count {
+                        PlayerEdgeCardLocations.append(indexPath.row)
+                        let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                        thisCard.highlightCard()
+                    }
+                } else {
+                    PlayerEdgeCardLocations.removeAll { (nextInt) -> Bool in
+                        nextInt == indexPath.row
+                    }
+                    let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                    thisCard.unhighlightCard()
+                }
+                
+                setPlayCardsButtonText()
+                var valueOfEdge: Int = 0
+                for i in 0..<PlayerEdgeCardLocations.count {
+                    valueOfEdge = valueOfEdge + DeckController.PlayerHand[PlayerEdgeCardLocations[i]].getValue()
+                }
+                let valueForLabel = TotalPlayValue + valueOfEdge
+                TotalValueLabel.text = "\(valueForLabel)"
+            }
+        case .cardSelectDefend:
+            if !PlayerCardSelectionLocation.contains(indexPath.row) {
+                if(PlayerCardSelectionLocation.count != 0) {
+                    let indexPathToCard = IndexPath(row: PlayerCardSelectionLocation[0], section: 0)
+                    let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPathToCard) as! CardCollectionViewCell
+                    thisCard.unhighlightCard()
+                    PlayerCardSelectionLocation.removeAll()
+                }
+                
+                PlayerCardSelectionLocation.append(indexPath.row)
+                let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                thisCard.highlightCard()
+                
+                let valueForLabel = TotalPlayValue + DeckController.PlayerHand[indexPath.row].getValue()
+                if DeckController.PlayerHand[indexPath.row].getActionType() == HeroParagon.CurrentActionType {
+                    TotalValueLabel.text = "\(valueForLabel)+"
+                } else {
+                    TotalValueLabel.text = "\(valueForLabel)"
+                }
+            } else {
+                PlayerCardSelectionLocation.removeAll()
+                let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                thisCard.unhighlightCard()
+                updateTotalLabel()
+            }
+            setPlayCardsButtonText()
+        case .damageToHero:
+            if !PlayerCardSelectionLocation.contains(indexPath.row) {
+                if !(DamageToHero - getTotalValueOfSelectedCards() <= 0) {
+                    PlayerCardSelectionLocation.append(indexPath.row)
+                    let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                    thisCard.highlightCard()
+                }
+            } else {
+                PlayerCardSelectionLocation.removeAll { (intValue) -> Bool in
+                    intValue == indexPath.row
+                }
+                let thisCard: CardCollectionViewCell = PlayerCardCollectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
+                thisCard.unhighlightCard()
+            }
+            setPlayCardsButtonText()
+            let valueForText = DamageToHero - getTotalValueOfSelectedCards()
+            TotalValueLabel.text = "\(valueForText)"
+        case .none:
+            return
+        }
+    }
+    
+    // MARK: - Picker View Functions
+    func reloadActionLog() {
+        ActionLogPickerView.reloadAllComponents()
+    }
+    
+    func addTextToLog(event: String) {
+        PickerActionLog.append(event)
+        reloadActionLog()
+        let row = 0
+        ActionLogPickerView.selectRow(row, inComponent: 0, animated: true)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return PickerActionLog.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var copyOfLogs = PickerActionLog
+        copyOfLogs.reverse()
+        
+        let pickerLabel = UILabel()
+        pickerLabel.backgroundColor = UIColor.clear
+        let titleData = copyOfLogs[row]
+        let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: LogFontSize),NSAttributedString.Key.foregroundColor:UIColor.white])
+        pickerLabel.attributedText = myTitle
+        pickerLabel.textAlignment = .left
+        return pickerLabel
+    }
+    
+    
+    // MARK: - Miscellaneous UI Functions
+    func setActionIndicatorColor() {
+        switch HeroParagon.CurrentActionType {
+        case .agility:
+            ActionTypeColorView.backgroundColor = ColorUtilities.RedAgility
+        case .strength:
+            ActionTypeColorView.backgroundColor = ColorUtilities.GreenStrength
+        case .intellect:
+            ActionTypeColorView.backgroundColor = ColorUtilities.BlueIntellect
+        case .willpower:
+            ActionTypeColorView.backgroundColor = ColorUtilities.PurpleWillpower
+        default:
+            ActionTypeColorView.backgroundColor = ColorUtilities.BlackDoom
+        }
+    }
+    
+    func setPickerLineColors() {
+        for subview in self.ActionLogPickerView.subviews {
+            
+            if subview.frame.height <= 5 {
+                
+                subview.backgroundColor = UIColor.white
+                subview.tintColor = UIColor.white
+                subview.layer.borderColor = UIColor.white.cgColor
+                subview.layer.borderWidth = 2            }
+        }
+    }
+    
+    
+    // MARK: - Setup Functions
+    func setUpAttackOptions() {
+        setUpSelectorButtonUI()
+        if HeroParagon.PossibleAttackTypeList.contains(.strength) {
+            StrengthSelectorButton.alpha = 1.0
+            StrengthSelectorButton.setTitle(HeroParagon.AttackTypeNames[0], for: .normal)
+            if HeroParagon.DamageBonuses[indexStr] > 0 {
+                StrengthDamageBonusView.alpha = 1.0
+                StrengthDamageBonusLabel.alpha = 1.0
+                StrengthDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexStr])"
+            } else {
+                StrengthDamageBonusView.alpha = 0.0
+                StrengthDamageBonusLabel.alpha = 0.0
+            }
+        } else {
+            StrengthSelectorButton.alpha = 0.0
+            StrengthDamageBonusView.alpha = 0.0
+            StrengthDamageBonusLabel.alpha = 0.0
+        }
+        
+        if HeroParagon.PossibleAttackTypeList.contains(.agility) {
+            AgilitySelectorButton.alpha = 1.0
+            AgilitySelectorButton.setTitle(HeroParagon.AttackTypeNames[1], for: .normal)
+            if HeroParagon.DamageBonuses[indexAgi] > 0 {
+                AgilityDamageBonusView.alpha = 1.0
+                AgilityDamageBonusLabel.alpha = 1.0
+                AgilityDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexAgi])"
+            } else {
+                AgilityDamageBonusView.alpha = 0.0
+                AgilityDamageBonusLabel.alpha = 0.0
+            }
+        } else {
+            AgilitySelectorButton.alpha = 0.0
+            AgilityDamageBonusView.alpha = 0.0
+            AgilityDamageBonusLabel.alpha = 0.0
+        }
+        
+        if HeroParagon.PossibleAttackTypeList.contains(.intellect) {
+            IntellectSelectorButton.alpha = 1.0
+            IntellectSelectorButton.setTitle(HeroParagon.AttackTypeNames[2], for: .normal)
+            if HeroParagon.DamageBonuses[indexInt] > 0 {
+                IntellectDamageBonusView.alpha = 1.0
+                IntellectDamageBonusLabel.alpha = 1.0
+                IntellectDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexInt])"
+            } else {
+                IntellectDamageBonusView.alpha = 0.0
+                IntellectDamageBonusLabel.alpha = 0.0
+            }
+        } else {
+            IntellectSelectorButton.alpha = 0.0
+            IntellectDamageBonusView.alpha = 0.0
+            IntellectDamageBonusLabel.alpha = 0.0
+        }
+        
+        if HeroParagon.PossibleAttackTypeList.contains(.willpower) {
+            WillpowerSelectorButton.alpha = 1.0
+            WillpowerSelectorButton.setTitle(HeroParagon.AttackTypeNames[3], for: .normal)
+            if HeroParagon.DamageBonuses[indexWil] > 0 {
+                WillpowerDamageBonusView.alpha = 1.0
+                WillpowerDamageBonusLabel.alpha = 1.0
+                WillpowerDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexWil])"
+            } else {
+                WillpowerDamageBonusView.alpha = 0.0
+                WillpowerDamageBonusLabel.alpha = 0.0
+            }
+        } else {
+            WillpowerSelectorButton.alpha = 0.0
+            WillpowerDamageBonusView.alpha = 0.0
+            WillpowerDamageBonusLabel.alpha = 0.0
+        }
+    }
+    
+    func setUpSelectorButtonUI() {
+        ActionSelectorBackgroundView.backgroundColor = ColorUtilities.hexUIColor(hex: "EAE3EB")
+        StrengthSelectorButton.layer.cornerRadius = 5.0
+        StrengthSelectorButton.layer.masksToBounds = true
+        StrengthSelectorButton.backgroundColor = ColorUtilities.GreenStrength
+        StrengthSelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        AgilitySelectorButton.layer.cornerRadius = 5.0
+        AgilitySelectorButton.layer.masksToBounds = true
+        AgilitySelectorButton.backgroundColor = ColorUtilities.RedAgility
+        AgilitySelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        IntellectSelectorButton.layer.cornerRadius = 5.0
+        IntellectSelectorButton.layer.masksToBounds = true
+        IntellectSelectorButton.backgroundColor = ColorUtilities.BlueIntellect
+        IntellectSelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        WillpowerSelectorButton.layer.cornerRadius = 5.0
+        WillpowerSelectorButton.layer.masksToBounds = true
+        WillpowerSelectorButton.backgroundColor = ColorUtilities.PurpleWillpower
+        WillpowerSelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+    }
+    
+    func determineInitiative() {
+        if HeroParagon.Agility >= VillainParagon.Agility {
+            CurrentPhase = .selectAttack
+            HeroAttacking = true
+        } else {
+            CurrentPhase = .enemyAttack
+            HeroAttacking = false
+        }
+        HeroParagon.CurrentActionType = .doom
+        setActionIndicatorColor()
+    }
+    
+    func getPlayType() {
+        PlayType = HeroParagon.CurrentActionType
+    }
+    
+    func setUpCardsButtonView() {
+        CardHandHolderView.layer.cornerRadius = 4.0
+        CardHandHolderView.layer.masksToBounds = true
+        CardHandImageView.layer.cornerRadius = 4.0
+        CardHandImageView.layer.masksToBounds = true
+        
+        CardHandImageView.image = CardHandImageView.image!.withRenderingMode(.alwaysTemplate)
+        CardHandImageView.tintColor = UIColor.white
+    }
+    
+    func setUpHiddenViewPositions() {
+        let halfHeight = ScreenHeight / 2
+        NewCollectionConstraintConstant = -1 * halfHeight
+        CollectionViewBottomConstraint.constant = NewCollectionConstraintConstant
+        ActionSelectionViewBottomConstraint.constant = NewCollectionConstraintConstant
+        self.view.layoutIfNeeded()
+    }
+    
+    func setUpHolderViews() {
+        ActionLogsHolderView.layer.cornerRadius = 4.0
+        ActionLogsHolderView.layer.masksToBounds = true
+        CardPlayHolderView.layer.cornerRadius = 4.0
+        CardPlayHolderView.layer.masksToBounds = true
+    }
+    
+    func setUpActionTypeIndicatorFrame() {
+        ActionTypeFrameView.layer.cornerRadius = 4.0
+        ActionTypeValueView.layer.cornerRadius = 4.0
+        ActionTypeColorView.layer.cornerRadius = 4.0
+        ActionTypeFrameView.layer.masksToBounds = true
+        ActionTypeValueView.layer.masksToBounds = true
+        ActionTypeColorView.layer.masksToBounds = true
+        setActionIndicatorColor()
+    }
+    
+    func setInitialAttackType() {
+        InitialAttackType = HeroParagon.CurrentActionType
+    }
+    
+    func setPlayCardsButtonUI() {
+        PlayCardsButton.layer.borderColor = UIColor.white.cgColor
+        PlayCardsButton.layer.borderWidth = 2
+        PlayCardsButton.layer.cornerRadius = 5.0
+        PlayCardsButton.layer.masksToBounds = true
+    }
+    
+    func setPlayCardsButtonText() {
+        PlayCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        switch CurrentPhase {
+        case .selectAttack:
+            PlayCardsButton.setTitle("Select an Attack Type", for: .normal)
+        case .edgeAttack:
+            if PlayerEdgeCardLocations.count == 0 {
+                PlayCardsButton.setTitle("Skip Edge Cards", for: .normal)
+            } else {
+                PlayCardsButton.setTitle("Play Cards (\(PlayerEdgeCardLocations.count))", for: .normal)
+            }
+        case .cardSelectAttack:
+            if PlayerCardSelectionLocation.count == 0 {
+                PlayCardsButton.setTitle("Select Card", for: .normal)
+            } else {
+                PlayCardsButton.setTitle("Play Card", for: .normal)
+            }
+        case .damageToEnemy:
+            PlayCardsButton.setTitle("Next", for: .normal)
+        case .enemyAttack:
+            PlayCardsButton.setTitle("Next", for: .normal)
+        case .edgeDefend:
+            if PlayerEdgeCardLocations.count == 0 {
+                PlayCardsButton.setTitle("Skip Edge Cards", for: .normal)
+            } else {
+                PlayCardsButton.setTitle("Play Cards (\(PlayerEdgeCardLocations.count))", for: .normal)
+            }
+        case .cardSelectDefend:
+            if PlayerCardSelectionLocation.count == 0 {
+                PlayCardsButton.setTitle("Select Card", for: .normal)
+            } else {
+                PlayCardsButton.setTitle("Play Card", for: .normal)
+            }
+        case .damageToHero:
+            if PlayerCardSelectionLocation.count == 0 {
+                PlayCardsButton.setTitle("Select Cards for Damage", for: .normal)
+            } else {
+                PlayCardsButton.setTitle("Pay Cards (\(PlayerCardSelectionLocation.count))", for: .normal)
+            }
+        case .none:
+            PlayCardsButton.setTitle("Finish Combat", for: .normal)
+        }
+    }
+    
+    
+    func setPhaseLabelValue() {
+        switch CurrentPhase {
+        case .selectAttack:
+            PhaseLabel.text = "Phase: Select Attack"
+        case .edgeAttack:
+            PhaseLabel.text = "Phase: Edge - Attack"
+        case .cardSelectAttack:
+            PhaseLabel.text = "Phase: Card Select - Attack"
+        case .damageToEnemy:
+            PhaseLabel.text = "Phase: Damaging Enemy"
+        case .enemyAttack:
+            PhaseLabel.text = "Phase: Enemy Attack"
+        case .edgeDefend:
+            PhaseLabel.text = "Phase: Edge - Defense"
+        case .cardSelectDefend:
+            PhaseLabel.text = "Phase: Card Select - Defense"
+        case .damageToHero:
+            PhaseLabel.text = "Phase: Damage to Hero"
+        case .none:
+            PhaseLabel.text = "Combat Complete!"
+        }
+    }
+    
+    func setupCardSizeUI() {
+        PlayerCardHeight = PlayerCardCollectionView.frame.height * 0.6
+        PlayerCardWidth = PlayerCardHeight / 1.75
+    }
+    
+    func updateTotalLabel() {
+        if CurrentPhase == .selectAttack || CurrentPhase == .enemyAttack {
+            TotalValueLabel.text = "-"
+        } else {
+            TotalValueLabel.text = String(TotalPlayValue)
+        }
+    }
+    
+    func resetTotalPlayValue() {
+        TotalPlayValue = 0
+    }
+    
+    func setHeroDefenseActionType() {
+        if CurrentPhase == .edgeDefend || CurrentPhase == .cardSelectDefend {
+            if VillainParagon.CurrentActionType == .willpower {
+                HeroParagon.CurrentActionType = .willpower
+            } else {
+                HeroParagon.CurrentActionType = .agility
+            }
+        }
+        setActionIndicatorColor()
+    }
+    
+    func setInitialActionSelectorViewPosition() {
+        if CurrentPhase == .selectAttack {
+            ActionSelectionViewIsDisplayed = true
+            ActionSelectionViewBottomConstraint.constant = 0
+        } else {
+            ActionSelectionViewIsDisplayed = false
+            ActionSelectionViewBottomConstraint.constant = NewCollectionConstraintConstant
+        }
+        self.view.layoutIfNeeded()
+    }
+}
