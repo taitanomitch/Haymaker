@@ -78,18 +78,30 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Action Selector IBOutlet Variables
     @IBOutlet weak var ActionSelectorView: UIView!
     @IBOutlet weak var ActionSelectorBackgroundView: UIView!
-    @IBOutlet weak var StrengthDamageBonusView: UIView!
-    @IBOutlet weak var IntellectDamageBonusView: UIView!
-    @IBOutlet weak var AgilityDamageBonusView: UIView!
-    @IBOutlet weak var WillpowerDamageBonusView: UIView!
-    @IBOutlet weak var StrengthDamageBonusLabel: UILabel!
-    @IBOutlet weak var IntellectDamageBonusLabel: UILabel!
-    @IBOutlet weak var AgilityDamageBonusLabel: UILabel!
-    @IBOutlet weak var WillpowerDamageBonusLabel: UILabel!
+    
     @IBOutlet weak var StrengthSelectorButton: UIButton!
+    @IBOutlet weak var StrengthSelectorLabelsView: UIView!
+    @IBOutlet weak var StrengthAttackNameLabel: UILabel!
+    @IBOutlet weak var StrengthAttackValueLabel: UILabel!
+    @IBOutlet weak var StrengthBonusDamageLabel: UILabel!
+    
     @IBOutlet weak var IntellectSelectorButton: UIButton!
+    @IBOutlet weak var IntellectSelectorLabelsView: UIView!
+    @IBOutlet weak var IntellectAttackNameLabel: UILabel!
+    @IBOutlet weak var IntellectAttackValueLabel: UILabel!
+    @IBOutlet weak var IntellectBonusDamageLabel: UILabel!
+    
     @IBOutlet weak var AgilitySelectorButton: UIButton!
+    @IBOutlet weak var AgilitySelectorLabelsView: UIView!
+    @IBOutlet weak var AgilityAttackNameLabel: UILabel!
+    @IBOutlet weak var AgilityAttackValueLabel: UILabel!
+    @IBOutlet weak var AgilityBonusDamageLabel: UILabel!
+    
     @IBOutlet weak var WillpowerSelectorButton: UIButton!
+    @IBOutlet weak var WillpowerSelectorLabelsView: UIView!
+    @IBOutlet weak var WillpowerAttackNameLabel: UILabel!
+    @IBOutlet weak var WillpowerAttackValueLabel: UILabel!
+    @IBOutlet weak var WillpowerBonusDamageLabel: UILabel!
     
     // MARK: - Card Collection IBOutlet Variables
     @IBOutlet weak var PlayerCardCollectionView: UICollectionView!
@@ -1407,70 +1419,74 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         setUpSelectorButtonUI()
         if HeroParagon.PossibleAttackTypeList.contains(.strength) {
             StrengthSelectorButton.alpha = 1.0
-            StrengthSelectorButton.setTitle(HeroParagon.AttackTypeNames[0], for: .normal)
+            StrengthSelectorLabelsView.alpha = 1.0
+            StrengthAttackNameLabel.text = HeroParagon.AttackTypeNames[0]
+            StrengthAttackValueLabel.alpha = 1.0
+            StrengthAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[0])"
             if HeroParagon.DamageBonuses[indexStr] > 0 {
-                StrengthDamageBonusView.alpha = 1.0
-                StrengthDamageBonusLabel.alpha = 1.0
-                StrengthDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexStr])"
+                StrengthBonusDamageLabel.alpha = 1.0
+                StrengthBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexStr])"
             } else {
-                StrengthDamageBonusView.alpha = 0.0
-                StrengthDamageBonusLabel.alpha = 0.0
+                StrengthBonusDamageLabel.alpha = 0.0
+                StrengthBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexStr])"
             }
         } else {
             StrengthSelectorButton.alpha = 0.0
-            StrengthDamageBonusView.alpha = 0.0
-            StrengthDamageBonusLabel.alpha = 0.0
+            StrengthSelectorLabelsView.alpha = 0.0
         }
         
         if HeroParagon.PossibleAttackTypeList.contains(.agility) {
             AgilitySelectorButton.alpha = 1.0
-            AgilitySelectorButton.setTitle(HeroParagon.AttackTypeNames[1], for: .normal)
+            AgilitySelectorLabelsView.alpha = 1.0
+            AgilityAttackNameLabel.text = HeroParagon.AttackTypeNames[1]
+            AgilityAttackValueLabel.alpha = 1.0
+            AgilityAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[1])"
             if HeroParagon.DamageBonuses[indexAgi] > 0 {
-                AgilityDamageBonusView.alpha = 1.0
-                AgilityDamageBonusLabel.alpha = 1.0
-                AgilityDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexAgi])"
+                AgilityBonusDamageLabel.alpha = 1.0
+                AgilityBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexAgi])"
             } else {
-                AgilityDamageBonusView.alpha = 0.0
-                AgilityDamageBonusLabel.alpha = 0.0
+                AgilityBonusDamageLabel.alpha = 0.0
+                AgilityBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexAgi])"
             }
         } else {
             AgilitySelectorButton.alpha = 0.0
-            AgilityDamageBonusView.alpha = 0.0
-            AgilityDamageBonusLabel.alpha = 0.0
+            AgilitySelectorLabelsView.alpha = 0.0
         }
         
         if HeroParagon.PossibleAttackTypeList.contains(.intellect) {
             IntellectSelectorButton.alpha = 1.0
-            IntellectSelectorButton.setTitle(HeroParagon.AttackTypeNames[2], for: .normal)
+            IntellectSelectorLabelsView.alpha = 1.0
+            IntellectAttackNameLabel.text = HeroParagon.AttackTypeNames[2]
+            IntellectAttackValueLabel.alpha = 1.0
+            IntellectAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[2])"
             if HeroParagon.DamageBonuses[indexInt] > 0 {
-                IntellectDamageBonusView.alpha = 1.0
-                IntellectDamageBonusLabel.alpha = 1.0
-                IntellectDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexInt])"
+                IntellectBonusDamageLabel.alpha = 1.0
+                IntellectBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexInt])"
             } else {
-                IntellectDamageBonusView.alpha = 0.0
-                IntellectDamageBonusLabel.alpha = 0.0
+                IntellectBonusDamageLabel.alpha = 0.0
+                IntellectBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexInt])"
             }
         } else {
             IntellectSelectorButton.alpha = 0.0
-            IntellectDamageBonusView.alpha = 0.0
-            IntellectDamageBonusLabel.alpha = 0.0
+            IntellectSelectorLabelsView.alpha = 0.0
         }
         
         if HeroParagon.PossibleAttackTypeList.contains(.willpower) {
             WillpowerSelectorButton.alpha = 1.0
-            WillpowerSelectorButton.setTitle(HeroParagon.AttackTypeNames[3], for: .normal)
+            WillpowerSelectorLabelsView.alpha = 1.0
+            WillpowerAttackNameLabel.text = HeroParagon.AttackTypeNames[3]
+            WillpowerAttackValueLabel.alpha = 1.0
+            WillpowerAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[3])"
             if HeroParagon.DamageBonuses[indexWil] > 0 {
-                WillpowerDamageBonusView.alpha = 1.0
-                WillpowerDamageBonusLabel.alpha = 1.0
-                WillpowerDamageBonusLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexWil])"
+                WillpowerBonusDamageLabel.alpha = 1.0
+                WillpowerBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexWil])"
             } else {
-                WillpowerDamageBonusView.alpha = 0.0
-                WillpowerDamageBonusLabel.alpha = 0.0
+                WillpowerBonusDamageLabel.alpha = 0.0
+                WillpowerBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexWil])"
             }
         } else {
             WillpowerSelectorButton.alpha = 0.0
-            WillpowerDamageBonusView.alpha = 0.0
-            WillpowerDamageBonusLabel.alpha = 0.0
+            WillpowerSelectorLabelsView.alpha = 0.0
         }
     }
     
@@ -1478,20 +1494,32 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         ActionSelectorBackgroundView.backgroundColor = ColorUtilities.hexUIColor(hex: "EAE3EB")
         StrengthSelectorButton.layer.cornerRadius = 5.0
         StrengthSelectorButton.layer.masksToBounds = true
-        StrengthSelectorButton.backgroundColor = ColorUtilities.GreenStrength
-        StrengthSelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        StrengthSelectorButton.backgroundColor = UIColor.clear
+        StrengthSelectorLabelsView.backgroundColor = ColorUtilities.GreenStrength
+        StrengthSelectorLabelsView.layer.cornerRadius = 5.0
+        StrengthSelectorLabelsView.layer.masksToBounds = true
+        
         AgilitySelectorButton.layer.cornerRadius = 5.0
         AgilitySelectorButton.layer.masksToBounds = true
-        AgilitySelectorButton.backgroundColor = ColorUtilities.RedAgility
-        AgilitySelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        AgilitySelectorButton.backgroundColor = UIColor.clear
+        AgilitySelectorLabelsView.backgroundColor = ColorUtilities.RedAgility
+        AgilitySelectorLabelsView.layer.cornerRadius = 5.0
+        AgilitySelectorLabelsView.layer.masksToBounds = true
+        
         IntellectSelectorButton.layer.cornerRadius = 5.0
         IntellectSelectorButton.layer.masksToBounds = true
-        IntellectSelectorButton.backgroundColor = ColorUtilities.BlueIntellect
-        IntellectSelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        IntellectSelectorButton.backgroundColor = UIColor.clear
+        IntellectSelectorLabelsView.backgroundColor = ColorUtilities.BlueIntellect
+        IntellectSelectorLabelsView.layer.cornerRadius = 5.0
+        IntellectSelectorLabelsView.layer.masksToBounds = true
+        
         WillpowerSelectorButton.layer.cornerRadius = 5.0
         WillpowerSelectorButton.layer.masksToBounds = true
-        WillpowerSelectorButton.backgroundColor = ColorUtilities.PurpleWillpower
-        WillpowerSelectorButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        WillpowerSelectorButton.backgroundColor = UIColor.clear
+        WillpowerSelectorLabelsView.backgroundColor = ColorUtilities.PurpleWillpower
+        WillpowerSelectorLabelsView.layer.cornerRadius = 5.0
+        WillpowerSelectorLabelsView.layer.masksToBounds = true
     }
     
     func determineInitiative() {
