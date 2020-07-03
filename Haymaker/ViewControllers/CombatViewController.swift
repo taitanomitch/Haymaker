@@ -160,6 +160,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Call Setup Functions
     func runSetup() {
+        setUpEntryTaunts()
         setUpAttackOptions()
         determineInitiative()
         setupCardSizeUI()
@@ -1415,6 +1416,11 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     // MARK: - Setup Functions
+    func setUpEntryTaunts() {
+        addTextToLog(event: "\(VillainParagon.Name) yells, \"\(VillainParagon.EntryTaunt)\"")
+        addTextToLog(event: "\(HeroParagon.Name) yells, \"\(HeroParagon.EntryTaunt)\"")
+    }
+    
     func setUpAttackOptions() {
         setUpSelectorButtonUI()
         if HeroParagon.PossibleAttackTypeList.contains(.strength) {

@@ -284,24 +284,31 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Player Card Hand Functions
     func redrawPlayerCards() {
-        let cardsToDraw = HeroParagon.Handsize - CurrentPlayerHandSize
-        for _ in 1...cardsToDraw {
-            DeckController.playerDrawCard()
+        let cardsToDraw = HeroParagon.StartingHandsize
+        if cardsToDraw > 0 {
+            for _ in 1...cardsToDraw {
+                DeckController.playerDrawCard()
+            }
         }
-        CurrentPlayerHandSize = HeroParagon.Handsize
+        CurrentPlayerHandSize = HeroParagon.StartingHandsize
     }
     
     func redrawEnemyCards() {
-        let cardsToDraw = VillainParagon.Handsize - CurrentEnemyHandSize
-        for _ in 1...cardsToDraw {
-            DeckController.enemyDrawCard()
+        let cardsToDraw = VillainParagon.StartingHandsize
+        if cardsToDraw > 0 {
+            for _ in 1...cardsToDraw {
+                DeckController.enemyDrawCard()
+            }
         }
-        CurrentEnemyHandSize = VillainParagon.Handsize
+        CurrentEnemyHandSize = VillainParagon.StartingHandsize
     }
     
     
     // MARK: - Button Functions
     @IBAction func pressBeginCombatButton(_ sender: UIButton) {
+        DeckController.prepareHand()
+        HeroParagon.resetHandSize()
+        VillainParagon.resetHandSize()
         determinHeroParagon()
         determinEnemyParagon()
         showCardSelectionWindow()
@@ -310,7 +317,6 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     // MARK: - Collection View Functions
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return NumberOfParagons
     }

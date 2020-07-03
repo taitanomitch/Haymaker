@@ -19,6 +19,7 @@ class ParagonOverseer {
     var Willpower: Int = 0
     var Edge: Int = 0
     var Handsize: Int = 0
+    var StartingHandsize: Int = 0
     
     // MARK: - Character Boolean Variables
     var HasPower: Bool = false
@@ -29,6 +30,9 @@ class ParagonOverseer {
     var CurrentActionType: ActionType = .none
     var CurrentAttackType: AttackType = .none
     var AttackPosition: Int = 0
+    
+    // MARK: - Character Entry Taunt
+    var EntryTaunt: String = ""
     
     // MARK: - Character Skill/Power/Equipment List Variables
     var CharacterStatus: Status = .none
@@ -61,6 +65,11 @@ class ParagonOverseer {
         case vulnerable
         case noAttack
         case none
+    }
+    
+    // MARK: - Combat Preparation Functions
+    func resetHandSize() {
+        Handsize = StartingHandsize
     }
     
     // MARK: - Value Calculator Functions
@@ -134,11 +143,13 @@ class HeroGenerator {
     func theThing() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "The Thing"
+        hero.EntryTaunt = "It's clobberin' time!"
         hero.Strength = 18
         hero.Agility = 5
         hero.Intellect = 6
         hero.Willpower = 8
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -157,11 +168,13 @@ class HeroGenerator {
     func ironMan() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Iron Man"
+        hero.EntryTaunt = "I am Iron Man!"
         hero.Strength = 16
         hero.Agility = 6
         hero.Intellect = 10
         hero.Willpower = 6
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -180,11 +193,13 @@ class HeroGenerator {
     func spiderman() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Spiderman"
+        hero.EntryTaunt = "Spider-senses are tingling!"
         hero.Strength = 14
         hero.Agility = 14
         hero.Intellect = 8
         hero.Willpower = 10
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -192,7 +207,7 @@ class HeroGenerator {
         hero.Skills = []
         hero.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
         hero.AttackTypeNames = ["Uppercut", "Sweep Kick", "Web-shooters", ""]
-        hero.AttackValues = [14, 4, 16, 0]
+        hero.AttackValues = [14, 14, 16, 0]
         hero.DamageBonuses = [0, 0, 0, 0]
         hero.DodgeBonus = 4
         hero.DamageResistance = 0
@@ -203,11 +218,13 @@ class HeroGenerator {
     func wolverine() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Wolverine"
+        hero.EntryTaunt = "Let's go bub!"
         hero.Strength = 8
         hero.Agility = 10
         hero.Intellect = 6
         hero.Willpower = 10
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -226,11 +243,13 @@ class HeroGenerator {
     func hulk() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Hulk"
+        hero.EntryTaunt = "HULK SMASH!"
         hero.Strength = 20
         hero.Agility = 3
         hero.Intellect = 1
         hero.Willpower = 8
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -249,11 +268,13 @@ class HeroGenerator {
     func captainAmerica() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Captain America"
+        hero.EntryTaunt = "Freedom will prevail!"
         hero.Strength = 10
         hero.Agility = 10
         hero.Intellect = 6
         hero.Willpower = 12
         hero.Handsize = 6
+        hero.StartingHandsize = 6
         hero.Edge = 4
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -272,11 +293,13 @@ class HeroGenerator {
     func daredevil() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Daredevil"
+        hero.EntryTaunt = "I know no fear!"
         hero.Strength = 8
         hero.Agility = 10
         hero.Intellect = 8
         hero.Willpower = 8
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -295,11 +318,13 @@ class HeroGenerator {
     func doctorStrange() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Doctor Strange"
+        hero.EntryTaunt = "I shall defend our world!"
         hero.Strength = 3
         hero.Agility = 4
         hero.Intellect = 8
         hero.Willpower = 16
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -318,11 +343,13 @@ class HeroGenerator {
     func humanTorch() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Human Torch"
+        hero.EntryTaunt = "Flame on!"
         hero.Strength = 4
         hero.Agility = 8
         hero.Intellect = 5
         hero.Willpower = 6
         hero.Handsize = 4
+        hero.StartingHandsize = 4
         hero.Edge = 2
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -341,11 +368,13 @@ class HeroGenerator {
     func invisibleWoman() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Invisible Woman"
+        hero.EntryTaunt = "What you can't see will hurt you!"
         hero.Strength = 4
         hero.Agility = 6
         hero.Intellect = 6
         hero.Willpower = 10
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -364,11 +393,13 @@ class HeroGenerator {
     func misterFantastic() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Mister Fantastic"
+        hero.EntryTaunt = "I've calculated your demise!"
         hero.Strength = 3
         hero.Agility = 4
         hero.Intellect = 12
         hero.Willpower = 8
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -387,11 +418,13 @@ class HeroGenerator {
     func nightcrawler() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Nightcrawler"
+        hero.EntryTaunt = "Have faith that this will be swift!"
         hero.Strength = 6
         hero.Agility = 12
         hero.Intellect = 5
         hero.Willpower = 7
         hero.Handsize = 4
+        hero.StartingHandsize = 4
         hero.Edge = 2
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -410,11 +443,13 @@ class HeroGenerator {
     func silverSurfer() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Silver Surfer"
+        hero.EntryTaunt = "The power cosmic will finish this!"
         hero.Strength = 20
         hero.Agility = 20
         hero.Intellect = 7
         hero.Willpower = 10
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -433,11 +468,13 @@ class HeroGenerator {
     func thor() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Thor"
+        hero.EntryTaunt = "Behold the god of thunder!"
         hero.Strength = 19
         hero.Agility = 5
         hero.Intellect = 5
         hero.Willpower = 8
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -455,12 +492,14 @@ class HeroGenerator {
     
     func blackPanther() -> ParagonOverseer {
         let hero = ParagonOverseer()
-        hero.Name = "BlackPanther"
+        hero.Name = "Black Panther"
+        hero.EntryTaunt = "Wakanda forever!"
         hero.Strength = 9
         hero.Agility = 10
         hero.Intellect = 7
         hero.Willpower = 8
         hero.Handsize = 5
+        hero.StartingHandsize = 5
         hero.Edge = 3
         hero.CharacterStatus = .none
         hero.EquipmentList = []
@@ -486,7 +525,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Dr. Doom"
+        enemy.EntryTaunt = "Now is doom!"
         enemy.Handsize = 6
+        enemy.StartingHandsize = 6
         enemy.Edge = 4
         
         enemy.Strength = 14
@@ -512,7 +553,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Annihilus"
+        enemy.EntryTaunt = "Annihilation!"
         enemy.Handsize = 5
+        enemy.StartingHandsize = 5
         enemy.Edge = 3
         
         enemy.Strength = 16
@@ -538,7 +581,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Galactus"
+        enemy.EntryTaunt = "I am the Devourer of Worlds!"
         enemy.Handsize = 7
+        enemy.StartingHandsize = 7
         enemy.Edge = 5
         
         enemy.Strength = 30
@@ -564,7 +609,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Juggernaut"
+        enemy.EntryTaunt = "I'm Juggernaut!"
         enemy.Handsize = 4
+        enemy.StartingHandsize = 4
         enemy.Edge = 2
         
         enemy.Strength = 19
@@ -590,7 +637,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Loki"
+        enemy.EntryTaunt = "Beware the god of mischief!"
         enemy.Handsize = 5
+        enemy.StartingHandsize = 5
         enemy.Edge = 3
         
         enemy.Strength = 16
@@ -616,7 +665,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Magneto"
+        enemy.EntryTaunt = "I reign supreme!"
         enemy.Handsize = 6
+        enemy.StartingHandsize = 6
         enemy.Edge = 4
         
         enemy.Strength = 7
@@ -642,7 +693,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Rhino"
+        enemy.EntryTaunt = "I'll stomp you into the dirt!"
         enemy.Handsize = 3
+        enemy.StartingHandsize = 3
         enemy.Edge = 1
         
         enemy.Strength = 17
@@ -668,7 +721,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Sabertooth"
+        enemy.EntryTaunt = "I'll tear you to shreds!"
         enemy.Handsize = 4
+        enemy.StartingHandsize = 4
         enemy.Edge = 2
         
         enemy.Strength = 10
@@ -694,7 +749,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Super-Skrull"
+        enemy.EntryTaunt = "My powers will destroy you!"
         enemy.Handsize = 5
+        enemy.StartingHandsize = 5
         enemy.Edge = 3
         
         enemy.Strength = 16
@@ -720,7 +777,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Thanos"
+        enemy.EntryTaunt = "I am inevitable!"
         enemy.Handsize = 5
+        enemy.StartingHandsize = 5
         enemy.Edge = 3
         
         enemy.Strength = 19
@@ -746,7 +805,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Ultron"
+        enemy.EntryTaunt = "I will make this world my own!"
         enemy.Handsize = 5
+        enemy.StartingHandsize = 5
         enemy.Edge = 3
         
         enemy.Strength = 16
@@ -772,7 +833,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Venom"
+        enemy.EntryTaunt = "We are Venom!"
         enemy.Handsize = 4
+        enemy.StartingHandsize = 4
         enemy.Edge = 2
         
         enemy.Strength = 15
@@ -798,7 +861,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Thug"
+        enemy.EntryTaunt = "I'ma smash you up!"
         enemy.Handsize = 3
+        enemy.StartingHandsize = 3
         enemy.Edge = 1
         
         enemy.Strength = 3
@@ -824,7 +889,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Brute"
+        enemy.EntryTaunt = "I'ma crush you!"
         enemy.Handsize = 4
+        enemy.StartingHandsize = 4
         enemy.Edge = 2
         
         enemy.Strength = 6
@@ -850,7 +917,9 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Ninja"
+        enemy.EntryTaunt = "The dark is my ally!"
         enemy.Handsize = 3
+        enemy.StartingHandsize = 3
         enemy.Edge = 1
         
         enemy.Strength = 3
