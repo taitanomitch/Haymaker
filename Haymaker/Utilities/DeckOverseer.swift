@@ -15,6 +15,7 @@ class DeckOverseer {
     var DiscardPile: [Card]!
     var PlayerHand: [Card]!
     var EnemyHand: [Card]!
+    var TempHand: [Card]!
     
     
     // MARK: - Deck Prep Functions

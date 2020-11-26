@@ -39,6 +39,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Villain Sheet IBOutlet Variables
     @IBOutlet weak var VillainImageView: UIImageView!
     @IBOutlet weak var VillainImageHolderView: UIView!
+    @IBOutlet weak var VillianTauntView: UIView!
+    @IBOutlet weak var VillainTauntLabel: UILabel!
     @IBOutlet weak var VillainSheetView: UIView!
     @IBOutlet weak var VillainStrengthImageView: UIImageView!
     @IBOutlet weak var VillainAgilityImageView: UIImageView!
@@ -55,6 +57,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Hero Sheet IBOutlet Variables
     @IBOutlet weak var HeroImageView: UIImageView!
     @IBOutlet weak var HeroImageHolderView: UIView!
+    @IBOutlet weak var HeroTauntView: UIView!
+    @IBOutlet weak var HeroTauntLabel: UILabel!
     @IBOutlet weak var HeroSheetView: UIView!
     @IBOutlet weak var HeroStrengthImageView: UIImageView!
     @IBOutlet weak var HeroAgilityImageView: UIImageView!
@@ -115,7 +119,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var DeckController: DeckOverseer!
     var CurrentPlayerHandSize: Int = 0
     var PlayType: ActionType = .none
-    var LogFontSize: CGFloat = 20.0
+    var LogFontSize: CGFloat = 15.0
     
     // MARK: - Runtime Variables
     var InitialAttackType: ActionType = .none
@@ -150,6 +154,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpEntryTaunts()
         runSetup()
     }
     
@@ -160,7 +165,6 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Call Setup Functions
     func runSetup() {
-        setUpEntryTaunts()
         setUpAttackOptions()
         determineInitiative()
         setupCardSizeUI()
@@ -492,6 +496,16 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         PlayCardsButton.setTitle("Select Willpower Attack", for: .normal)
     }
     
+    // MARK: - Side Swap Functions
+    func swapParagonSides() {
+        let TempParagon: ParagonOverseer = HeroParagon
+        HeroParagon = VillainParagon
+        VillainParagon = TempParagon
+        DeckController.TempHand = DeckController.PlayerHand
+        DeckController.PlayerHand = DeckController.EnemyHand
+        DeckController.EnemyHand = DeckController.TempHand
+        runSetup()
+    }
     
     // MARK: - Card Playing Functions
     func setAbilityScoreToPlayValue() {
@@ -1381,7 +1395,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         let titleData = copyOfLogs[row]
         let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: LogFontSize),NSAttributedString.Key.foregroundColor:UIColor.white])
         pickerLabel.attributedText = myTitle
-        pickerLabel.textAlignment = .left
+        pickerLabel.textAlignment = .center
         return pickerLabel
     }
     
@@ -1417,8 +1431,16 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Setup Functions
     func setUpEntryTaunts() {
-        addTextToLog(event: "\(VillainParagon.Name) yells, \"\(VillainParagon.EntryTaunt)\"")
-        addTextToLog(event: "\(HeroParagon.Name) yells, \"\(HeroParagon.EntryTaunt)\"")
+        HeroTauntView.alpha = 1.0
+        VillianTauntView.alpha = 1.0
+        VillainTauntLabel.text = VillainParagon.EntryTaunt
+        HeroTauntLabel.text = HeroParagon.EntryTaunt
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
+            UIView.animate(withDuration: 0.3) {
+                self.HeroTauntView.alpha = 0.0
+                self.VillianTauntView.alpha = 0.0
+            }
+        }
     }
     
     func setUpAttackOptions() {
@@ -1697,3 +1719,20 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.view.layoutIfNeeded()
     }
 }
+
+extension UILabel {
+    func fixPickerLabelMargins(margin: CGFloat = 10, _ leftMarginOnly: Bool = true) {
+            if let textString = self.text {
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.firstLineHeadIndent = margin
+                paragraphStyle.headIndent = margin
+                if !leftMarginOnly {
+                    paragraphStyle.tailIndent = -margin
+                }
+                let attributedString = NSMutableAttributedString(string: textString)
+                attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+                attributedText = attributedString
+            }
+        }
+}
+
