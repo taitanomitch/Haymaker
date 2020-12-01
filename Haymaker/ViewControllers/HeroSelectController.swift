@@ -27,7 +27,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     var VillainParagon: ParagonOverseer = ParagonOverseer()
     
     // MARK: - Variables
-    var NumberOfParagons: Int = 29
+    var NumberOfParagons: Int = 30
     var ParagonChoices: [ParagonOverseer] = []
     var OpponentChoices: [ParagonOverseer] = []
     var DeckController: DeckOverseer!

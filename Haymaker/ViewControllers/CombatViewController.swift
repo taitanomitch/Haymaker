@@ -41,6 +41,9 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var VillainImageHolderView: UIView!
     @IBOutlet weak var VillianTauntView: UIView!
     @IBOutlet weak var VillainTauntLabel: UILabel!
+    @IBOutlet weak var VillainDamagedView: UIView!
+    @IBOutlet weak var VillainDamageReceivedLabel: UILabel!
+    @IBOutlet weak var VillainDamageReceivedYConstraint: NSLayoutConstraint!
     @IBOutlet weak var VillainSheetView: UIView!
     @IBOutlet weak var VillainStrengthImageView: UIImageView!
     @IBOutlet weak var VillainAgilityImageView: UIImageView!
@@ -59,6 +62,9 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var HeroImageHolderView: UIView!
     @IBOutlet weak var HeroTauntView: UIView!
     @IBOutlet weak var HeroTauntLabel: UILabel!
+    @IBOutlet weak var HeroDamagedView: UIView!
+    @IBOutlet weak var HeroDamageReceivedLabel: UILabel!
+    @IBOutlet weak var HeroDamageReceivedYConstraint: NSLayoutConstraint!
     @IBOutlet weak var HeroSheetView: UIView!
     @IBOutlet weak var HeroStrengthImageView: UIImageView!
     @IBOutlet weak var HeroAgilityImageView: UIImageView!
@@ -167,6 +173,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     func runSetup() {
         setUpAttackOptions()
         determineInitiative()
+        setUpDamgedViews()
         setupCardSizeUI()
         setPickerLineColors()
         updateTotalLabel()
@@ -220,25 +227,14 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func pressDisplayCardsButton(_ sender: UIButton) {
         if !AnimatingCollectionView && !AnimatingActionSelectionView {
             AnimatingCollectionView = true
-            
-            if ActionSelectionViewIsDisplayed && CollectionViewIsDisplayed {
+            if CurrentPhase == .selectAttack {
                 showOrHideActionSelectorView()
-            } else if ActionSelectionViewIsDisplayed && !CollectionViewIsDisplayed {
-                showOrHideCardsView()
-            } else if !ActionSelectionViewIsDisplayed && CollectionViewIsDisplayed {
-                showOrHideActionSelectorView()
+                if !CollectionViewIsDisplayed {
+                    showOrHideCardsView()
+                }
             } else {
-                CollectionViewIsDisplayed = !CollectionViewIsDisplayed
-                if CollectionViewIsDisplayed {
-                    CollectionViewBottomConstraint.constant = 0
-                } else {
-                    CollectionViewBottomConstraint.constant = NewCollectionConstraintConstant
-                }
-                UIView.animate(withDuration: 0.5) {
-                    self.view.layoutIfNeeded()
-                }
+                showOrHideCardsView()
             }
-            
             AnimatingCollectionView = false
         }
     }
@@ -299,6 +295,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                 }
             }
         case .damageToEnemy:
+            flashEnemyDamagedView()
             enemyTakeDamage()
             resetTotalPlayValue()
             if EnemyUnconscious {
@@ -391,6 +388,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                         DamageToHero = EnemyTotalAttackValue - heroResistance
                         TotalValueLabel.text = "\(DamageToHero)"
                         addTextToLog(event: "You take \(DamageToHero) damage!")
+                        flashPlayerDamagedView()
                         
                         var HandTotal = 0
                         for i in 0..<DeckController.PlayerHand.count {
@@ -679,6 +677,70 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else {
             VillainAttackDefenseImageView.image = UIImage(named: "Icon_Attack")
             HeroAttackDefenseImageView.image = UIImage(named: "Icon_Defense")
+        }
+    }
+    
+    
+    // MARK: - Damage UI Functions
+    func flashEnemyDamagedView() {
+        UIView.animate(withDuration: 0.25) {
+            self.VillainDamagedView.alpha = 0.6
+        } completion: { (didComplete) in
+            UIView.animate(withDuration: 0.25) {
+                self.VillainDamagedView.alpha = 0.0
+            } completion: { (didCompletePartTwo) in
+                self.displayDamageToVillain()
+            }
+        }
+    }
+    
+    func flashPlayerDamagedView() {
+        UIView.animate(withDuration: 0.25) {
+            self.HeroDamagedView.alpha = 0.6
+        } completion: { (didCompletePartOne) in
+            UIView.animate(withDuration: 0.25) {
+                self.HeroDamagedView.alpha = 0.0
+            } completion: { (didCompletePartTwo) in
+                self.displayDamageToHero()
+            }
+        }
+    }
+    
+    func displayDamageToVillain() {
+        VillainDamageReceivedYConstraint.constant = 40
+        VillainDamageReceivedLabel.text = "-" + String(DamageToEnemy)
+        UIView.animate(withDuration: 0.2) {
+            self.VillainDamageReceivedLabel.alpha = 1.0
+        } completion: { (didCompletePartOne) in
+            UIView.animate(withDuration: 0.2, delay: 1.1, options: UIView.AnimationOptions.init()) {
+                self.VillainDamageReceivedLabel.alpha = 0.0
+            } completion: { (didComplete) in }
+        }
+        
+        UIView.animate(withDuration: 1.5) {
+            self.VillainDamageReceivedYConstraint.constant = -40
+            self.view.layoutIfNeeded()
+        } completion: { (didComplete) in
+            self.VillainDamageReceivedYConstraint.constant = 40
+        }
+    }
+    
+    func displayDamageToHero() {
+        HeroDamageReceivedYConstraint.constant = 40
+        HeroDamageReceivedLabel.text = "-" + String(DamageToHero)
+        UIView.animate(withDuration: 0.2) {
+            self.HeroDamageReceivedLabel.alpha = 1.0
+        } completion: { (didCompletePartOne) in
+            UIView.animate(withDuration: 0.2, delay: 1.1, options: UIView.AnimationOptions.init()) {
+                self.HeroDamageReceivedLabel.alpha = 0.0
+            } completion: { (didComplete) in }
+        }
+        
+        UIView.animate(withDuration: 1.5) {
+            self.HeroDamageReceivedYConstraint.constant = -40
+            self.view.layoutIfNeeded()
+        } completion: { (didComplete) in
+            self.HeroDamageReceivedYConstraint.constant = 40
         }
     }
     
@@ -1432,13 +1494,12 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     func showOrHideCardsView() {
         CollectionViewIsDisplayed = !CollectionViewIsDisplayed
         if CollectionViewIsDisplayed {
-            CardsHolderView.alpha = 0.0
             CollectionViewBottomConstraint.constant = 0
+        } else {
+            CollectionViewBottomConstraint.constant = NewCollectionConstraintConstant
         }
-        self.view.layoutIfNeeded()
-        self.CardsHolderView.alpha = 1.0
         UIView.animate(withDuration: 0.5) {
-            self.ActionSelectorView.alpha = 0.0
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -1676,6 +1737,22 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             PlayCardsButton.setTitle("Finish Combat", for: .normal)
         }
+    }
+    
+    
+    func setUpDamgedViews() {
+        HeroDamagedView.alpha = 0.0
+        HeroDamagedView.backgroundColor = UIColor.red
+        VillainDamagedView.alpha = 0.0
+        VillainDamagedView.backgroundColor = UIColor.red
+        
+        let damageStringTextAttributes = [NSAttributedString.Key.strokeColor : UIColor.red, NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.strokeWidth : -6.0, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 40)] as [NSAttributedString.Key : Any]
+        HeroDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "-20", attributes: damageStringTextAttributes)
+        VillainDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "-20", attributes: damageStringTextAttributes)
+        HeroDamageReceivedYConstraint.constant = 40
+        VillainDamageReceivedYConstraint.constant = 40
+        HeroDamageReceivedLabel.alpha = 0.0
+        VillainDamageReceivedLabel.alpha = 0.0
     }
     
     

@@ -752,15 +752,32 @@
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BFh-0D-6C5">
                                                                 <rect key="frame" x="2" y="2" width="99" height="99.5"/>
                                                             </imageView>
+                                                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LVt-ER-9d0">
+                                                                <rect key="frame" x="0.0" y="0.0" width="103" height="103.5"/>
+                                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                                <color key="tintColor" systemColor="systemRedColor"/>
+                                                            </view>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ite-3F-bHy">
+                                                                <rect key="frame" x="30" y="40.5" width="42" height="21"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="LVt-ER-9d0" secondAttribute="trailing" id="6R7-XT-DlM"/>
+                                                            <constraint firstItem="Ite-3F-bHy" firstAttribute="centerY" secondItem="SSZ-do-NBU" secondAttribute="centerY" id="LYs-be-h7i"/>
                                                             <constraint firstItem="BFh-0D-6C5" firstAttribute="leading" secondItem="SSZ-do-NBU" secondAttribute="leading" constant="2" id="Nbd-3r-EOa"/>
                                                             <constraint firstItem="BFh-0D-6C5" firstAttribute="top" secondItem="SSZ-do-NBU" secondAttribute="top" constant="2" id="PVV-Q9-5E1"/>
                                                             <constraint firstAttribute="width" secondItem="SSZ-do-NBU" secondAttribute="height" multiplier="1:1" id="VmQ-uk-XCg"/>
                                                             <constraint firstAttribute="trailing" secondItem="BFh-0D-6C5" secondAttribute="trailing" constant="2" id="W4w-ZA-HSX"/>
+                                                            <constraint firstAttribute="bottom" secondItem="LVt-ER-9d0" secondAttribute="bottom" id="bWQ-rG-9ul"/>
                                                             <constraint firstAttribute="bottom" secondItem="BFh-0D-6C5" secondAttribute="bottom" constant="2" id="g5F-II-dqq"/>
+                                                            <constraint firstItem="Ite-3F-bHy" firstAttribute="centerX" secondItem="SSZ-do-NBU" secondAttribute="centerX" id="quh-gU-Sup"/>
+                                                            <constraint firstItem="LVt-ER-9d0" firstAttribute="leading" secondItem="SSZ-do-NBU" secondAttribute="leading" id="sKb-JH-dcO"/>
                                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="tth-85-a38"/>
+                                                            <constraint firstItem="LVt-ER-9d0" firstAttribute="top" secondItem="SSZ-do-NBU" secondAttribute="top" id="ueJ-i0-DV0"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -785,15 +802,32 @@
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VM6-6I-4Mu">
                                                                 <rect key="frame" x="2" y="2" width="99" height="99"/>
                                                             </imageView>
+                                                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWG-hY-utL">
+                                                                <rect key="frame" x="0.0" y="0.0" width="103" height="103"/>
+                                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                                <color key="tintColor" systemColor="systemRedColor"/>
+                                                            </view>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNN-Fb-YQs">
+                                                                <rect key="frame" x="30" y="41" width="42" height="21"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
+                                                            <constraint firstItem="SNN-Fb-YQs" firstAttribute="centerY" secondItem="CfQ-Ex-ycN" secondAttribute="centerY" id="93d-ui-3YG"/>
+                                                            <constraint firstAttribute="trailing" secondItem="lWG-hY-utL" secondAttribute="trailing" id="Amg-ME-MAO"/>
                                                             <constraint firstItem="VM6-6I-4Mu" firstAttribute="leading" secondItem="CfQ-Ex-ycN" secondAttribute="leading" constant="2" id="YKL-Dq-UYi"/>
+                                                            <constraint firstAttribute="bottom" secondItem="lWG-hY-utL" secondAttribute="bottom" id="aOr-90-4T1"/>
+                                                            <constraint firstItem="lWG-hY-utL" firstAttribute="top" secondItem="CfQ-Ex-ycN" secondAttribute="top" id="bXH-z7-BOT"/>
                                                             <constraint firstAttribute="trailing" secondItem="VM6-6I-4Mu" secondAttribute="trailing" constant="2" id="cNy-K3-xIT"/>
                                                             <constraint firstAttribute="width" secondItem="CfQ-Ex-ycN" secondAttribute="height" multiplier="1:1" id="jII-k9-VZj"/>
                                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="mJw-os-Ro5"/>
                                                             <constraint firstItem="VM6-6I-4Mu" firstAttribute="top" secondItem="CfQ-Ex-ycN" secondAttribute="top" constant="2" id="nUk-sf-Ua7"/>
+                                                            <constraint firstItem="SNN-Fb-YQs" firstAttribute="centerX" secondItem="CfQ-Ex-ycN" secondAttribute="centerX" id="oz4-qF-eBV"/>
                                                             <constraint firstAttribute="bottom" secondItem="VM6-6I-4Mu" secondAttribute="bottom" constant="2" id="xeY-D2-KDq"/>
+                                                            <constraint firstItem="lWG-hY-utL" firstAttribute="leading" secondItem="CfQ-Ex-ycN" secondAttribute="leading" id="zTh-tG-NqA"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xby-cQ-eAj" userLabel="RightCharacterView">
@@ -1793,6 +1827,9 @@
                         <outlet property="HeroAgilityImageView" destination="adt-fo-9dh" id="gko-ng-hRw"/>
                         <outlet property="HeroAgilityLabel" destination="Yzx-ay-yZo" id="dD6-PB-rYN"/>
                         <outlet property="HeroAttackDefenseImageView" destination="zke-tF-tyl" id="Mht-an-el3"/>
+                        <outlet property="HeroDamageReceivedLabel" destination="SNN-Fb-YQs" id="YS5-Xw-yeA"/>
+                        <outlet property="HeroDamageReceivedYConstraint" destination="93d-ui-3YG" id="Xnu-YI-8p2"/>
+                        <outlet property="HeroDamagedView" destination="lWG-hY-utL" id="3eX-Uq-HJE"/>
                         <outlet property="HeroEdgeLabel" destination="eBZ-Yx-whF" id="ZW6-AI-vl2"/>
                         <outlet property="HeroHandSizeLabel" destination="LE2-E2-5yS" id="sOk-rh-Olo"/>
                         <outlet property="HeroImageHolderView" destination="CfQ-Ex-ycN" id="RXb-eE-Eks"/>
@@ -1823,6 +1860,9 @@
                         <outlet property="VillainAgilityImageView" destination="aoV-g1-es4" id="fam-hS-T7J"/>
                         <outlet property="VillainAgilityLabel" destination="o2i-3V-vB3" id="frC-RH-s4r"/>
                         <outlet property="VillainAttackDefenseImageView" destination="4Am-wt-MUo" id="et0-7T-Otk"/>
+                        <outlet property="VillainDamageReceivedLabel" destination="Ite-3F-bHy" id="LS9-a6-z6M"/>
+                        <outlet property="VillainDamageReceivedYConstraint" destination="LYs-be-h7i" id="FIj-2c-gQf"/>
+                        <outlet property="VillainDamagedView" destination="LVt-ER-9d0" id="wSD-a6-LYx"/>
                         <outlet property="VillainEdgeLabel" destination="zcv-8N-ovP" id="bEo-Ut-x8u"/>
                         <outlet property="VillainHandSizeLabel" destination="RlM-pD-p08" id="ghG-FE-9Pb"/>
                         <outlet property="VillainImageHolderView" destination="SSZ-do-NBU" id="rNU-zf-Mma"/>
@@ -1859,6 +1899,9 @@
         <image name="SpeechBubble_Right" width="321" height="157"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
