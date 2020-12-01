@@ -222,26 +222,11 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             AnimatingCollectionView = true
             
             if ActionSelectionViewIsDisplayed && CollectionViewIsDisplayed {
-                if ActionSelectorView.alpha == 0.0 {
-                    UIView.animate(withDuration: 0.5) {
-                        self.ActionSelectorView.alpha = 1.0
-                    }
-                } else {
-                    UIView.animate(withDuration: 0.5) {
-                        self.ActionSelectorView.alpha = 0.0
-                    }
-                }
+                showOrHideActionSelectorView()
             } else if ActionSelectionViewIsDisplayed && !CollectionViewIsDisplayed {
-                CollectionViewIsDisplayed = !CollectionViewIsDisplayed
-                if CollectionViewIsDisplayed {
-                    CardsHolderView.alpha = 0.0
-                    CollectionViewBottomConstraint.constant = 0
-                }
-                self.view.layoutIfNeeded()
-                self.CardsHolderView.alpha = 1.0
-                UIView.animate(withDuration: 0.5) {
-                    self.ActionSelectorView.alpha = 0.0
-                }
+                showOrHideCardsView()
+            } else if !ActionSelectionViewIsDisplayed && CollectionViewIsDisplayed {
+                showOrHideActionSelectorView()
             } else {
                 CollectionViewIsDisplayed = !CollectionViewIsDisplayed
                 if CollectionViewIsDisplayed {
@@ -270,8 +255,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                 setAbilityScoreToPlayValue()
                 updateTotalLabel()
                 addTextToLog(event: "Before Edge: Current Attack (\(TotalPlayValue))")
-            } else if !ActionSelectionViewIsDisplayed {
-                displayActionSelectionMenu()
+            } else if ActionSelectorView.alpha == 0 {
+                    showOrHideActionSelectorView()
             }
         case .edgeAttack:
             CurrentPhase = .cardSelectAttack
@@ -478,21 +463,25 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBAction func pressSelectStrengthAction(_ sender: UIButton) {
         HeroParagon.CurrentActionType = .strength
+        PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
         PlayCardsButton.setTitle("Select Strength Attack", for: .normal)
     }
     
     @IBAction func pressSelectIntellectAction(_ sender: UIButton) {
         HeroParagon.CurrentActionType = .intellect
+        PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
         PlayCardsButton.setTitle("Select Intellect Attack", for: .normal)
     }
     
     @IBAction func pressSelectAgilityAction(_ sender: UIButton) {
         HeroParagon.CurrentActionType = .agility
+        PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
         PlayCardsButton.setTitle("Select Agility Attack", for: .normal)
     }
     
     @IBAction func pressSelectWillpowerAction(_ sender: UIButton) {
         HeroParagon.CurrentActionType = .willpower
+        PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
         PlayCardsButton.setTitle("Select Willpower Attack", for: .normal)
     }
     
@@ -1428,6 +1417,30 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    func showOrHideActionSelectorView() {
+        if ActionSelectorView.alpha == 0.0 {
+            UIView.animate(withDuration: 0.5) {
+                self.ActionSelectorView.alpha = 1.0
+            }
+        } else {
+            UIView.animate(withDuration: 0.5) {
+                self.ActionSelectorView.alpha = 0.0
+            }
+        }
+    }
+    
+    func showOrHideCardsView() {
+        CollectionViewIsDisplayed = !CollectionViewIsDisplayed
+        if CollectionViewIsDisplayed {
+            CardsHolderView.alpha = 0.0
+            CollectionViewBottomConstraint.constant = 0
+        }
+        self.view.layoutIfNeeded()
+        self.CardsHolderView.alpha = 1.0
+        UIView.animate(withDuration: 0.5) {
+            self.ActionSelectorView.alpha = 0.0
+        }
+    }
     
     // MARK: - Setup Functions
     func setUpEntryTaunts() {
@@ -1435,7 +1448,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillianTauntView.alpha = 1.0
         VillainTauntLabel.text = VillainParagon.EntryTaunt
         HeroTauntLabel.text = HeroParagon.EntryTaunt
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
             UIView.animate(withDuration: 0.3) {
                 self.HeroTauntView.alpha = 0.0
                 self.VillianTauntView.alpha = 0.0
@@ -1616,42 +1629,51 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         PlayCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         switch CurrentPhase {
         case .selectAttack:
+            PlayCardsButton.setTitleColor(UIColor.yellow, for: .normal)
             PlayCardsButton.setTitle("Select an Attack Type", for: .normal)
         case .edgeAttack:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             if PlayerEdgeCardLocations.count == 0 {
                 PlayCardsButton.setTitle("Skip Edge Cards", for: .normal)
             } else {
                 PlayCardsButton.setTitle("Play Cards (\(PlayerEdgeCardLocations.count))", for: .normal)
             }
         case .cardSelectAttack:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             if PlayerCardSelectionLocation.count == 0 {
                 PlayCardsButton.setTitle("Select Card", for: .normal)
             } else {
                 PlayCardsButton.setTitle("Play Card", for: .normal)
             }
         case .damageToEnemy:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             PlayCardsButton.setTitle("Next", for: .normal)
         case .enemyAttack:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             PlayCardsButton.setTitle("Next", for: .normal)
         case .edgeDefend:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             if PlayerEdgeCardLocations.count == 0 {
                 PlayCardsButton.setTitle("Skip Edge Cards", for: .normal)
             } else {
                 PlayCardsButton.setTitle("Play Cards (\(PlayerEdgeCardLocations.count))", for: .normal)
             }
         case .cardSelectDefend:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             if PlayerCardSelectionLocation.count == 0 {
                 PlayCardsButton.setTitle("Select Card", for: .normal)
             } else {
                 PlayCardsButton.setTitle("Play Card", for: .normal)
             }
         case .damageToHero:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             if PlayerCardSelectionLocation.count == 0 {
                 PlayCardsButton.setTitle("Select Cards for Damage", for: .normal)
             } else {
                 PlayCardsButton.setTitle("Pay Cards (\(PlayerCardSelectionLocation.count))", for: .normal)
             }
         case .none:
+            PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
             PlayCardsButton.setTitle("Finish Combat", for: .normal)
         }
     }
