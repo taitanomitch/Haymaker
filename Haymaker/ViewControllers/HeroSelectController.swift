@@ -10,9 +10,16 @@ import UIKit
 
 class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    enum PlayerType {
+        case Player
+        case Computer
+    }
+    
     // MARK: - IBOutlet Variables
     @IBOutlet weak var SelectedHeroImageView: UIImageView!
     @IBOutlet weak var SelectedOpponentImageView: UIImageView!
+    @IBOutlet weak var LeftPlayerTypeButton: UIButton!
+    @IBOutlet weak var RightPlayerTypeButton: UIButton!
     @IBOutlet weak var SelectedParagonsBackgroundView: UIView!
     @IBOutlet weak var HeroesCollectionView: UICollectionView!
     @IBOutlet weak var HeroesCollectionBackgroundView: UIView!
@@ -38,6 +45,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     var UpdatingSelection: Bool = false
     var SelectedHero: ParagonOverseer = ParagonOverseer()
     var SelectedOpponent: ParagonOverseer = ParagonOverseer()
+    var LeftPlayerType: PlayerType = .Player
+    var RightPlayerType: PlayerType = .Computer
     
     
     // MARK: - Loading Functions
@@ -208,6 +217,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         setUpBeginCombatButtonUI()
         setUpCollectionViewUI()
         setUpParagonSelectionUI()
+        setUpPlayerTypeButtonUI()
     }
     
     func setUpBeginCombatButtonUI() {
@@ -230,18 +240,30 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         SelectedParagonsBackgroundView.backgroundColor = UIColor.white
     }
     
+    func setUpPlayerTypeButtonUI() {
+        LeftPlayerType = .Player
+        RightPlayerType = .Computer
+
+        LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player"), for: .normal)
+        RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer"), for: .normal)
+        LeftPlayerTypeButton.imageView!.tintColor = UIColor.black
+        RightPlayerTypeButton.imageView!.tintColor = UIColor.black
+    }
+    
     
     // MARK: - Transition Functions
     func showCardSelectionWindow() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "CombatViewController") as! CombatViewController
-        newViewController.HeroParagon = HeroParagon
-        newViewController.VillainParagon = VillainParagon
-        newViewController.DeckController = DeckController
-        newViewController.ScreenHeight = self.view.frame.height
+        var newCombatViewController = storyBoard.instantiateViewController(withIdentifier: "CombatViewController") as! CombatViewController
+        newCombatViewController.HeroParagon = HeroParagon
+        newCombatViewController.VillainParagon = VillainParagon
+        newCombatViewController.DeckController = DeckController
+        newCombatViewController.ScreenHeight = self.view.frame.height
+        newCombatViewController.CurrentGameType = determineGameType()
+        newCombatViewController = swapParagonsIfNeeded(GameViewController: newCombatViewController)
         let transition = getPresentTransition()
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(newViewController, animated: false, completion: nil)
+        self.present(newCombatViewController, animated: false, completion: nil)
     }
     
     func getPresentTransition() -> CATransition {
@@ -251,6 +273,33 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         transition.subtype = CATransitionSubtype.fromRight
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
         return transition
+    }
+    
+    func swapParagonsIfNeeded(GameViewController: CombatViewController) -> CombatViewController {
+        if LeftPlayerType == .Computer && RightPlayerType == .Player {
+            let TempParagon: ParagonOverseer = GameViewController.HeroParagon
+            GameViewController.HeroParagon = GameViewController.VillainParagon
+            GameViewController.VillainParagon = TempParagon
+        }
+        return GameViewController
+    }
+    
+    func determineGameType() -> CombatViewController.GameType {
+        var selectedGameType: CombatViewController.GameType = .none
+        if LeftPlayerType == .Player {
+            if RightPlayerType == .Player {
+                selectedGameType = .pvp
+            } else {
+                selectedGameType = .pve
+            }
+        } else {
+            if RightPlayerType == .Player {
+                selectedGameType = .pve
+            } else {
+                selectedGameType = .eve
+            }
+        }
+        return selectedGameType
     }
     
     
@@ -314,6 +363,25 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         showCardSelectionWindow()
     }
     
+    @IBAction func pressLeftPlayerTypeButton(_ sender: UIButton) {
+        if LeftPlayerType == .Player {
+            LeftPlayerType = .Computer
+            LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer"), for: .normal)
+        } else {
+            LeftPlayerType = .Player
+            LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player"), for: .normal)
+        }
+    }
+    
+    @IBAction func pressRightPlayerTypeButton(_ sender: UIButton) {
+        if RightPlayerType == .Player {
+            RightPlayerType = .Computer
+            RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer"), for: .normal)
+        } else {
+            RightPlayerType = .Player
+            RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player"), for: .normal)
+        }
+    }
     
     
     // MARK: - Collection View Functions

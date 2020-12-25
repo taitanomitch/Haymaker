@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -80,7 +80,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QhF-ET-FNt" userLabel="SelectedParagonsBackgroundView">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="167"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W1b-QU-257" userLabel="SelectedParagonView">
                                                 <rect key="frame" x="0.0" y="0.0" width="187.5" height="167"/>
@@ -133,26 +133,46 @@
                                                     <constraint firstAttribute="trailing" secondItem="Jhv-Xb-79W" secondAttribute="trailing" id="frj-oQ-IAZ"/>
                                                 </constraints>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgB-mu-Lcr">
+                                                <rect key="frame" x="10" y="101" width="62.5" height="56"/>
+                                                <connections>
+                                                    <action selector="pressLeftPlayerTypeButton:" destination="Ppn-0K-x3x" eventType="touchUpInside" id="Zx5-YR-9jh"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpX-5b-ciH">
+                                                <rect key="frame" x="302.5" y="101" width="62.5" height="56"/>
+                                                <connections>
+                                                    <action selector="pressRightPlayerTypeButton:" destination="Ppn-0K-x3x" eventType="touchUpInside" id="Lcs-Q6-cU1"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="vci-cC-GBy" secondAttribute="trailing" id="0pX-w3-L1W"/>
+                                            <constraint firstItem="mgB-mu-Lcr" firstAttribute="leading" secondItem="W1b-QU-257" secondAttribute="leading" constant="10" id="2Ia-08-0mo"/>
                                             <constraint firstItem="QhF-ET-FNt" firstAttribute="leading" secondItem="HcB-nX-ukr" secondAttribute="leading" id="5Ft-EA-MUB"/>
                                             <constraint firstItem="TOQ-v9-uH0" firstAttribute="centerX" secondItem="HcB-nX-ukr" secondAttribute="centerX" id="7uF-hP-3h9"/>
+                                            <constraint firstItem="tpX-5b-ciH" firstAttribute="bottom" secondItem="vci-cC-GBy" secondAttribute="bottom" constant="-10" id="8zO-yn-RL6"/>
                                             <constraint firstItem="vci-cC-GBy" firstAttribute="width" secondItem="W1b-QU-257" secondAttribute="width" id="BXf-vM-PVL"/>
+                                            <constraint firstItem="mgB-mu-Lcr" firstAttribute="height" secondItem="W1b-QU-257" secondAttribute="height" multiplier="0.335329" id="CaD-zb-xKm"/>
                                             <constraint firstItem="W1b-QU-257" firstAttribute="leading" secondItem="HcB-nX-ukr" secondAttribute="leading" id="EZi-gJ-fHj"/>
                                             <constraint firstAttribute="bottom" secondItem="vci-cC-GBy" secondAttribute="bottom" id="F3S-Xu-80V"/>
                                             <constraint firstItem="FhK-iv-nL2" firstAttribute="top" secondItem="5iZ-qy-0fs" secondAttribute="top" id="GzF-p4-iPS"/>
+                                            <constraint firstItem="tpX-5b-ciH" firstAttribute="trailing" secondItem="vci-cC-GBy" secondAttribute="trailing" constant="-10" id="J7A-4K-bqk"/>
                                             <constraint firstAttribute="trailing" secondItem="QhF-ET-FNt" secondAttribute="trailing" id="NWr-cL-SBL"/>
                                             <constraint firstItem="FhK-iv-nL2" firstAttribute="height" secondItem="5iZ-qy-0fs" secondAttribute="height" id="Psw-M8-WrO"/>
                                             <constraint firstAttribute="bottom" secondItem="W1b-QU-257" secondAttribute="bottom" id="Uw8-bM-S2b"/>
+                                            <constraint firstItem="tpX-5b-ciH" firstAttribute="height" secondItem="vci-cC-GBy" secondAttribute="height" multiplier="0.335329" id="Vwu-TI-Uh0"/>
                                             <constraint firstItem="W1b-QU-257" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" id="c0g-vR-LDx"/>
                                             <constraint firstAttribute="bottom" secondItem="TOQ-v9-uH0" secondAttribute="bottom" constant="10" id="eFS-xz-85u"/>
                                             <constraint firstItem="QhF-ET-FNt" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" id="f1X-LK-O8l"/>
                                             <constraint firstItem="vci-cC-GBy" firstAttribute="leading" secondItem="W1b-QU-257" secondAttribute="trailing" id="gAa-O1-tFV"/>
+                                            <constraint firstItem="mgB-mu-Lcr" firstAttribute="width" secondItem="W1b-QU-257" secondAttribute="width" multiplier="0.333333" id="guH-jg-VX1"/>
+                                            <constraint firstItem="mgB-mu-Lcr" firstAttribute="bottom" secondItem="W1b-QU-257" secondAttribute="bottom" constant="-10" id="hyh-hr-y3L"/>
                                             <constraint firstItem="TOQ-v9-uH0" firstAttribute="width" secondItem="HcB-nX-ukr" secondAttribute="width" multiplier="1/4" id="os0-f4-I3H"/>
                                             <constraint firstItem="vci-cC-GBy" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" id="t9i-x3-t0B"/>
                                             <constraint firstAttribute="bottom" secondItem="QhF-ET-FNt" secondAttribute="bottom" id="tDN-Qv-IVt"/>
+                                            <constraint firstItem="tpX-5b-ciH" firstAttribute="width" secondItem="vci-cC-GBy" secondAttribute="width" multiplier="0.333333" id="vt8-oA-PTC"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vzv-Vy-lT1" userLabel="TopDivider">
@@ -435,8 +455,10 @@
                         <outlet property="BeginCombatButton" destination="oP5-Qd-ja4" id="Mad-6C-0BB"/>
                         <outlet property="HeroesCollectionBackgroundView" destination="YZR-mR-1ys" id="rMF-Qf-JGg"/>
                         <outlet property="HeroesCollectionView" destination="Hug-kg-Hns" id="Til-Z8-fV9"/>
+                        <outlet property="LeftPlayerTypeButton" destination="mgB-mu-Lcr" id="wCO-7L-Y4g"/>
                         <outlet property="OpponentsCollectionBackgroundView" destination="bqi-YH-ANc" id="wue-Ol-jtZ"/>
                         <outlet property="OpponentsCollectionView" destination="f8C-M1-jhS" id="bBz-Ok-jBF"/>
+                        <outlet property="RightPlayerTypeButton" destination="tpX-5b-ciH" id="gdf-4B-AT4"/>
                         <outlet property="SelectedHeroImageView" destination="5iZ-qy-0fs" id="kcM-YE-N0A"/>
                         <outlet property="SelectedOpponentImageView" destination="FhK-iv-nL2" id="oCv-e4-Ud1"/>
                         <outlet property="SelectedParagonsBackgroundView" destination="QhF-ET-FNt" id="IY3-f3-7MV"/>
@@ -808,7 +830,7 @@
                                                                 <color key="tintColor" systemColor="systemRedColor"/>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNN-Fb-YQs">
-                                                                <rect key="frame" x="30" y="41" width="42" height="21"/>
+                                                                <rect key="frame" x="30.5" y="41" width="42" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>

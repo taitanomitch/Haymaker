@@ -10,6 +10,13 @@ import UIKit
 
 class CombatViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    enum GameType {
+        case pvp
+        case pve
+        case eve
+        case none
+    }
+    
     enum PlayPhase {
         case selectAttack
         case edgeAttack
@@ -133,6 +140,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var PlayerCardSelectionLocation: [Int] = []
     var PickerActionLog:[String] = ["Combat Begins!"]
     var CurrentPhase: PlayPhase = .none
+    var CurrentGameType: GameType = .none
     var PlayerCardWidth: CGFloat = 0
     var PlayerCardHeight: CGFloat = 0
     var TotalPlayValue: Int = 0
@@ -152,6 +160,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var NewCollectionConstraintConstant: CGFloat = 0
     
     // MARK: - Constant Variables
+    var tauntDuration: Double = 3.2
     var indexStr: Int = 0
     var indexAgi: Int = 1
     var indexInt: Int = 2
@@ -190,6 +199,26 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         setInitialActionSelectorViewPosition()
     }
     
+    func runSwapSetup() {
+        setUpAttackOptions()
+        setUpDamgedViews()
+        setupCardSizeUI()
+        setPickerLineColors()
+        updateTotalLabel()
+        setInitialAttackType()
+        setUpCardsButtonView()
+        setUpActionTypeIndicatorFrame()
+        setUpHolderViews()
+        setAttackDefenseImages()
+        setUpCharacterSheetViews()
+        setPlayCardsButtonUI()
+        setPlayCardsButtonText()
+        setPhaseLabelValue()
+        setUpHiddenViewPositions()
+        setInitialActionSelectorViewPosition()
+        PlayerCardCollectionView.reloadData()
+    }
+    
     
     // MARK: - Transition Functions
     func getDismissTransition() -> CATransition {
@@ -218,6 +247,269 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    // MARK: - Phase Functions
+    func beginSelectAttack() {
+        if HeroParagon.CurrentActionType == .strength || HeroParagon.CurrentActionType == .agility || HeroParagon.CurrentActionType == .intellect || HeroParagon.CurrentActionType == .willpower {
+            CurrentPhase = .edgeAttack
+            setPhaseLabelValue()
+            setPlayCardsButtonText()
+            displayActionSelectionMenu()
+            setActionIndicatorColor()
+            setAbilityScoreToPlayValue()
+            updateTotalLabel()
+            addTextToLog(event: "\(HeroParagon.Name) Starting Attack: (\(TotalPlayValue))")
+        } else if ActionSelectorView.alpha == 0 {
+                showOrHideActionSelectorView()
+        }
+    }
+    
+    func beginEdgeAttack() {
+        CurrentPhase = .cardSelectAttack
+        setPhaseLabelValue()
+        setPlayCardsButtonText()
+        
+        if PlayerEdgeCardLocations.count > 0 {
+            addEdgeToTotal()
+            removePlayedEdgeCards()
+            updateTotalLabel()
+            PlayerEdgeCardLocations = []
+        }
+        addTextToLog(event: "\(HeroParagon.Name) Current Attack: (\(TotalPlayValue))")
+    }
+    
+    func beginCardSelectAttack() {
+        if PlayerCardSelectionLocation.count > 0 {
+            if CurrentGameType == .pvp {
+                let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
+                EnemyTotalAttackValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
+                redrawCards()
+                addTextToLog(event: "\(VillainParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
+                
+                swapParagonSides()
+                
+                CurrentPhase = .edgeDefend
+                setPhaseLabelValue()
+                setPlayCardsButtonText()
+                
+                setHeroDefenseActionType()
+                setAbilityScoreToPlayValue()
+                updateTotalLabel()
+                addTextToLog(event: "\(HeroParagon.Name) Starting Dodge: (\(TotalPlayValue))")
+            } else {
+                CurrentPhase = .damageToEnemy
+                setPhaseLabelValue()
+                setPlayCardsButtonText()
+                
+                let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
+                TotalPlayValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
+                
+                addTextToLog(event: "\(HeroParagon.Name) Attack Value: (\(TotalPlayValue))")
+                
+                redrawCards()
+                updateTotalLabel()
+                PlayerCardCollectionView.reloadData()
+                enemyAttemptToDodge()
+                redrawEnemyCards()
+                PlayerCardSelectionLocation = []
+                if DamageToEnemy <= 0 {
+                    CurrentPhase = .enemyAttack
+                    HeroParagon.CurrentActionType = .doom
+                    setActionIndicatorColor()
+                    flipAttackDefenseImages()
+                    resetTotalPlayValue()
+                    updateTotalLabel()
+                    setPhaseLabelValue()
+                    setPlayCardsButtonText()
+                }
+            }
+        }
+    }
+    
+    func beginDamageToEnemy() {
+        flashEnemyDamagedView()
+        enemyTakeDamage()
+        resetTotalPlayValue()
+        if EnemyUnconscious {
+            addTextToLog(event: "\(HeroParagon.Name) WINS!")
+            CurrentPhase = .none
+        } else {
+            CurrentPhase = .enemyAttack
+            HeroParagon.CurrentActionType = .doom
+            updateTotalLabel()
+            setActionIndicatorColor()
+            flipAttackDefenseImages()
+        }
+        setPhaseLabelValue()
+        setPlayCardsButtonText()
+    }
+    
+    func beginEnemyAttack() {
+        enemyAttack()
+        addTextToLog(event: "\(VillainParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
+        
+        if CurrentGameType == .pve {
+            CurrentPhase = .edgeDefend
+            setPhaseLabelValue()
+            setPlayCardsButtonText()
+            
+            redrawEnemyCards()
+            setHeroDefenseActionType()
+            setAbilityScoreToPlayValue()
+            updateTotalLabel()
+            addTextToLog(event: "\(HeroParagon.Name) Dodge Value: (\(TotalPlayValue))")
+        } else if CurrentGameType == .eve {
+            CurrentPhase = .damageToEnemy
+            TotalPlayValue = EnemyTotalAttackValue
+            addTextToLog(event: "\(HeroParagon.Name) Attack Value: (\(TotalPlayValue))")
+            
+            redrawEnemyCards()
+            swapParagonSides()
+            enemyAttemptToDodge()
+            redrawEnemyCards()
+            if DamageToEnemy <= 0 {
+                CurrentPhase = .enemyAttack
+                HeroParagon.CurrentActionType = .doom
+                setActionIndicatorColor()
+                flipAttackDefenseImages()
+                resetTotalPlayValue()
+                setPhaseLabelValue()
+            }
+        }
+    }
+    
+    func beginEdgeDefend() {
+        CurrentPhase = .cardSelectDefend
+        setPhaseLabelValue()
+        setPlayCardsButtonText()
+        
+        if PlayerEdgeCardLocations.count > 0 {
+            addEdgeToTotal()
+            removePlayedEdgeCards()
+            updateTotalLabel()
+            PlayerEdgeCardLocations = []
+        }
+        addTextToLog(event: "\(HeroParagon.Name) Starting Dodge: (\(TotalPlayValue))")
+    }
+    
+    func beginCardSelectDefend() {
+        if PlayerCardSelectionLocation.count > 0 {
+            let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
+            TotalPlayValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
+            redrawCards()
+            updateTotalLabel()
+            PlayerCardCollectionView.reloadData()
+            PlayerCardSelectionLocation = []
+            addTextToLog(event: "\(HeroParagon.Name) Dodge: (\(TotalPlayValue))")
+            
+            var heroResistance = 0
+            if VillainParagon.CurrentActionType == .willpower {
+                heroResistance = HeroParagon.Willpower + HeroParagon.WillpowerResistanceBonus
+            } else {
+                heroResistance = HeroParagon.Strength + HeroParagon.DamageResistance
+            }
+            
+            if TotalPlayValue > EnemyTotalAttackValue {
+                CurrentPhase = .selectAttack
+                HeroParagon.CurrentActionType = .doom
+                displayActionSelectionMenu()
+                addTextToLog(event: "\(HeroParagon.Name) Dodged The Attack!")
+                setActionIndicatorColor()
+                updateTotalLabel()
+                flipAttackDefenseImages()
+            } else {
+                switch VillainParagon.CurrentActionType {
+                case .strength:
+                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexStr]
+                case .agility:
+                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexAgi]
+                case .intellect:
+                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexInt]
+                case .willpower:
+                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexWil]
+                default:
+                    break
+                }
+                
+                addTextToLog(event: "\(HeroParagon.Name) Resistance: (\(heroResistance))")
+                
+                if EnemyTotalAttackValue - heroResistance <= 0 {
+                    CurrentPhase = .selectAttack
+                    HeroParagon.CurrentActionType = .doom
+                    displayActionSelectionMenu()
+                    addTextToLog(event: "\(HeroParagon.Name) Resisted The Damage!")
+                    setActionIndicatorColor()
+                    updateTotalLabel()
+                    flipAttackDefenseImages()
+                } else {
+                    CurrentPhase = .damageToHero
+                    ActionTypeColorView.backgroundColor = ColorUtilities.BlackDoom
+                    DamageToHero = EnemyTotalAttackValue - heroResistance
+                    TotalValueLabel.text = "\(DamageToHero)"
+                    addTextToLog(event: "\(HeroParagon.Name) Took \(DamageToHero) Damage!")
+                    flashPlayerDamagedView()
+                    
+                    var HandTotal = 0
+                    for i in 0..<DeckController.PlayerHand.count {
+                        HandTotal = HandTotal + DeckController.PlayerHand[i].getValue()
+                    }
+                    
+                    if HandTotal < DamageToHero {
+                        HeroUnconscious = true
+                        flipParagonToUnconscious()
+                        CurrentPhase = .none
+                        addTextToLog(event: "\(HeroParagon.Name) Has Feinted...")
+                        addTextToLog(event: "\(VillainParagon.Name) WINS!")
+                        setPlayCardsButtonText()
+                        for _ in 0..<DeckController.PlayerHand.count {
+                            let _ = DeckController.playerPlayCard(atPosition: DeckController.PlayerHand.count - 1)
+                        }
+                        HeroParagon.Handsize = 0
+                        PlayerCardCollectionView.reloadData()
+                        setHandSizeLabels()
+                    }
+                }
+            }
+            
+            setPhaseLabelValue()
+            setPlayCardsButtonText()
+        }
+    }
+    
+    func beginDamageToHero() {
+        if getTotalValueOfSelectedCards() >= DamageToHero {
+            HeroParagon.Handsize = HeroParagon.Handsize - PlayerCardSelectionLocation.count
+            
+            PlayerCardSelectionLocation.sort()
+            PlayerCardSelectionLocation.reverse()
+            for i in 0..<PlayerCardSelectionLocation.count {
+                let _ = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[i])
+            }
+            PlayerCardSelectionLocation = []
+            PlayerCardCollectionView.reloadData()
+            setHandSizeLabels()
+            
+            if HeroParagon.Handsize == 0 {
+                HeroUnconscious = true
+                flipParagonToUnconscious()
+            }
+            
+            if HeroUnconscious {
+                CurrentPhase = .none
+                addTextToLog(event: "\(HeroParagon.Name) Has Feinted...")
+                addTextToLog(event: "\(VillainParagon.Name) WINS!")
+                setPlayCardsButtonText()
+            } else {
+                CurrentPhase = .selectAttack
+                HeroParagon.CurrentActionType = .doom
+                displayActionSelectionMenu()
+                setActionIndicatorColor()
+                setPhaseLabelValue()
+                setPlayCardsButtonText()
+                flipAttackDefenseImages()
+                updateTotalLabel()
+            }
+        }
+    }
     
     // MARK: - Button Functions
     @IBAction func pressPlayCardsButton(_ sender: UIButton) {
@@ -242,213 +534,21 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     func pressNextPhaseButton() {
         switch CurrentPhase {
         case .selectAttack:
-            if HeroParagon.CurrentActionType == .strength || HeroParagon.CurrentActionType == .agility || HeroParagon.CurrentActionType == .intellect || HeroParagon.CurrentActionType == .willpower {
-                CurrentPhase = .edgeAttack
-                setPhaseLabelValue()
-                setPlayCardsButtonText()
-                displayActionSelectionMenu()
-                setActionIndicatorColor()
-                setAbilityScoreToPlayValue()
-                updateTotalLabel()
-                addTextToLog(event: "Before Edge: Current Attack (\(TotalPlayValue))")
-            } else if ActionSelectorView.alpha == 0 {
-                    showOrHideActionSelectorView()
-            }
+            beginSelectAttack()
         case .edgeAttack:
-            CurrentPhase = .cardSelectAttack
-            setPhaseLabelValue()
-            setPlayCardsButtonText()
-            
-            if PlayerEdgeCardLocations.count > 0 {
-                addEdgeToTotal()
-                removePlayedEdgeCards()
-                updateTotalLabel()
-                PlayerEdgeCardLocations = []
-            }
-            addTextToLog(event: "After Edge: Current Attack (\(TotalPlayValue))")
+            beginEdgeAttack()
         case .cardSelectAttack:
-            if PlayerCardSelectionLocation.count > 0 {
-                CurrentPhase = .damageToEnemy
-                setPhaseLabelValue()
-                setPlayCardsButtonText()
-                
-                let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
-                TotalPlayValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
-                
-                addTextToLog(event: "Hero Attack! (\(TotalPlayValue))")
-                
-                redrawCards()
-                updateTotalLabel()
-                PlayerCardCollectionView.reloadData()
-                enemyAttemptToDodge()
-                redrawEnemyCards()
-                PlayerCardSelectionLocation = []
-                if DamageToEnemy <= 0 {
-                    CurrentPhase = .enemyAttack
-                    HeroParagon.CurrentActionType = .doom
-                    setActionIndicatorColor()
-                    flipAttackDefenseImages()
-                    resetTotalPlayValue()
-                    updateTotalLabel()
-                    setPhaseLabelValue()
-                    setPlayCardsButtonText()
-                }
-            }
+            beginCardSelectAttack()
         case .damageToEnemy:
-            flashEnemyDamagedView()
-            enemyTakeDamage()
-            resetTotalPlayValue()
-            if EnemyUnconscious {
-                addTextToLog(event: "VICTORY!")
-                CurrentPhase = .none
-            } else {
-                CurrentPhase = .enemyAttack
-                HeroParagon.CurrentActionType = .doom
-                updateTotalLabel()
-                setActionIndicatorColor()
-                flipAttackDefenseImages()
-            }
-            setPhaseLabelValue()
-            setPlayCardsButtonText()
+            beginDamageToEnemy()
         case .enemyAttack:
-            enemyAttack()
-            addTextToLog(event: "Enemy Attacks: (\(EnemyTotalAttackValue))")
-            
-            CurrentPhase = .edgeDefend
-            setPhaseLabelValue()
-            setPlayCardsButtonText()
-            
-            redrawEnemyCards()
-            setHeroDefenseActionType()
-            setAbilityScoreToPlayValue()
-            updateTotalLabel()
-            addTextToLog(event: "Before Edge: Dodge Value (\(TotalPlayValue))")
+            beginEnemyAttack()
         case .edgeDefend:
-            CurrentPhase = .cardSelectDefend
-            setPhaseLabelValue()
-            setPlayCardsButtonText()
-            
-            if PlayerEdgeCardLocations.count > 0 {
-                addEdgeToTotal()
-                removePlayedEdgeCards()
-                updateTotalLabel()
-                PlayerEdgeCardLocations = []
-            }
-            addTextToLog(event: "After Edge: Dodge Value (\(TotalPlayValue))")
+            beginEdgeDefend()
         case .cardSelectDefend:
-            if PlayerCardSelectionLocation.count > 0 {
-                let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
-                TotalPlayValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
-                redrawCards()
-                updateTotalLabel()
-                PlayerCardCollectionView.reloadData()
-                PlayerCardSelectionLocation = []
-                addTextToLog(event: "Dodge Value: (\(TotalPlayValue))")
-                
-                var heroResistance = 0
-                if VillainParagon.CurrentActionType == .willpower {
-                    heroResistance = HeroParagon.Willpower + HeroParagon.WillpowerResistanceBonus
-                } else {
-                    heroResistance = HeroParagon.Strength + HeroParagon.DamageResistance
-                }
-                
-                if TotalPlayValue > EnemyTotalAttackValue {
-                    CurrentPhase = .selectAttack
-                    HeroParagon.CurrentActionType = .doom
-                    displayActionSelectionMenu()
-                    addTextToLog(event: "Dodged Enemy Attack!")
-                    setActionIndicatorColor()
-                    updateTotalLabel()
-                    flipAttackDefenseImages()
-                } else {
-                    switch VillainParagon.CurrentActionType {
-                    case .strength:
-                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexStr]
-                    case .agility:
-                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexAgi]
-                    case .intellect:
-                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexInt]
-                    case .willpower:
-                        EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexWil]
-                    default:
-                        break
-                    }
-                    
-                    if EnemyTotalAttackValue - heroResistance <= 0 {
-                        CurrentPhase = .selectAttack
-                        HeroParagon.CurrentActionType = .doom
-                        displayActionSelectionMenu()
-                        addTextToLog(event: "Resisted Damage from Enemy!")
-                        setActionIndicatorColor()
-                        updateTotalLabel()
-                        flipAttackDefenseImages()
-                    } else {
-                        CurrentPhase = .damageToHero
-                        ActionTypeColorView.backgroundColor = ColorUtilities.BlackDoom
-                        DamageToHero = EnemyTotalAttackValue - heroResistance
-                        TotalValueLabel.text = "\(DamageToHero)"
-                        addTextToLog(event: "You take \(DamageToHero) damage!")
-                        flashPlayerDamagedView()
-                        
-                        var HandTotal = 0
-                        for i in 0..<DeckController.PlayerHand.count {
-                            HandTotal = HandTotal + DeckController.PlayerHand[i].getValue()
-                        }
-                        
-                        if HandTotal < DamageToHero {
-                            HeroUnconscious = true
-                            flipParagonToUnconscious()
-                            CurrentPhase = .none
-                            addTextToLog(event: "You have feinted...")
-                            addTextToLog(event: "DEFEAT!")
-                            setPlayCardsButtonText()
-                            for _ in 0..<DeckController.PlayerHand.count {
-                                let _ = DeckController.playerPlayCard(atPosition: DeckController.PlayerHand.count - 1)
-                            }
-                            HeroParagon.Handsize = 0
-                            PlayerCardCollectionView.reloadData()
-                            setHandSizeLabels()
-                        }
-                    }
-                }
-                
-                setPhaseLabelValue()
-                setPlayCardsButtonText()
-            }
+            beginCardSelectDefend()
         case .damageToHero:
-            if getTotalValueOfSelectedCards() >= DamageToHero {
-                HeroParagon.Handsize = HeroParagon.Handsize - PlayerCardSelectionLocation.count
-                
-                PlayerCardSelectionLocation.sort()
-                PlayerCardSelectionLocation.reverse()
-                for i in 0..<PlayerCardSelectionLocation.count {
-                    let _ = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[i])
-                }
-                PlayerCardSelectionLocation = []
-                PlayerCardCollectionView.reloadData()
-                setHandSizeLabels()
-                
-                if HeroParagon.Handsize == 0 {
-                    HeroUnconscious = true
-                    flipParagonToUnconscious()
-                }
-                
-                if HeroUnconscious {
-                    CurrentPhase = .none
-                    addTextToLog(event: "You have feinted...")
-                    addTextToLog(event: "DEFEAT!")
-                    setPlayCardsButtonText()
-                } else {
-                    CurrentPhase = .selectAttack
-                    HeroParagon.CurrentActionType = .doom
-                    displayActionSelectionMenu()
-                    setActionIndicatorColor()
-                    setPhaseLabelValue()
-                    setPlayCardsButtonText()
-                    flipAttackDefenseImages()
-                    updateTotalLabel()
-                }
-            }
+            beginDamageToHero()
         case .none:
             let transition = getDismissTransition()
             view.window!.layer.add(transition, forKey: kCATransition)
@@ -491,7 +591,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         DeckController.TempHand = DeckController.PlayerHand
         DeckController.PlayerHand = DeckController.EnemyHand
         DeckController.EnemyHand = DeckController.TempHand
-        runSetup()
+        PlayerCardSelectionLocation.removeAll()
+        VillainTauntLabel.text = VillainParagon.EntryTaunt
+        HeroTauntLabel.text = HeroParagon.EntryTaunt
+        runSwapSetup()
     }
     
     // MARK: - Card Playing Functions
@@ -708,7 +811,9 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func displayDamageToVillain() {
         VillainDamageReceivedYConstraint.constant = 40
-        VillainDamageReceivedLabel.text = "-" + String(DamageToEnemy)
+        let damageStringTextAttributes = [NSAttributedString.Key.strokeColor : UIColor.red, NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.strokeWidth : -6.0, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 40)] as [NSAttributedString.Key : Any]
+        VillainDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "-" + String(DamageToEnemy), attributes: damageStringTextAttributes)
+        self.view.layoutIfNeeded()
         UIView.animate(withDuration: 0.2) {
             self.VillainDamageReceivedLabel.alpha = 1.0
         } completion: { (didCompletePartOne) in
@@ -727,7 +832,9 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func displayDamageToHero() {
         HeroDamageReceivedYConstraint.constant = 40
-        HeroDamageReceivedLabel.text = "-" + String(DamageToHero)
+        let damageStringTextAttributes = [NSAttributedString.Key.strokeColor : UIColor.red, NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.strokeWidth : -6.0, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 40)] as [NSAttributedString.Key : Any]
+        HeroDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "-" + String(DamageToHero), attributes: damageStringTextAttributes)
+        self.view.layoutIfNeeded()
         UIView.animate(withDuration: 0.2) {
             self.HeroDamageReceivedLabel.alpha = 1.0
         } completion: { (didCompletePartOne) in
@@ -839,7 +946,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         if DeckController.EnemyHand.count == 0 {
             EnemyUnconscious = true
             flipParagonToUnconscious()
-            addTextToLog(event: "Enemy has feinted!")
+            addTextToLog(event: "\(VillainParagon.Name) Has Feinted...")
         } else {
             VillainParagon.Handsize = DeckController.EnemyHand.count
         }
@@ -1138,6 +1245,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         let dodgeAmountNeeded = TotalPlayValue + 1 - totalDodgeValue
         
+        addTextToLog(event: "\(VillainParagon.Name) Starting Dodge Value: (\(totalDodgeValue))")
+        
         var canDodgeWithSingleCard = false
         var hasAgilityCard = false
         var hasGoodChance = false
@@ -1197,6 +1306,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             opponentResistance = VillainParagon.Strength + VillainParagon.DamageResistance
         }
         
+        addTextToLog(event: "\(VillainParagon.Name) Dodge Value: (\(totalDodgeValue))")
+        
         if totalDodgeValue > TotalPlayValue {
             enemyDodged = true
         } else {
@@ -1204,7 +1315,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         
         if enemyDodged {
-            addTextToLog(event: "Enemy Dodged! (\(totalDodgeValue))")
+            addTextToLog(event: "\(VillainParagon.Name) Dodged! (\(totalDodgeValue))")
             DamageToEnemy = 0
         } else {
             switch HeroParagon.CurrentActionType {
@@ -1219,11 +1330,12 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             default:
                 break
             }
+            addTextToLog(event: "\(VillainParagon.Name) Resistance: (\(opponentResistance))")
             DamageToEnemy = TotalPlayValue - opponentResistance
             if DamageToEnemy <= 0 {
-                addTextToLog(event: "Enemy Resisted the Damage!")
+                addTextToLog(event: "\(VillainParagon.Name) Resisted The Damage!")
             } else {
-                addTextToLog(event: "Enemy Hit For \(DamageToEnemy) Damage!")
+                addTextToLog(event: "\(VillainParagon.Name) Hit For \(DamageToEnemy) Damage!")
             }
         }
     }
@@ -1509,7 +1621,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillianTauntView.alpha = 1.0
         VillainTauntLabel.text = VillainParagon.EntryTaunt
         HeroTauntLabel.text = HeroParagon.EntryTaunt
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + tauntDuration) {
             UIView.animate(withDuration: 0.3) {
                 self.HeroTauntView.alpha = 0.0
                 self.VillianTauntView.alpha = 0.0
@@ -1625,10 +1737,27 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func determineInitiative() {
-        if HeroParagon.Agility >= VillainParagon.Agility {
-            CurrentPhase = .selectAttack
-            HeroAttacking = true
-        } else {
+        if CurrentGameType == .pve {
+            if HeroParagon.Agility >= VillainParagon.Agility {
+                CurrentPhase = .selectAttack
+                HeroAttacking = true
+            } else {
+                CurrentPhase = .enemyAttack
+                HeroAttacking = false
+            }
+        } else if CurrentGameType == .pvp {
+            if HeroParagon.Agility >= VillainParagon.Agility {
+                CurrentPhase = .selectAttack
+                HeroAttacking = true
+            } else {
+                CurrentPhase = .selectAttack
+                HeroAttacking = true
+                swapParagonSides()
+            }
+        } else if CurrentGameType == .eve {
+            if HeroParagon.Agility >= VillainParagon.Agility {
+                swapParagonSides()
+            }
             CurrentPhase = .enemyAttack
             HeroAttacking = false
         }
@@ -1747,8 +1876,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainDamagedView.backgroundColor = UIColor.red
         
         let damageStringTextAttributes = [NSAttributedString.Key.strokeColor : UIColor.red, NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.strokeWidth : -6.0, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 40)] as [NSAttributedString.Key : Any]
-        HeroDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "-20", attributes: damageStringTextAttributes)
-        VillainDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "-20", attributes: damageStringTextAttributes)
+        HeroDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "", attributes: damageStringTextAttributes)
+        VillainDamageReceivedLabel.attributedText = NSMutableAttributedString(string: "", attributes: damageStringTextAttributes)
         HeroDamageReceivedYConstraint.constant = 40
         VillainDamageReceivedYConstraint.constant = 40
         HeroDamageReceivedLabel.alpha = 0.0
