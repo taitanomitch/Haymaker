@@ -672,9 +672,13 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Hero Villain Sheet Functions
     func setHandSizeLabels() {
         HeroHandSizeLabel.text = "\(DeckController.getPlayerHandSize())"
+        HeroHandSizeLabel.textColor = UIColor.black
         HeroEdgeLabel.text = "(\(HeroParagon.Edge))"
+        HeroEdgeLabel.textColor = UIColor.black
         VillainHandSizeLabel.text = "\(DeckController.getEnemyHandSize())"
+        VillainHandSizeLabel.textColor = UIColor.black
         VillainEdgeLabel.text = "(\(VillainParagon.Edge))"
+        VillainEdgeLabel.textColor = UIColor.black
     }
     
     func setUpCharacterSheetViews() {
@@ -697,6 +701,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroStrengthImageView.image = HeroStrengthImageView.image!.withRenderingMode(.alwaysTemplate)
         HeroStrengthImageView.tintColor = UIColor.white
         HeroStrengthLabel.text = "\(HeroParagon.Strength)"
+        HeroStrengthLabel.textColor = UIColor.black
         HeroStrengthLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         HeroAgilityImageView.layer.cornerRadius = 4.0
         HeroAgilityImageView.layer.masksToBounds = true
@@ -704,6 +709,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroAgilityImageView.tintColor = UIColor.white
         HeroAgilityImageView.backgroundColor = ColorUtilities.RedAgility
         HeroAgilityLabel.text = "\(HeroParagon.Agility)"
+        HeroAgilityLabel.textColor = UIColor.black
         HeroAgilityLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         HeroIntellectImageView.layer.cornerRadius = 4.0
         HeroIntellectImageView.layer.masksToBounds = true
@@ -711,6 +717,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroIntellectImageView.tintColor = UIColor.white
         HeroIntellectImageView.backgroundColor = ColorUtilities.BlueIntellect
         HeroIntellectLabel.text = "\(HeroParagon.Intellect)"
+        HeroIntellectLabel.textColor = UIColor.black
         HeroIntellectLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         HeroWillpowerImageView.layer.cornerRadius = 4.0
         HeroWillpowerImageView.layer.masksToBounds = true
@@ -718,6 +725,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroWillpowerImageView.tintColor = UIColor.white
         HeroWillpowerImageView.backgroundColor = ColorUtilities.PurpleWillpower
         HeroWillpowerLabel.text = "\(HeroParagon.Willpower)"
+        HeroWillpowerLabel.textColor = UIColor.black
         HeroWillpowerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         
         VillainStrengthImageView.layer.cornerRadius = 4.0
@@ -726,6 +734,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainStrengthImageView.image = HeroStrengthImageView.image!.withRenderingMode(.alwaysTemplate)
         VillainStrengthImageView.tintColor = UIColor.white
         VillainStrengthLabel.text = "\(VillainParagon.Strength)"
+        VillainStrengthLabel.textColor = UIColor.black
         VillainStrengthLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         VillainAgilityImageView.layer.cornerRadius = 4.0
         VillainAgilityImageView.layer.masksToBounds = true
@@ -733,6 +742,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainAgilityImageView.tintColor = UIColor.white
         VillainAgilityImageView.backgroundColor = ColorUtilities.RedAgility
         VillainAgilityLabel.text = "\(VillainParagon.Agility)"
+        VillainAgilityLabel.textColor = UIColor.black
         VillainAgilityLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         VillainIntellectImageView.layer.cornerRadius = 4.0
         VillainIntellectImageView.layer.masksToBounds = true
@@ -740,6 +750,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainIntellectImageView.tintColor = UIColor.white
         VillainIntellectImageView.backgroundColor = ColorUtilities.BlueIntellect
         VillainIntellectLabel.text = "\(VillainParagon.Intellect)"
+        VillainIntellectLabel.textColor = UIColor.black
         VillainIntellectLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         VillainWillpowerImageView.layer.cornerRadius = 4.0
         VillainWillpowerImageView.layer.masksToBounds = true
@@ -747,6 +758,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainWillpowerImageView.tintColor = UIColor.white
         VillainWillpowerImageView.backgroundColor = ColorUtilities.PurpleWillpower
         VillainWillpowerLabel.text = "\(VillainParagon.Willpower)"
+        VillainWillpowerLabel.textColor = UIColor.black
         VillainWillpowerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
     }
     
@@ -1619,6 +1631,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     func setUpEntryTaunts() {
         HeroTauntView.alpha = 1.0
         VillianTauntView.alpha = 1.0
+        VillainTauntLabel.textColor = UIColor.black
+        HeroTauntLabel.textColor = UIColor.black
         VillainTauntLabel.text = VillainParagon.EntryTaunt
         HeroTauntLabel.text = HeroParagon.EntryTaunt
         DispatchQueue.main.asyncAfter(deadline: .now() + tauntDuration) {

@@ -732,7 +732,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstItem="2Z9-MY-ISz" firstAttribute="width" secondItem="9d5-nC-7Uk" secondAttribute="width" multiplier="0.5" id="J9W-eN-aRi"/>
                                                                     <constraint firstItem="l7N-08-Fgb" firstAttribute="leading" secondItem="9d5-nC-7Uk" secondAttribute="leading" id="PgG-qT-JT7"/>
@@ -1090,7 +1090,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="bottom" secondItem="dtk-Ug-Ila" secondAttribute="bottom" id="BhF-6Q-waL"/>
                                                                     <constraint firstItem="MvC-bB-OPC" firstAttribute="centerX" secondItem="Np5-vP-WA6" secondAttribute="centerX" id="PI3-mf-eiW"/>
@@ -1919,9 +1919,6 @@
         <image name="Icon_Willpower" width="268" height="473"/>
         <image name="SpeechBubble_Left" width="321" height="157"/>
         <image name="SpeechBubble_Right" width="321" height="157"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
