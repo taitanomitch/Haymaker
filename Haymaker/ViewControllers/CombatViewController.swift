@@ -430,6 +430,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                     break
                 }
                 
+                addTextToLog(event: "\(VillainParagon.Name) Total Attack Damage: (\(EnemyTotalAttackValue))")
                 addTextToLog(event: "\(HeroParagon.Name) Resistance: (\(heroResistance))")
                 
                 if EnemyTotalAttackValue - heroResistance <= 0 {
@@ -973,13 +974,13 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         EnemyTotalAttackValue = 0
         switch VillainParagon.CurrentActionType {
         case .strength:
-            EnemyTotalAttackValue = VillainParagon.Strength
+            EnemyTotalAttackValue = VillainParagon.AttackValues[indexStr]
         case .agility:
-            EnemyTotalAttackValue = VillainParagon.Agility
+            EnemyTotalAttackValue = VillainParagon.AttackValues[indexAgi]
         case .intellect:
-            EnemyTotalAttackValue = VillainParagon.Intellect
+            EnemyTotalAttackValue = VillainParagon.AttackValues[indexInt]
         case .willpower:
-            EnemyTotalAttackValue = VillainParagon.Willpower
+            EnemyTotalAttackValue = VillainParagon.AttackValues[indexWil]
         default:
             EnemyTotalAttackValue = 0
         }
@@ -1342,7 +1343,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             default:
                 break
             }
+            
+            addTextToLog(event: "\(HeroParagon.Name) Total Attack Damage: (\(TotalPlayValue))")
             addTextToLog(event: "\(VillainParagon.Name) Resistance: (\(opponentResistance))")
+            
             DamageToEnemy = TotalPlayValue - opponentResistance
             if DamageToEnemy <= 0 {
                 addTextToLog(event: "\(VillainParagon.Name) Resisted The Damage!")
