@@ -360,7 +360,6 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else if CurrentGameType == .eve {
             CurrentPhase = .damageToEnemy
             TotalPlayValue = EnemyTotalAttackValue
-            addTextToLog(event: "\(HeroParagon.Name) Attack Value: (\(TotalPlayValue))")
             
             redrawEnemyCards()
             swapParagonSides()
