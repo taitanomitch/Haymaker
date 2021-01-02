@@ -57,6 +57,7 @@ class ParagonOverseer {
     var WillpowerResistanceBonus: Int = 0
     var ParagonAbilityPower: AbilityPowers = .none
     var ParagonAbilityPowerMultiplier: Int = 1
+    var ParagonAbilityPowerText: String = ""
     
     // MARK: - Character Status Enum
     enum Status {
@@ -264,6 +265,9 @@ class HeroGenerator {
         hero.DodgeBonus = 0
         hero.DamageResistance = 0
         hero.WillpowerResistanceBonus = 0
+        hero.ParagonAbilityPower = .healingFactor
+        hero.ParagonAbilityPowerMultiplier = 1
+        hero.ParagonAbilityPowerText = "\(hero.Name) Heals with Healing Factor!"
         return hero
     }
     
@@ -291,6 +295,7 @@ class HeroGenerator {
         hero.WillpowerResistanceBonus = 0
         hero.ParagonAbilityPower = .strengthIncrease
         hero.ParagonAbilityPowerMultiplier = 1
+        hero.ParagonAbilityPowerText = "\(hero.Name)'s Strength Increases!"
         return hero
     }
     

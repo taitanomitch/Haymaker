@@ -1598,6 +1598,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             paragon.performAbilityPower()
             redrawEnemyCards()
         }
+        addTextToLog(event: paragon.ParagonAbilityPowerText)
         setUpCharacterSheetViews()
     }
     
