@@ -154,6 +154,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var ActionSelectionViewIsDisplayed: Bool = false
     var AnimatingActionSelectionView: Bool = false
     var HeroAttacking: Bool = false
+    var FirstSwap: Bool = false
     
     // MARK: - UI Variables
     var ScreenHeight: CGFloat = 0
@@ -337,7 +338,9 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             HeroParagon.CurrentActionType = .doom
             updateTotalLabel()
             setActionIndicatorColor()
-            flipAttackDefenseImages()
+            if CurrentGameType != .eve {
+                flipAttackDefenseImages()
+            }
         }
         setPhaseLabelValue()
         setPlayCardsButtonText()
@@ -363,13 +366,16 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             redrawEnemyCards()
             swapParagonSides()
+            if FirstSwap {
+                FirstSwap = false
+                flipAttackDefenseImages()
+            }
             enemyAttemptToDodge()
             redrawEnemyCards()
             if DamageToEnemy <= 0 {
                 CurrentPhase = .enemyAttack
                 HeroParagon.CurrentActionType = .doom
                 setActionIndicatorColor()
-                flipAttackDefenseImages()
                 resetTotalPlayValue()
                 setPhaseLabelValue()
             }
@@ -1580,17 +1586,21 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Miscellaneous UI Functions
     func setActionIndicatorColor() {
-        switch HeroParagon.CurrentActionType {
-        case .agility:
-            ActionTypeColorView.backgroundColor = ColorUtilities.RedAgility
-        case .strength:
-            ActionTypeColorView.backgroundColor = ColorUtilities.GreenStrength
-        case .intellect:
-            ActionTypeColorView.backgroundColor = ColorUtilities.BlueIntellect
-        case .willpower:
-            ActionTypeColorView.backgroundColor = ColorUtilities.PurpleWillpower
-        default:
+        if CurrentGameType == .eve {
             ActionTypeColorView.backgroundColor = ColorUtilities.BlackDoom
+        } else {
+            switch HeroParagon.CurrentActionType {
+            case .agility:
+                ActionTypeColorView.backgroundColor = ColorUtilities.RedAgility
+            case .strength:
+                ActionTypeColorView.backgroundColor = ColorUtilities.GreenStrength
+            case .intellect:
+                ActionTypeColorView.backgroundColor = ColorUtilities.BlueIntellect
+            case .willpower:
+                ActionTypeColorView.backgroundColor = ColorUtilities.PurpleWillpower
+            default:
+                ActionTypeColorView.backgroundColor = ColorUtilities.BlackDoom
+            }
         }
     }
     
@@ -1776,6 +1786,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                 swapParagonSides()
             }
             CurrentPhase = .enemyAttack
+            FirstSwap = true
             HeroAttacking = false
         }
         HeroParagon.CurrentActionType = .doom
@@ -1911,9 +1922,17 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         case .cardSelectAttack:
             PhaseLabel.text = "Phase: Card Select - Attack"
         case .damageToEnemy:
-            PhaseLabel.text = "Phase: Damaging Enemy"
+            if CurrentGameType == .eve {
+                PhaseLabel.text = "Phase: Paragon Damaged!"
+            } else {
+                PhaseLabel.text = "Phase: Damaging Enemy"
+            }
         case .enemyAttack:
-            PhaseLabel.text = "Phase: Enemy Attack"
+            if CurrentGameType == .eve {
+                PhaseLabel.text = "Phase: Brawling!"
+            } else {
+                PhaseLabel.text = "Phase: Enemy Attack"
+            }
         case .edgeDefend:
             PhaseLabel.text = "Phase: Edge - Defense"
         case .cardSelectDefend:
@@ -1931,7 +1950,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func updateTotalLabel() {
-        if CurrentPhase == .selectAttack || CurrentPhase == .enemyAttack {
+        if CurrentGameType == .eve || CurrentPhase == .selectAttack || CurrentPhase == .enemyAttack {
             TotalValueLabel.text = "-"
         } else {
             TotalValueLabel.text = String(TotalPlayValue)
