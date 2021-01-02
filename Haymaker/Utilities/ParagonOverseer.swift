@@ -10,6 +10,12 @@ import Foundation
 
 class ParagonOverseer {
     
+    enum AbilityPowers {
+        case strengthIncrease
+        case healingFactor
+        case none
+    }
+    
     var Name: String = ""
     
     // MARK: - Character Stat Variables
@@ -49,6 +55,8 @@ class ParagonOverseer {
     var DodgeBonus: Int = 0
     var DamageResistance: Int = 0
     var WillpowerResistanceBonus: Int = 0
+    var ParagonAbilityPower: AbilityPowers = .none
+    var ParagonAbilityPowerMultiplier: Int = 1
     
     // MARK: - Character Status Enum
     enum Status {
@@ -123,6 +131,25 @@ class ParagonOverseer {
         //Return Sum of Modifiers
         return damageValue
     }
+    
+    
+    // MARK: - Hero Power Abilities
+    public func performAbilityPower() {
+        switch ParagonAbilityPower {
+        case .strengthIncrease:
+            self.Strength = self.Strength + (1 * ParagonAbilityPowerMultiplier)
+        case .healingFactor:
+            if self.Handsize < StartingHandsize {
+                self.Handsize = self.Handsize + (1 * ParagonAbilityPowerMultiplier)
+                if self.Handsize >= self.StartingHandsize {
+                    resetHandSize()
+                }
+            }
+        case .none:
+            return
+        }
+    }
+    
     
     // MARK: - Debugging Functions
     public func printCharacterStats() {
@@ -262,6 +289,8 @@ class HeroGenerator {
         hero.DodgeBonus = 0
         hero.DamageResistance = 4
         hero.WillpowerResistanceBonus = 0
+        hero.ParagonAbilityPower = .strengthIncrease
+        hero.ParagonAbilityPowerMultiplier = 1
         return hero
     }
     

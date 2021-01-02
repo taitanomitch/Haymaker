@@ -283,7 +283,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             if CurrentGameType == .pvp {
                 let cardPlayed = DeckController.playerPlayCard(atPosition: PlayerCardSelectionLocation[0])
                 EnemyTotalAttackValue = TotalPlayValue + playCardAndReturnTotalValue(card: cardPlayed, type: HeroParagon.CurrentActionType)
+                
                 redrawCards()
+                performParagonPowers(paragon: HeroParagon)
+                
                 addTextToLog(event: "\(VillainParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
                 
                 swapParagonSides()
@@ -307,6 +310,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                 addTextToLog(event: "\(HeroParagon.Name) Attack Value: (\(TotalPlayValue))")
                 
                 redrawCards()
+                performParagonPowers(paragon: HeroParagon)
                 updateTotalLabel()
                 PlayerCardCollectionView.reloadData()
                 enemyAttemptToDodge()
@@ -348,6 +352,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func beginEnemyAttack() {
         enemyAttack()
+        performParagonPowers(paragon: VillainParagon)
         addTextToLog(event: "\(VillainParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
         
         if CurrentGameType == .pve {
@@ -1583,6 +1588,18 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         return pickerLabel
     }
     
+    
+    // MARK: - Miscellaneous UI Functions
+    func performParagonPowers(paragon: ParagonOverseer) {
+        if paragon.Name == HeroParagon.Name {
+            paragon.performAbilityPower()
+            redrawCards()
+        } else {
+            paragon.performAbilityPower()
+            redrawEnemyCards()
+        }
+        setUpCharacterSheetViews()
+    }
     
     // MARK: - Miscellaneous UI Functions
     func setActionIndicatorColor() {
