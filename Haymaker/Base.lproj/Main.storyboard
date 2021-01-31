@@ -1284,9 +1284,9 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="kgq-nv-jxi" firstAttribute="top" secondItem="Itv-oc-nK2" secondAttribute="top" constant="10" id="2DR-OU-fKW"/>
-                                            <constraint firstItem="AyD-9U-uVB" firstAttribute="top" secondItem="kgq-nv-jxi" secondAttribute="bottom" priority="500" constant="10" id="857-kd-cRs"/>
+                                            <constraint firstItem="AyD-9U-uVB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="kgq-nv-jxi" secondAttribute="bottom" priority="500" constant="10" id="857-kd-cRs"/>
                                             <constraint firstAttribute="trailing" secondItem="kgq-nv-jxi" secondAttribute="trailing" id="Dgw-6w-Sub"/>
-                                            <constraint firstItem="AyD-9U-uVB" firstAttribute="firstBaseline" relation="greaterThanOrEqual" secondItem="kgq-nv-jxi" secondAttribute="baseline" constant="10" id="KLY-jI-P1o"/>
+                                            <constraint firstItem="AyD-9U-uVB" firstAttribute="firstBaseline" secondItem="kgq-nv-jxi" secondAttribute="baseline" constant="10" id="KLY-jI-P1o"/>
                                             <constraint firstItem="AyD-9U-uVB" firstAttribute="height" secondItem="kgq-nv-jxi" secondAttribute="height" id="Leu-4j-dJT"/>
                                             <constraint firstAttribute="trailing" secondItem="AyD-9U-uVB" secondAttribute="trailing" id="O4n-60-JhK"/>
                                             <constraint firstItem="kgq-nv-jxi" firstAttribute="leading" secondItem="Itv-oc-nK2" secondAttribute="leading" id="Uy2-iO-GRr"/>
