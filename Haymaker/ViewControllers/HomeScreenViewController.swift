@@ -8,11 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeScreenViewController: UIViewController {
 
     @IBOutlet weak var PlayButton: UIButton!
-    
-    
     
     // MARK: - Loading Functions
     override func viewDidLoad() {
@@ -27,8 +25,12 @@ class ViewController: UIViewController {
     
     // MARK: - Setup Functions
     func setupPlayButton() {
-        PlayButton.layer.cornerRadius = 4.0
+        PlayButton.layer.cornerRadius = 6.0
+        PlayButton.layer.borderWidth = 4.0
         PlayButton.layer.masksToBounds = true
+        PlayButton.backgroundColor = UIColor.white
+        PlayButton.layer.borderColor = UIColor.white.cgColor
+        PlayButton.setTitleColor(UIColor.clear, for: .normal)
     }
     
     // MARK: - Button Functions

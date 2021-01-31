@@ -223,6 +223,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     func setUpBeginCombatButtonUI() {
         BeginCombatButton.layer.cornerRadius = 5.0
         BeginCombatButton.layer.masksToBounds = true
+        BeginCombatButton.setTitle("", for: .normal)
+        BeginCombatButton.backgroundColor = UIColor.clear
         BeginCombatBackgroundView.backgroundColor = UIColor.white
     }
     

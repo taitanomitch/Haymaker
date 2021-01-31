@@ -42,11 +42,18 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var CardPlayHolderView: UIView!
     @IBOutlet weak var CardHandHolderView: UIView!
     @IBOutlet weak var CardHandImageView: UIImageView!
+    @IBOutlet weak var CombatBackgroundImageView: UIImageView!
+    
+    // MARK: - Villain Sheet IBOutlet Variables
+    @IBOutlet weak var HeroImageBackgroundView: UIView!
+    @IBOutlet weak var HeroStatsBackgroundView: UIView!
+    @IBOutlet weak var VillainImageBackgroundView: UIView!
+    @IBOutlet weak var VillainStatsBackgroundView: UIView!
     
     // MARK: - Villain Sheet IBOutlet Variables
     @IBOutlet weak var VillainImageView: UIImageView!
     @IBOutlet weak var VillainImageHolderView: UIView!
-    @IBOutlet weak var VillianTauntView: UIView!
+    @IBOutlet weak var VillainTauntView: UIView!
     @IBOutlet weak var VillainTauntLabel: UILabel!
     @IBOutlet weak var VillainDamagedView: UIView!
     @IBOutlet weak var VillainDamageReceivedLabel: UILabel!
@@ -101,24 +108,28 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var StrengthAttackNameLabel: UILabel!
     @IBOutlet weak var StrengthAttackValueLabel: UILabel!
     @IBOutlet weak var StrengthBonusDamageLabel: UILabel!
+    @IBOutlet weak var StrengthShadowView: UIView!
     
     @IBOutlet weak var IntellectSelectorButton: UIButton!
     @IBOutlet weak var IntellectSelectorLabelsView: UIView!
     @IBOutlet weak var IntellectAttackNameLabel: UILabel!
     @IBOutlet weak var IntellectAttackValueLabel: UILabel!
     @IBOutlet weak var IntellectBonusDamageLabel: UILabel!
+    @IBOutlet weak var IntellectShadowView: UIView!
     
     @IBOutlet weak var AgilitySelectorButton: UIButton!
     @IBOutlet weak var AgilitySelectorLabelsView: UIView!
     @IBOutlet weak var AgilityAttackNameLabel: UILabel!
     @IBOutlet weak var AgilityAttackValueLabel: UILabel!
     @IBOutlet weak var AgilityBonusDamageLabel: UILabel!
+    @IBOutlet weak var AgilityShadowView: UIView!
     
     @IBOutlet weak var WillpowerSelectorButton: UIButton!
     @IBOutlet weak var WillpowerSelectorLabelsView: UIView!
     @IBOutlet weak var WillpowerAttackNameLabel: UILabel!
     @IBOutlet weak var WillpowerAttackValueLabel: UILabel!
     @IBOutlet weak var WillpowerBonusDamageLabel: UILabel!
+    @IBOutlet weak var WillpowerShadowView: UIView!
     
     // MARK: - Card Collection IBOutlet Variables
     @IBOutlet weak var PlayerCardCollectionView: UICollectionView!
@@ -166,6 +177,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var indexAgi: Int = 1
     var indexInt: Int = 2
     var indexWil: Int = 3
+    var characterSheetTextColor: UIColor = UIColor.white
+    var backgroundColor: UIColor = UIColor.black
+    var backgroundAlpha: CGFloat = 0.7
+    var shadowAlpha: CGFloat = 0.4
     
     // MARK: - Loading Functions
     override func viewDidLoad() {
@@ -178,8 +193,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewWillAppear(animated)
     }
     
-    
-    // MARK: - Call Setup Functions
+    // MARK: - Setup Functions
     func runSetup() {
         setUpAttackOptions()
         determineInitiative()
@@ -198,6 +212,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         setPhaseLabelValue()
         setUpHiddenViewPositions()
         setInitialActionSelectorViewPosition()
+        setUpCombatBackgroundImageView()
+        setUpBackgroundViews()
     }
     
     func runSwapSetup() {
@@ -683,13 +699,13 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Hero Villain Sheet Functions
     func setHandSizeLabels() {
         HeroHandSizeLabel.text = "\(DeckController.getPlayerHandSize())"
-        HeroHandSizeLabel.textColor = UIColor.black
+        HeroHandSizeLabel.textColor = characterSheetTextColor
         HeroEdgeLabel.text = "(\(HeroParagon.Edge))"
-        HeroEdgeLabel.textColor = UIColor.black
+        HeroEdgeLabel.textColor = characterSheetTextColor
         VillainHandSizeLabel.text = "\(DeckController.getEnemyHandSize())"
-        VillainHandSizeLabel.textColor = UIColor.black
+        VillainHandSizeLabel.textColor = characterSheetTextColor
         VillainEdgeLabel.text = "(\(VillainParagon.Edge))"
-        VillainEdgeLabel.textColor = UIColor.black
+        VillainEdgeLabel.textColor = characterSheetTextColor
     }
     
     func setUpCharacterSheetViews() {
@@ -712,7 +728,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroStrengthImageView.image = HeroStrengthImageView.image!.withRenderingMode(.alwaysTemplate)
         HeroStrengthImageView.tintColor = UIColor.white
         HeroStrengthLabel.text = "\(HeroParagon.Strength)"
-        HeroStrengthLabel.textColor = UIColor.black
+        HeroStrengthLabel.textColor = characterSheetTextColor
         HeroStrengthLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         HeroAgilityImageView.layer.cornerRadius = 4.0
         HeroAgilityImageView.layer.masksToBounds = true
@@ -720,7 +736,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroAgilityImageView.tintColor = UIColor.white
         HeroAgilityImageView.backgroundColor = ColorUtilities.RedAgility
         HeroAgilityLabel.text = "\(HeroParagon.Agility)"
-        HeroAgilityLabel.textColor = UIColor.black
+        HeroAgilityLabel.textColor = characterSheetTextColor
         HeroAgilityLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         HeroIntellectImageView.layer.cornerRadius = 4.0
         HeroIntellectImageView.layer.masksToBounds = true
@@ -728,7 +744,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroIntellectImageView.tintColor = UIColor.white
         HeroIntellectImageView.backgroundColor = ColorUtilities.BlueIntellect
         HeroIntellectLabel.text = "\(HeroParagon.Intellect)"
-        HeroIntellectLabel.textColor = UIColor.black
+        HeroIntellectLabel.textColor = characterSheetTextColor
         HeroIntellectLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         HeroWillpowerImageView.layer.cornerRadius = 4.0
         HeroWillpowerImageView.layer.masksToBounds = true
@@ -736,7 +752,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroWillpowerImageView.tintColor = UIColor.white
         HeroWillpowerImageView.backgroundColor = ColorUtilities.PurpleWillpower
         HeroWillpowerLabel.text = "\(HeroParagon.Willpower)"
-        HeroWillpowerLabel.textColor = UIColor.black
+        HeroWillpowerLabel.textColor = characterSheetTextColor
         HeroWillpowerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         
         VillainStrengthImageView.layer.cornerRadius = 4.0
@@ -745,7 +761,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainStrengthImageView.image = HeroStrengthImageView.image!.withRenderingMode(.alwaysTemplate)
         VillainStrengthImageView.tintColor = UIColor.white
         VillainStrengthLabel.text = "\(VillainParagon.Strength)"
-        VillainStrengthLabel.textColor = UIColor.black
+        VillainStrengthLabel.textColor = characterSheetTextColor
         VillainStrengthLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         VillainAgilityImageView.layer.cornerRadius = 4.0
         VillainAgilityImageView.layer.masksToBounds = true
@@ -753,7 +769,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainAgilityImageView.tintColor = UIColor.white
         VillainAgilityImageView.backgroundColor = ColorUtilities.RedAgility
         VillainAgilityLabel.text = "\(VillainParagon.Agility)"
-        VillainAgilityLabel.textColor = UIColor.black
+        VillainAgilityLabel.textColor = characterSheetTextColor
         VillainAgilityLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         VillainIntellectImageView.layer.cornerRadius = 4.0
         VillainIntellectImageView.layer.masksToBounds = true
@@ -761,7 +777,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainIntellectImageView.tintColor = UIColor.white
         VillainIntellectImageView.backgroundColor = ColorUtilities.BlueIntellect
         VillainIntellectLabel.text = "\(VillainParagon.Intellect)"
-        VillainIntellectLabel.textColor = UIColor.black
+        VillainIntellectLabel.textColor = characterSheetTextColor
         VillainIntellectLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         VillainWillpowerImageView.layer.cornerRadius = 4.0
         VillainWillpowerImageView.layer.masksToBounds = true
@@ -769,7 +785,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainWillpowerImageView.tintColor = UIColor.white
         VillainWillpowerImageView.backgroundColor = ColorUtilities.PurpleWillpower
         VillainWillpowerLabel.text = "\(VillainParagon.Willpower)"
-        VillainWillpowerLabel.textColor = UIColor.black
+        VillainWillpowerLabel.textColor = characterSheetTextColor
         VillainWillpowerLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
     }
     
@@ -789,14 +805,18 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     func flipParagonToUnconscious() {
         if HeroUnconscious {
             HeroImageView.image = UIImage(named: "Icon_Unconscious")
+            HeroImageView.tintColor = characterSheetTextColor
             UIView.transition(with: HeroImageView, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
         } else if EnemyUnconscious {
             VillainImageView.image = UIImage(named: "Icon_Unconscious")
+            VillainImageView.tintColor = characterSheetTextColor
             UIView.transition(with: VillainImageView, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
         }
     }
     
     func setAttackDefenseImages() {
+        HeroAttackDefenseImageView.tintColor = characterSheetTextColor
+        VillainAttackDefenseImageView.tintColor = characterSheetTextColor
         if HeroAttacking {
             HeroAttackDefenseImageView.image = UIImage(named: "Icon_Attack")
             VillainAttackDefenseImageView.image = UIImage(named: "Icon_Defense")
@@ -1626,7 +1646,6 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         for subview in self.ActionLogPickerView.subviews {
             
             if subview.frame.height <= 5 {
-                
                 subview.backgroundColor = UIColor.white
                 subview.tintColor = UIColor.white
                 subview.layer.borderColor = UIColor.white.cgColor
@@ -1661,7 +1680,11 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Setup Functions
     func setUpEntryTaunts() {
         HeroTauntView.alpha = 1.0
-        VillianTauntView.alpha = 1.0
+        HeroTauntView.layer.cornerRadius = 4.0
+        HeroTauntView.layer.masksToBounds = true
+        VillainTauntView.alpha = 1.0
+        VillainTauntView.layer.cornerRadius = 4.0
+        VillainTauntView.layer.masksToBounds = true
         VillainTauntLabel.textColor = UIColor.black
         HeroTauntLabel.textColor = UIColor.black
         VillainTauntLabel.text = VillainParagon.EntryTaunt
@@ -1669,7 +1692,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         DispatchQueue.main.asyncAfter(deadline: .now() + tauntDuration) {
             UIView.animate(withDuration: 0.3) {
                 self.HeroTauntView.alpha = 0.0
-                self.VillianTauntView.alpha = 0.0
+                self.VillainTauntView.alpha = 0.0
             }
         }
     }
@@ -1758,6 +1781,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         StrengthSelectorLabelsView.backgroundColor = ColorUtilities.GreenStrength
         StrengthSelectorLabelsView.layer.cornerRadius = 5.0
         StrengthSelectorLabelsView.layer.masksToBounds = true
+        StrengthShadowView.backgroundColor = UIColor.black
+        StrengthShadowView.alpha = shadowAlpha
+        StrengthShadowView.layer.cornerRadius = 4.0
+        StrengthShadowView.layer.masksToBounds = true
         
         AgilitySelectorButton.layer.cornerRadius = 5.0
         AgilitySelectorButton.layer.masksToBounds = true
@@ -1765,6 +1792,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         AgilitySelectorLabelsView.backgroundColor = ColorUtilities.RedAgility
         AgilitySelectorLabelsView.layer.cornerRadius = 5.0
         AgilitySelectorLabelsView.layer.masksToBounds = true
+        AgilityShadowView.backgroundColor = UIColor.black
+        AgilityShadowView.alpha = shadowAlpha
+        AgilityShadowView.layer.cornerRadius = 4.0
+        AgilityShadowView.layer.masksToBounds = true
         
         IntellectSelectorButton.layer.cornerRadius = 5.0
         IntellectSelectorButton.layer.masksToBounds = true
@@ -1772,6 +1803,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         IntellectSelectorLabelsView.backgroundColor = ColorUtilities.BlueIntellect
         IntellectSelectorLabelsView.layer.cornerRadius = 5.0
         IntellectSelectorLabelsView.layer.masksToBounds = true
+        IntellectShadowView.backgroundColor = UIColor.black
+        IntellectShadowView.alpha = shadowAlpha
+        IntellectShadowView.layer.cornerRadius = 4.0
+        IntellectShadowView.layer.masksToBounds = true
         
         WillpowerSelectorButton.layer.cornerRadius = 5.0
         WillpowerSelectorButton.layer.masksToBounds = true
@@ -1779,6 +1814,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         WillpowerSelectorLabelsView.backgroundColor = ColorUtilities.PurpleWillpower
         WillpowerSelectorLabelsView.layer.cornerRadius = 5.0
         WillpowerSelectorLabelsView.layer.masksToBounds = true
+        WillpowerShadowView.backgroundColor = UIColor.black
+        WillpowerShadowView.alpha = shadowAlpha
+        WillpowerShadowView.layer.cornerRadius = 4.0
+        WillpowerShadowView.layer.masksToBounds = true
     }
     
     func determineInitiative() {
@@ -1931,6 +1970,11 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     
+    func setUpCombatBackgroundImageView() {
+        CombatBackgroundImageView.image = UIImage(named: ImageUtilities.selectBackgroundImageView())
+    }
+    
+    
     func setPhaseLabelValue() {
         switch CurrentPhase {
         case .selectAttack:
@@ -2000,6 +2044,17 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         self.view.layoutIfNeeded()
     }
+    
+    func setUpBackgroundViews() {
+        HeroStatsBackgroundView.backgroundColor = backgroundColor
+        HeroStatsBackgroundView.alpha = backgroundAlpha
+        HeroImageBackgroundView.backgroundColor = backgroundColor
+        HeroImageBackgroundView.alpha = backgroundAlpha
+        VillainStatsBackgroundView.backgroundColor = backgroundColor
+        VillainStatsBackgroundView.alpha = backgroundAlpha
+        VillainImageBackgroundView.backgroundColor = backgroundColor
+        VillainImageBackgroundView.alpha = backgroundAlpha
+    }
 }
 
 extension UILabel {
@@ -2017,4 +2072,3 @@ extension UILabel {
             }
         }
 }
-

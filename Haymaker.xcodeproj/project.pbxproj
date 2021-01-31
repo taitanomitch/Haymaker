@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A29DCF1B21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29DCF1A21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift */; };
+		A2AAB78C25C66C660070FE54 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AAB78B25C66C660070FE54 /* ImageUtilities.swift */; };
 		A2D56BA1219BC6BB00CACB96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BA0219BC6BB00CACB96 /* AppDelegate.swift */; };
-		A2D56BA3219BC6BB00CACB96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BA2219BC6BB00CACB96 /* ViewController.swift */; };
+		A2D56BA3219BC6BB00CACB96 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BA2219BC6BB00CACB96 /* HomeScreenViewController.swift */; };
 		A2D56BA6219BC6BB00CACB96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D56BA4219BC6BB00CACB96 /* Main.storyboard */; };
 		A2D56BA8219BC6BD00CACB96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2D56BA7219BC6BD00CACB96 /* Assets.xcassets */; };
 		A2D56BAB219BC6BD00CACB96 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D56BA9219BC6BD00CACB96 /* LaunchScreen.storyboard */; };
@@ -23,14 +24,15 @@
 		A2D56BC8219E5BD000CACB96 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BC7219E5BD000CACB96 /* Skill.swift */; };
 		A2D56BCB219E5CBD00CACB96 /* Equipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCA219E5CBD00CACB96 /* Equipment.swift */; };
 		A2D56BCD219FB88200CACB96 /* CombatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCC219FB88200CACB96 /* CombatViewController.swift */; };
-		A2D56BCF21A25A1A00CACB96 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCE21A25A1A00CACB96 /* Utility.swift */; };
+		A2D56BCF21A25A1A00CACB96 /* ColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCE21A25A1A00CACB96 /* ColorUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A29DCF1A21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagonOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		A2AAB78B25C66C660070FE54 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
 		A2D56B9D219BC6BB00CACB96 /* Haymaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Haymaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D56BA0219BC6BB00CACB96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A2D56BA2219BC6BB00CACB96 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A2D56BA2219BC6BB00CACB96 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		A2D56BA5219BC6BB00CACB96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A2D56BA7219BC6BD00CACB96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2D56BAA219BC6BD00CACB96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -45,7 +47,7 @@
 		A2D56BC7219E5BD000CACB96 /* Skill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
 		A2D56BCA219E5CBD00CACB96 /* Equipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equipment.swift; sourceTree = "<group>"; };
 		A2D56BCC219FB88200CACB96 /* CombatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombatViewController.swift; sourceTree = "<group>"; };
-		A2D56BCE21A25A1A00CACB96 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		A2D56BCE21A25A1A00CACB96 /* ColorUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +95,7 @@
 		A2D56BB8219BC91400CACB96 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A2D56BA2219BC6BB00CACB96 /* ViewController.swift */,
+				A2D56BA2219BC6BB00CACB96 /* HomeScreenViewController.swift */,
 				A2D56BB6219BC90F00CACB96 /* HeroSelectController.swift */,
 				A2D56BCC219FB88200CACB96 /* CombatViewController.swift */,
 			);
@@ -109,7 +111,8 @@
 				A2D56BC7219E5BD000CACB96 /* Skill.swift */,
 				A2D56BCA219E5CBD00CACB96 /* Equipment.swift */,
 				A2D56BB4219BC85C00CACB96 /* Cards.swift */,
-				A2D56BCE21A25A1A00CACB96 /* Utility.swift */,
+				A2D56BCE21A25A1A00CACB96 /* ColorUtilities.swift */,
+				A2AAB78B25C66C660070FE54 /* ImageUtilities.swift */,
 				A2D56BC9219E5BDD00CACB96 /* Plists */,
 			);
 			path = Utilities;
@@ -208,15 +211,16 @@
 				A2D56BC4219E580F00CACB96 /* ParagonOverseer.swift in Sources */,
 				A2D56BB5219BC85C00CACB96 /* Cards.swift in Sources */,
 				A2D56BCD219FB88200CACB96 /* CombatViewController.swift in Sources */,
-				A2D56BA3219BC6BB00CACB96 /* ViewController.swift in Sources */,
+				A2D56BA3219BC6BB00CACB96 /* HomeScreenViewController.swift in Sources */,
 				A2D56BC8219E5BD000CACB96 /* Skill.swift in Sources */,
 				A2D56BCB219E5CBD00CACB96 /* Equipment.swift in Sources */,
 				A2D56BC6219E589B00CACB96 /* Power.swift in Sources */,
 				A2D56BBA219BC96B00CACB96 /* DeckOverseer.swift in Sources */,
-				A2D56BCF21A25A1A00CACB96 /* Utility.swift in Sources */,
+				A2D56BCF21A25A1A00CACB96 /* ColorUtilities.swift in Sources */,
 				A2D56BB7219BC90F00CACB96 /* HeroSelectController.swift in Sources */,
 				A29DCF1B21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift in Sources */,
 				A2D56BC1219D17DC00CACB96 /* CardCollectionViewCell.swift in Sources */,
+				A2AAB78C25C66C660070FE54 /* ImageUtilities.swift in Sources */,
 				A2D56BA1219BC6BB00CACB96 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
