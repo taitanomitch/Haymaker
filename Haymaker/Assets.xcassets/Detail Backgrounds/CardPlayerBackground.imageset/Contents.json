@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "MetalFrame.png",
+      "filename" : "black.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MetalFrame-1.png",
+      "filename" : "black-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "MetalFrame-2.png",
+      "filename" : "black-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

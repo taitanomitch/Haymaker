@@ -40,8 +40,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var ActionTypeColorView: UIView!
     @IBOutlet weak var ActionTypeValueView: UIView!
     @IBOutlet weak var CardPlayHolderView: UIView!
+    @IBOutlet weak var CardPlayBackgroundView: UIView!
     @IBOutlet weak var CardHandHolderView: UIView!
     @IBOutlet weak var CardHandImageView: UIImageView!
+    @IBOutlet weak var CardHandBackgroundView: UIView!
     @IBOutlet weak var CombatBackgroundImageView: UIImageView!
     
     // MARK: - Villain Sheet IBOutlet Variables
@@ -55,6 +57,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var VillainImageHolderView: UIView!
     @IBOutlet weak var VillainTauntView: UIView!
     @IBOutlet weak var VillainTauntLabel: UILabel!
+    @IBOutlet weak var VillainTauntBackgroundView: UIView!
     @IBOutlet weak var VillainDamagedView: UIView!
     @IBOutlet weak var VillainDamageReceivedLabel: UILabel!
     @IBOutlet weak var VillainDamageReceivedYConstraint: NSLayoutConstraint!
@@ -76,6 +79,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var HeroImageHolderView: UIView!
     @IBOutlet weak var HeroTauntView: UIView!
     @IBOutlet weak var HeroTauntLabel: UILabel!
+    @IBOutlet weak var HeroTauntBackgroundView: UIView!
     @IBOutlet weak var HeroDamagedView: UIView!
     @IBOutlet weak var HeroDamageReceivedLabel: UILabel!
     @IBOutlet weak var HeroDamageReceivedYConstraint: NSLayoutConstraint!
@@ -620,7 +624,9 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         DeckController.EnemyHand = DeckController.TempHand
         PlayerCardSelectionLocation.removeAll()
         VillainTauntLabel.text = VillainParagon.EntryTaunt
+        VillainTauntLabel.textColor = characterSheetTextColor
         HeroTauntLabel.text = HeroParagon.EntryTaunt
+        HeroTauntLabel.textColor = characterSheetTextColor
         runSwapSetup()
     }
     
@@ -1685,14 +1691,18 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainTauntView.alpha = 1.0
         VillainTauntView.layer.cornerRadius = 4.0
         VillainTauntView.layer.masksToBounds = true
-        VillainTauntLabel.textColor = UIColor.black
-        HeroTauntLabel.textColor = UIColor.black
+        VillainTauntLabel.textColor = characterSheetTextColor
+        VillainTauntBackgroundView.backgroundColor = backgroundColor
+        HeroTauntLabel.textColor = characterSheetTextColor
+        HeroTauntBackgroundView.backgroundColor = backgroundColor
         VillainTauntLabel.text = VillainParagon.EntryTaunt
         HeroTauntLabel.text = HeroParagon.EntryTaunt
         DispatchQueue.main.asyncAfter(deadline: .now() + tauntDuration) {
             UIView.animate(withDuration: 0.3) {
                 self.HeroTauntView.alpha = 0.0
                 self.VillainTauntView.alpha = 0.0
+                self.HeroImageBackgroundView.alpha = self.backgroundAlpha
+                self.VillainImageBackgroundView.alpha = self.backgroundAlpha
             }
         }
     }
@@ -1862,6 +1872,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         CardHandImageView.image = CardHandImageView.image!.withRenderingMode(.alwaysTemplate)
         CardHandImageView.tintColor = UIColor.white
+        
+        CardHandBackgroundView.backgroundColor = ColorUtilities.hexUIColor(hex: "84d1ef")
     }
     
     func setUpHiddenViewPositions() {
@@ -1904,7 +1916,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         PlayCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         switch CurrentPhase {
         case .selectAttack:
-            PlayCardsButton.setTitleColor(UIColor.yellow, for: .normal)
+            PlayCardsButton.setTitleColor(ColorUtilities.hexUIColor(hex: "84d1ef"), for: .normal)
             PlayCardsButton.setTitle("Select an Attack Type", for: .normal)
         case .edgeAttack:
             PlayCardsButton.setTitleColor(UIColor.white, for: .normal)
@@ -2049,11 +2061,11 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         HeroStatsBackgroundView.backgroundColor = backgroundColor
         HeroStatsBackgroundView.alpha = backgroundAlpha
         HeroImageBackgroundView.backgroundColor = backgroundColor
-        HeroImageBackgroundView.alpha = backgroundAlpha
+        HeroImageBackgroundView.alpha = 1.0
         VillainStatsBackgroundView.backgroundColor = backgroundColor
         VillainStatsBackgroundView.alpha = backgroundAlpha
         VillainImageBackgroundView.backgroundColor = backgroundColor
-        VillainImageBackgroundView.alpha = backgroundAlpha
+        VillainImageBackgroundView.alpha = 1.0
     }
 }
 
