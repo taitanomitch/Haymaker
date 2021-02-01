@@ -15,7 +15,6 @@ class HomeScreenViewController: UIViewController {
     // MARK: - Loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.insetsLayoutMarginsFromSafeArea = false
     }
 
     override func viewWillAppear(_ animated: Bool) {
