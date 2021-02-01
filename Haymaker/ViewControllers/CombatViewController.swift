@@ -372,8 +372,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func beginEnemyAttack() {
         enemyAttack()
-        performParagonPowers(paragon: VillainParagon)
         addTextToLog(event: "\(VillainParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
+        performParagonPowers(paragon: VillainParagon)
         
         if CurrentGameType == .pve {
             CurrentPhase = .edgeDefend
@@ -383,6 +383,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             redrawEnemyCards()
             setHeroDefenseActionType()
             setAbilityScoreToPlayValue()
+            setHandSizeLabels()
             updateTotalLabel()
             addTextToLog(event: "\(HeroParagon.Name) Dodge Value: (\(TotalPlayValue))")
         } else if CurrentGameType == .eve {
@@ -517,6 +518,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
             PlayerCardSelectionLocation = []
             PlayerCardCollectionView.reloadData()
+            redrawEnemyCards()
             setHandSizeLabels()
             
             if HeroParagon.Handsize == 0 {
@@ -1587,10 +1589,12 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func addTextToLog(event: String) {
-        PickerActionLog.append(event)
-        reloadActionLog()
-        let row = 0
-        ActionLogPickerView.selectRow(row, inComponent: 0, animated: true)
+        if event != "" {
+            PickerActionLog.append(event)
+            reloadActionLog()
+            let row = 0
+            ActionLogPickerView.selectRow(row, inComponent: 0, animated: true)
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

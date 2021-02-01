@@ -87,8 +87,8 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="HVc-WW-eTk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TOm-1y-DNJ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="HVc-WW-eTk" secondAttribute="bottom" id="jLY-LH-arF"/>
-                            <constraint firstItem="HVc-WW-eTk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kLU-OE-Haa"/>
+                            <constraint firstItem="HVc-WW-eTk" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="UGw-OX-9Ub"/>
+                            <constraint firstItem="HVc-WW-eTk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="sOQ-IN-md3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HVc-WW-eTk" secondAttribute="trailing" id="xve-Us-Ncg"/>
                         </constraints>
                     </view>
@@ -491,10 +491,10 @@
                         <viewLayoutGuide key="safeArea" id="gAp-2j-knE"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="gAp-2j-knE" firstAttribute="bottom" secondItem="l7b-RW-IGu" secondAttribute="bottom" id="0u7-Jt-VFK"/>
                             <constraint firstItem="gAp-2j-knE" firstAttribute="trailing" secondItem="l7b-RW-IGu" secondAttribute="trailing" id="CHd-yR-pq5"/>
-                            <constraint firstItem="l7b-RW-IGu" firstAttribute="top" secondItem="gAp-2j-knE" secondAttribute="top" id="cwK-Vz-hxF"/>
+                            <constraint firstAttribute="bottom" secondItem="l7b-RW-IGu" secondAttribute="bottom" id="MHI-i8-Pdl"/>
                             <constraint firstItem="l7b-RW-IGu" firstAttribute="leading" secondItem="gAp-2j-knE" secondAttribute="leading" id="mT9-Rn-0of"/>
+                            <constraint firstItem="l7b-RW-IGu" firstAttribute="top" secondItem="2Zd-W2-e2l" secondAttribute="top" id="tAC-dC-rl8"/>
                         </constraints>
                     </view>
                     <connections>
@@ -2091,8 +2091,8 @@
                         <constraints>
                             <constraint firstItem="NYW-0m-9mT" firstAttribute="leading" secondItem="ITk-Ie-70C" secondAttribute="leading" id="2JS-ZC-jkQ"/>
                             <constraint firstItem="ITk-Ie-70C" firstAttribute="trailing" secondItem="NYW-0m-9mT" secondAttribute="trailing" id="52e-f4-qZY"/>
-                            <constraint firstItem="ITk-Ie-70C" firstAttribute="bottom" secondItem="NYW-0m-9mT" secondAttribute="bottom" id="HTj-h5-yo3"/>
-                            <constraint firstItem="NYW-0m-9mT" firstAttribute="top" secondItem="ITk-Ie-70C" secondAttribute="top" id="iad-g9-KXK"/>
+                            <constraint firstItem="NYW-0m-9mT" firstAttribute="top" secondItem="IEu-DJ-Mm2" secondAttribute="top" id="PwW-Cd-c7o"/>
+                            <constraint firstAttribute="bottom" secondItem="NYW-0m-9mT" secondAttribute="bottom" id="jTH-9Z-QTR"/>
                         </constraints>
                     </view>
                     <connections>
