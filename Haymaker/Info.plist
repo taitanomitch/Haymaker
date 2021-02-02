@@ -2,6 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF_Wonder_Comic.ttf</string>
+		<string>SF_Wonder_Comic_Italic.ttf</string>
+		<string>SF_Wonder_Comic_Inline.ttf</string>
+		<string>SF_Wonder_Comic_Inline_Italic.ttf</string>
+		<string>SF_Wonder_Comic_Bold.ttf</string>
+		<string>SF_Wonder_Comic_Bold_Italic.ttf</string>
+		<string>SF_Wonder_Comic_Blotch.ttf</string>
+		<string>SF_Wonder_Comic_Blotch_Italic.ttf</string>
+		<string>comic_zine_ot.otf</string>
+		<string>Action_Man.ttf</string>
+		<string>Action_Man_Shaded.ttf</string>
+		<string>Action_Man_Shaded_Italic.ttf</string>
+		<string>Action_Man_Italic.ttf</string>
+		<string>Action_Man_Extended.ttf</string>
+		<string>Action_Man_Extended_Italic.ttf</string>
+		<string>Action_Man_Extended_Bold.ttf</string>
+		<string>Action_Man_Extended_Bold_Italic.ttf</string>
+		<string>Action_Man_Bold.ttf</string>
+		<string>Action_Man_Bold_Italic.ttf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -29,9 +51,7 @@
 		<string>armv7</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
+	<array/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

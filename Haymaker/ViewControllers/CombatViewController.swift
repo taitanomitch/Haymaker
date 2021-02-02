@@ -183,8 +183,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var indexWil: Int = 3
     var characterSheetTextColor: UIColor = UIColor.white
     var backgroundColor: UIColor = UIColor.black
-    var backgroundAlpha: CGFloat = 0.7
+    var backgroundAlpha: CGFloat = 0.60
     var shadowAlpha: CGFloat = 0.4
+    var tauntLabelFont: String = "ActionMan"
+    var tauntLabelFontSize: CGFloat = 16.0
     
     // MARK: - Loading Functions
     override func viewDidLoad() {
@@ -627,8 +629,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         PlayerCardSelectionLocation.removeAll()
         VillainTauntLabel.text = VillainParagon.EntryTaunt
         VillainTauntLabel.textColor = characterSheetTextColor
+        VillainTauntLabel.font = UIFont(name: tauntLabelFont, size: tauntLabelFontSize)
         HeroTauntLabel.text = HeroParagon.EntryTaunt
         HeroTauntLabel.textColor = characterSheetTextColor
+        HeroTauntLabel.font = UIFont(name: tauntLabelFont, size: tauntLabelFontSize)
         runSwapSetup()
     }
     
@@ -1695,10 +1699,12 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainTauntView.alpha = 1.0
         VillainTauntView.layer.cornerRadius = 4.0
         VillainTauntView.layer.masksToBounds = true
-        VillainTauntLabel.textColor = characterSheetTextColor
         VillainTauntBackgroundView.backgroundColor = backgroundColor
-        HeroTauntLabel.textColor = characterSheetTextColor
         HeroTauntBackgroundView.backgroundColor = backgroundColor
+        VillainTauntLabel.textColor = characterSheetTextColor
+        VillainTauntLabel.font = UIFont(name: tauntLabelFont, size: tauntLabelFontSize)
+        HeroTauntLabel.textColor = characterSheetTextColor
+        HeroTauntLabel.font = UIFont(name: tauntLabelFont, size: tauntLabelFontSize)
         VillainTauntLabel.text = VillainParagon.EntryTaunt
         HeroTauntLabel.text = HeroParagon.EntryTaunt
         DispatchQueue.main.asyncAfter(deadline: .now() + tauntDuration) {

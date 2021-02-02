@@ -235,6 +235,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     func setUpParagonSelectionUI() {
         VersusTextLabel.textColor = UIColor.black
+        VersusTextLabel.font = UIFont(name: "ComicZineOT", size: 55)
         SelectedHeroImageView.layer.cornerRadius = 5.0
         SelectedHeroImageView.layer.masksToBounds = true
         SelectedOpponentImageView.layer.cornerRadius = 5.0
@@ -246,8 +247,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         LeftPlayerType = .Player
         RightPlayerType = .Computer
 
-        LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player"), for: .normal)
-        RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer"), for: .normal)
+        LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player2"), for: .normal)
+        RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer2"), for: .normal)
         LeftPlayerTypeButton.imageView!.tintColor = UIColor.black
         RightPlayerTypeButton.imageView!.tintColor = UIColor.black
     }
@@ -368,20 +369,20 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func pressLeftPlayerTypeButton(_ sender: UIButton) {
         if LeftPlayerType == .Player {
             LeftPlayerType = .Computer
-            LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer"), for: .normal)
+            LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer2"), for: .normal)
         } else {
             LeftPlayerType = .Player
-            LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player"), for: .normal)
+            LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player2"), for: .normal)
         }
     }
     
     @IBAction func pressRightPlayerTypeButton(_ sender: UIButton) {
         if RightPlayerType == .Player {
             RightPlayerType = .Computer
-            RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer"), for: .normal)
+            RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Computer2"), for: .normal)
         } else {
             RightPlayerType = .Player
-            RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player"), for: .normal)
+            RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player2"), for: .normal)
         }
     }
     

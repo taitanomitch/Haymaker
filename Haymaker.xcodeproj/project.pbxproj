@@ -8,6 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		A29DCF1B21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29DCF1A21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift */; };
+		A2A1E50125C91C730016EF7C /* SF_Wonder_Comic_Blotch.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E4F925C91C720016EF7C /* SF_Wonder_Comic_Blotch.ttf */; };
+		A2A1E50225C91C730016EF7C /* SF_Wonder_Comic_Blotch_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E4FA25C91C730016EF7C /* SF_Wonder_Comic_Blotch_Italic.ttf */; };
+		A2A1E50325C91C730016EF7C /* SF_Wonder_Comic_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E4FB25C91C730016EF7C /* SF_Wonder_Comic_Bold.ttf */; };
+		A2A1E50425C91C730016EF7C /* SF_Wonder_Comic_Inline_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E4FC25C91C730016EF7C /* SF_Wonder_Comic_Inline_Italic.ttf */; };
+		A2A1E50525C91C730016EF7C /* SF_Wonder_Comic_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E4FD25C91C730016EF7C /* SF_Wonder_Comic_Italic.ttf */; };
+		A2A1E50625C91C730016EF7C /* SF_Wonder_Comic_Bold_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E4FE25C91C730016EF7C /* SF_Wonder_Comic_Bold_Italic.ttf */; };
+		A2A1E50725C91C730016EF7C /* SF_Wonder_Comic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E4FF25C91C730016EF7C /* SF_Wonder_Comic.ttf */; };
+		A2A1E50825C91C730016EF7C /* SF_Wonder_Comic_Inline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E50025C91C730016EF7C /* SF_Wonder_Comic_Inline.ttf */; };
+		A2A1E50B25C91C850016EF7C /* comic_zine_ot.otf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E50A25C91C850016EF7C /* comic_zine_ot.otf */; };
+		A2A1E52D25C91D6C0016EF7C /* Action_Man_Extended_Bold_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52325C91D6B0016EF7C /* Action_Man_Extended_Bold_Italic.ttf */; };
+		A2A1E52E25C91D6C0016EF7C /* Action_Man_Extended.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52425C91D6B0016EF7C /* Action_Man_Extended.ttf */; };
+		A2A1E52F25C91D6C0016EF7C /* Action_Man_Extended_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52525C91D6B0016EF7C /* Action_Man_Extended_Italic.ttf */; };
+		A2A1E53025C91D6C0016EF7C /* Action_Man_Bold_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52625C91D6B0016EF7C /* Action_Man_Bold_Italic.ttf */; };
+		A2A1E53125C91D6C0016EF7C /* Action_Man_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52725C91D6B0016EF7C /* Action_Man_Bold.ttf */; };
+		A2A1E53225C91D6C0016EF7C /* Action_Man_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52825C91D6B0016EF7C /* Action_Man_Italic.ttf */; };
+		A2A1E53325C91D6C0016EF7C /* Action_Man_Shaded_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52925C91D6B0016EF7C /* Action_Man_Shaded_Italic.ttf */; };
+		A2A1E53425C91D6C0016EF7C /* Action_Man_Shaded.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52A25C91D6B0016EF7C /* Action_Man_Shaded.ttf */; };
+		A2A1E53525C91D6C0016EF7C /* Action_Man.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52B25C91D6C0016EF7C /* Action_Man.ttf */; };
+		A2A1E53625C91D6C0016EF7C /* Action_Man_Extended_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2A1E52C25C91D6C0016EF7C /* Action_Man_Extended_Bold.ttf */; };
 		A2AAB78C25C66C660070FE54 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AAB78B25C66C660070FE54 /* ImageUtilities.swift */; };
 		A2D56BA1219BC6BB00CACB96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BA0219BC6BB00CACB96 /* AppDelegate.swift */; };
 		A2D56BA3219BC6BB00CACB96 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BA2219BC6BB00CACB96 /* HomeScreenViewController.swift */; };
@@ -29,6 +48,25 @@
 
 /* Begin PBXFileReference section */
 		A29DCF1A21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagonOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		A2A1E4F925C91C720016EF7C /* SF_Wonder_Comic_Blotch.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic_Blotch.ttf; sourceTree = "<group>"; };
+		A2A1E4FA25C91C730016EF7C /* SF_Wonder_Comic_Blotch_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic_Blotch_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E4FB25C91C730016EF7C /* SF_Wonder_Comic_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic_Bold.ttf; sourceTree = "<group>"; };
+		A2A1E4FC25C91C730016EF7C /* SF_Wonder_Comic_Inline_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic_Inline_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E4FD25C91C730016EF7C /* SF_Wonder_Comic_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E4FE25C91C730016EF7C /* SF_Wonder_Comic_Bold_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic_Bold_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E4FF25C91C730016EF7C /* SF_Wonder_Comic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic.ttf; sourceTree = "<group>"; };
+		A2A1E50025C91C730016EF7C /* SF_Wonder_Comic_Inline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Wonder_Comic_Inline.ttf; sourceTree = "<group>"; };
+		A2A1E50A25C91C850016EF7C /* comic_zine_ot.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_zine_ot.otf; sourceTree = "<group>"; };
+		A2A1E52325C91D6B0016EF7C /* Action_Man_Extended_Bold_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Extended_Bold_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E52425C91D6B0016EF7C /* Action_Man_Extended.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Extended.ttf; sourceTree = "<group>"; };
+		A2A1E52525C91D6B0016EF7C /* Action_Man_Extended_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Extended_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E52625C91D6B0016EF7C /* Action_Man_Bold_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Bold_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E52725C91D6B0016EF7C /* Action_Man_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Bold.ttf; sourceTree = "<group>"; };
+		A2A1E52825C91D6B0016EF7C /* Action_Man_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E52925C91D6B0016EF7C /* Action_Man_Shaded_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Shaded_Italic.ttf; sourceTree = "<group>"; };
+		A2A1E52A25C91D6B0016EF7C /* Action_Man_Shaded.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Shaded.ttf; sourceTree = "<group>"; };
+		A2A1E52B25C91D6C0016EF7C /* Action_Man.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man.ttf; sourceTree = "<group>"; };
+		A2A1E52C25C91D6C0016EF7C /* Action_Man_Extended_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Extended_Bold.ttf; sourceTree = "<group>"; };
 		A2AAB78B25C66C660070FE54 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
 		A2D56B9D219BC6BB00CACB96 /* Haymaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Haymaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D56BA0219BC6BB00CACB96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +99,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2A1E4F525C91B4C0016EF7C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A2A1E4F725C91B970016EF7C /* Action Man */,
+				A2A1E4F825C91BE80016EF7C /* Comic Zine */,
+				A2A1E4F625C91B900016EF7C /* Wonder Comic */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A2A1E4F625C91B900016EF7C /* Wonder Comic */ = {
+			isa = PBXGroup;
+			children = (
+				A2A1E4FA25C91C730016EF7C /* SF_Wonder_Comic_Blotch_Italic.ttf */,
+				A2A1E4F925C91C720016EF7C /* SF_Wonder_Comic_Blotch.ttf */,
+				A2A1E4FE25C91C730016EF7C /* SF_Wonder_Comic_Bold_Italic.ttf */,
+				A2A1E4FB25C91C730016EF7C /* SF_Wonder_Comic_Bold.ttf */,
+				A2A1E4FC25C91C730016EF7C /* SF_Wonder_Comic_Inline_Italic.ttf */,
+				A2A1E50025C91C730016EF7C /* SF_Wonder_Comic_Inline.ttf */,
+				A2A1E4FD25C91C730016EF7C /* SF_Wonder_Comic_Italic.ttf */,
+				A2A1E4FF25C91C730016EF7C /* SF_Wonder_Comic.ttf */,
+			);
+			path = "Wonder Comic";
+			sourceTree = "<group>";
+		};
+		A2A1E4F725C91B970016EF7C /* Action Man */ = {
+			isa = PBXGroup;
+			children = (
+				A2A1E52625C91D6B0016EF7C /* Action_Man_Bold_Italic.ttf */,
+				A2A1E52725C91D6B0016EF7C /* Action_Man_Bold.ttf */,
+				A2A1E52325C91D6B0016EF7C /* Action_Man_Extended_Bold_Italic.ttf */,
+				A2A1E52C25C91D6C0016EF7C /* Action_Man_Extended_Bold.ttf */,
+				A2A1E52525C91D6B0016EF7C /* Action_Man_Extended_Italic.ttf */,
+				A2A1E52425C91D6B0016EF7C /* Action_Man_Extended.ttf */,
+				A2A1E52825C91D6B0016EF7C /* Action_Man_Italic.ttf */,
+				A2A1E52925C91D6B0016EF7C /* Action_Man_Shaded_Italic.ttf */,
+				A2A1E52A25C91D6B0016EF7C /* Action_Man_Shaded.ttf */,
+				A2A1E52B25C91D6C0016EF7C /* Action_Man.ttf */,
+			);
+			path = "Action Man";
+			sourceTree = "<group>";
+		};
+		A2A1E4F825C91BE80016EF7C /* Comic Zine */ = {
+			isa = PBXGroup;
+			children = (
+				A2A1E50A25C91C850016EF7C /* comic_zine_ot.otf */,
+			);
+			path = "Comic Zine";
+			sourceTree = "<group>";
+		};
 		A2D56B94219BC6BB00CACB96 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +201,7 @@
 				A2D56BB4219BC85C00CACB96 /* Cards.swift */,
 				A2D56BCE21A25A1A00CACB96 /* ColorUtilities.swift */,
 				A2AAB78B25C66C660070FE54 /* ImageUtilities.swift */,
+				A2A1E4F525C91B4C0016EF7C /* Fonts */,
 				A2D56BC9219E5BDD00CACB96 /* Plists */,
 			);
 			path = Utilities;
@@ -195,9 +284,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D56BBF219BDE2900CACB96 /* CardsDatabase.plist in Resources */,
+				A2A1E50625C91C730016EF7C /* SF_Wonder_Comic_Bold_Italic.ttf in Resources */,
+				A2A1E53125C91D6C0016EF7C /* Action_Man_Bold.ttf in Resources */,
 				A2D56BAB219BC6BD00CACB96 /* LaunchScreen.storyboard in Resources */,
+				A2A1E50225C91C730016EF7C /* SF_Wonder_Comic_Blotch_Italic.ttf in Resources */,
+				A2A1E50725C91C730016EF7C /* SF_Wonder_Comic.ttf in Resources */,
+				A2A1E53425C91D6C0016EF7C /* Action_Man_Shaded.ttf in Resources */,
+				A2A1E53525C91D6C0016EF7C /* Action_Man.ttf in Resources */,
+				A2A1E53325C91D6C0016EF7C /* Action_Man_Shaded_Italic.ttf in Resources */,
+				A2A1E50B25C91C850016EF7C /* comic_zine_ot.otf in Resources */,
+				A2A1E53225C91D6C0016EF7C /* Action_Man_Italic.ttf in Resources */,
+				A2A1E50825C91C730016EF7C /* SF_Wonder_Comic_Inline.ttf in Resources */,
+				A2A1E53625C91D6C0016EF7C /* Action_Man_Extended_Bold.ttf in Resources */,
+				A2A1E50425C91C730016EF7C /* SF_Wonder_Comic_Inline_Italic.ttf in Resources */,
+				A2A1E52F25C91D6C0016EF7C /* Action_Man_Extended_Italic.ttf in Resources */,
 				A2D56BA8219BC6BD00CACB96 /* Assets.xcassets in Resources */,
+				A2A1E53025C91D6C0016EF7C /* Action_Man_Bold_Italic.ttf in Resources */,
+				A2A1E52D25C91D6C0016EF7C /* Action_Man_Extended_Bold_Italic.ttf in Resources */,
+				A2A1E50525C91C730016EF7C /* SF_Wonder_Comic_Italic.ttf in Resources */,
+				A2A1E50125C91C730016EF7C /* SF_Wonder_Comic_Blotch.ttf in Resources */,
 				A2D56BA6219BC6BB00CACB96 /* Main.storyboard in Resources */,
+				A2A1E50325C91C730016EF7C /* SF_Wonder_Comic_Bold.ttf in Resources */,
+				A2A1E52E25C91D6C0016EF7C /* Action_Man_Extended.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
