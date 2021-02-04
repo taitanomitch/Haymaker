@@ -1,5 +1,5 @@
 //
-//  CombatViewController.swift
+//  HeroSelectViewController.swift
 //  Haymaker
 //
 //  Created by Mitchell Taitano on 11/13/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PlayerPasswordDelegate, CombatViewDelegate {
     
     enum PlayerType {
         case Player
@@ -18,6 +18,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - IBOutlet Variables
     @IBOutlet weak var SelectedHeroImageView: UIImageView!
     @IBOutlet weak var SelectedOpponentImageView: UIImageView!
+    @IBOutlet weak var PlayerPasswordsButton: UIButton!
+    @IBOutlet weak var PlayerPasswordImageView: UIImageView!
     @IBOutlet weak var LeftPlayerTypeButton: UIButton!
     @IBOutlet weak var RightPlayerTypeButton: UIButton!
     @IBOutlet weak var SelectedParagonsBackgroundView: UIView!
@@ -27,7 +29,6 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var OpponentsCollectionBackgroundView: UIView!
     @IBOutlet weak var BeginCombatBackgroundView: UIView!
     @IBOutlet weak var BeginCombatButton: UIButton!
-    @IBOutlet weak var VersusTextLabel: UILabel!
     
     // MARK: - Player Hero
     var HeroParagon: ParagonOverseer = ParagonOverseer()
@@ -47,6 +48,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     var SelectedOpponent: ParagonOverseer = ParagonOverseer()
     var LeftPlayerType: PlayerType = .Player
     var RightPlayerType: PlayerType = .Computer
+    var PlayerPasswords: Bool = false
+    var UsingPasswords: Bool = false
     
     
     // MARK: - Loading Functions
@@ -86,6 +89,21 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     func setUpOppoentsList() {
         OpponentChoices = listOfCharacaters()
+    }
+    
+    func setUpPlayerPasswordsImage() {
+        if LeftPlayerType == .Player && RightPlayerType == .Player {
+            PlayerPasswordsButton.alpha = 1.0
+            switch PlayerPasswords {
+            case true:
+                PlayerPasswordImageView.alpha = 1.0
+            case false:
+                PlayerPasswordImageView.alpha = 0.6
+            }
+        } else {
+            PlayerPasswordsButton.alpha = 0
+            PlayerPasswordImageView.alpha = 0
+        }
     }
     
     func listOfCharacaters() -> [ParagonOverseer] {
@@ -218,6 +236,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         setUpCollectionViewUI()
         setUpParagonSelectionUI()
         setUpPlayerTypeButtonUI()
+        setUpPlayerPasswordsImage()
     }
     
     func setUpBeginCombatButtonUI() {
@@ -234,8 +253,6 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func setUpParagonSelectionUI() {
-        VersusTextLabel.textColor = UIColor.black
-        VersusTextLabel.font = UIFont(name: "ComicZineOT", size: 55)
         SelectedHeroImageView.layer.cornerRadius = 5.0
         SelectedHeroImageView.layer.masksToBounds = true
         SelectedOpponentImageView.layer.cornerRadius = 5.0
@@ -255,7 +272,15 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     // MARK: - Transition Functions
-    func showCardSelectionWindow() {
+    func showCombatOrPasswordViewController() {
+        if determineGameType() == .pvp && PlayerPasswords {
+            showPlayerPasswordsViewController()
+        } else {
+            showCombatViewController()
+        }
+    }
+    
+    func showCombatViewController() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         var newCombatViewController = storyBoard.instantiateViewController(withIdentifier: "CombatViewController") as! CombatViewController
         newCombatViewController.HeroParagon = HeroParagon
@@ -263,17 +288,36 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         newCombatViewController.DeckController = DeckController
         newCombatViewController.ScreenHeight = self.view.frame.height
         newCombatViewController.CurrentGameType = determineGameType()
+        newCombatViewController.UsingPasswords = UsingPasswords
         newCombatViewController = swapParagonsIfNeeded(GameViewController: newCombatViewController)
-        let transition = getPresentTransition()
+        let transition = getPresentTransitionCombat()
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(newCombatViewController, animated: false, completion: nil)
     }
     
-    func getPresentTransition() -> CATransition {
+    func showPlayerPasswordsViewController() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newPlayerPasswordsViewController = storyBoard.instantiateViewController(withIdentifier: "PlayerPasswordsViewController") as! PlayerPasswordsViewController
+        newPlayerPasswordsViewController.delegate = self
+        let transition = getPresentTransitionPlayerPasswords()
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(newPlayerPasswordsViewController, animated: false, completion: nil)
+    }
+    
+    func getPresentTransitionCombat() -> CATransition {
         let transition = CATransition()
         transition.duration = 0.5
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromRight
+        transition.type = CATransitionType.moveIn
+        transition.subtype = CATransitionSubtype.fromTop
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        return transition
+    }
+    
+    func getPresentTransitionPlayerPasswords() -> CATransition {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.moveIn
+        transition.subtype = CATransitionSubtype.fromTop
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
         return transition
     }
@@ -363,8 +407,20 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         VillainParagon.resetHandSize()
         determinHeroParagon()
         determinEnemyParagon()
-        showCardSelectionWindow()
+        UsingPasswords = false
+        
+        if determineGameType() == .pvp && PlayerPasswords {
+            showPlayerPasswordsViewController()
+        } else {
+            showCombatViewController()
+        }
     }
+    
+    @IBAction func pressPlayerPasswordsButton(_ sender: UIButton) {
+        PlayerPasswords = !PlayerPasswords
+        setUpPlayerPasswordsImage()
+    }
+    
     
     @IBAction func pressLeftPlayerTypeButton(_ sender: UIButton) {
         if LeftPlayerType == .Player {
@@ -374,6 +430,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
             LeftPlayerType = .Player
             LeftPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player2"), for: .normal)
         }
+        setUpPlayerPasswordsImage()
     }
     
     @IBAction func pressRightPlayerTypeButton(_ sender: UIButton) {
@@ -384,6 +441,32 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
             RightPlayerType = .Player
             RightPlayerTypeButton.setBackgroundImage(UIImage(named: "Icon_Player2"), for: .normal)
         }
+        setUpPlayerPasswordsImage()
+    }
+    
+    
+    // MARK: - Player Password Delegate Functions
+    func CancelButtonPressed() {
+        
+    }
+    
+    func FightButtonPressed() {
+        UsingPasswords = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
+            self.showCombatViewController()
+        }
+    }
+    
+    func FightButtonWithoutPasswords() {
+        UsingPasswords = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
+            self.showCombatViewController()
+        }
+    }
+    
+    // MARK: - Combat View Delegate Functions
+    func CombatCompleted() {
+        
     }
     
     
@@ -409,7 +492,6 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = collectionView.frame.width * (6/10)
         let width = (collectionView.frame.width / 2)  - 10
         let height = width
         return CGSize(width: width, height: height)

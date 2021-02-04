@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CombatViewDelegate {
+    func CombatCompleted()
+}
+
 class CombatViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
     
     enum GameType {
@@ -144,6 +148,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var VillainParagon: ParagonOverseer = ParagonOverseer()
     
     // MARK: - Variables
+    public var delegate: CombatViewDelegate?
     var DeckController: DeckOverseer!
     var CurrentPlayerHandSize: Int = 0
     var PlayType: ActionType = .none
@@ -170,6 +175,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var AnimatingActionSelectionView: Bool = false
     var HeroAttacking: Bool = false
     var FirstSwap: Bool = false
+    var UsingPasswords: Bool = false
     
     // MARK: - UI Variables
     var ScreenHeight: CGFloat = 0
@@ -247,7 +253,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     func getDismissTransition() -> CATransition {
         let transition = CATransition()
         transition.duration = 0.5
-        transition.type = CATransitionType.push
+        transition.type = CATransitionType.reveal
         transition.subtype = CATransitionSubtype.fromLeft
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
         return transition
@@ -588,7 +594,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             let transition = getDismissTransition()
             view.window!.layer.add(transition, forKey: kCATransition)
             self.dismiss(animated: false) {
-                
+                self.delegate?.CombatCompleted()
             }
             return
         }

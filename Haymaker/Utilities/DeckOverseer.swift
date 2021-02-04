@@ -20,19 +20,8 @@ class DeckOverseer {
     
     // MARK: - Deck Prep Functions
     public func prepareDeck() {
-        if let _ = Deck {
-            if let discardedPile = DiscardPile {
-                Deck?.append(contentsOf: discardedPile)
-                DiscardPile = []
-                shuffleDek()
-            } else {
-                initializeDeck()
-                initializeDiscardPile()
-            }
-        } else {
-            initializeDeck()
-            initializeDiscardPile()
-        }
+        initializeDeck()
+        initializeDiscardPile()
     }
     
     // MARK: - Hand Prep Functions
