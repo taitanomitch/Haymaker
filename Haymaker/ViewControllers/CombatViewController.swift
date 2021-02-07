@@ -315,7 +315,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                 redrawCards()
                 performParagonPowers(paragon: HeroParagon)
                 
-                addTextToLog(event: "\(VillainParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
+                addTextToLog(event: "\(HeroParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
                 
                 swapParagonSides()
                 
