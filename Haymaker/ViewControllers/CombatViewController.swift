@@ -176,6 +176,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var HeroAttacking: Bool = false
     var FirstSwap: Bool = false
     var UsingPasswords: Bool = false
+    var HeroParagonPassword: String = ""
+    var VillainParagonPassword: String = ""
     
     // MARK: - UI Variables
     var ScreenHeight: CGFloat = 0

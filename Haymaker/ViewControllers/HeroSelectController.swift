@@ -50,6 +50,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     var RightPlayerType: PlayerType = .Computer
     var PlayerPasswords: Bool = false
     var UsingPasswords: Bool = false
+    var PlayerOnePassword: String = ""
+    var PlayerTwoPassword: String = ""
     
     
     // MARK: - Loading Functions
@@ -289,6 +291,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         newCombatViewController.ScreenHeight = self.view.frame.height
         newCombatViewController.CurrentGameType = determineGameType()
         newCombatViewController.UsingPasswords = UsingPasswords
+        newCombatViewController.HeroParagonPassword = PlayerOnePassword
+        newCombatViewController.VillainParagonPassword = PlayerTwoPassword
         newCombatViewController = swapParagonsIfNeeded(GameViewController: newCombatViewController)
         let transition = getPresentTransitionCombat()
         view.window!.layer.add(transition, forKey: kCATransition)
@@ -462,6 +466,11 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
             self.showCombatViewController()
         }
+    }
+    
+    func PasswordsSet(passwordOne: String, passwordTwo: String) {
+        PlayerOnePassword = passwordOne
+        PlayerTwoPassword = passwordTwo
     }
     
     // MARK: - Combat View Delegate Functions
