@@ -90,7 +90,9 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setUpParagonImageView() {
-        AttemptParagonImageView.image = UIImage(named: ParagonForPassword.Name)
+        if ParagonForPassword.Name.count > 0 {
+            AttemptParagonImageView.image = UIImage(named: ParagonForPassword.Name)
+        }
     }
     
     func setUpTextfield() {

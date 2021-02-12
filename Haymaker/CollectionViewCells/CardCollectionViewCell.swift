@@ -38,8 +38,8 @@ class CardCollectionViewCell: UICollectionViewCell {
         CardSelectHighlightView.layer.masksToBounds = true
         
         CardValueLabel.text = String(value)
+        CardValueLabel.font = UIFont(name: "Copperplate-Bold", size: 60.0)
         CardValueLabel.textColor = UIColor.white
-        CardValueLabel.font = CardValueLabel.font.withSize(CardFontSize)
         CardImageView.alpha = ImageAlpha
         switch type {
         case .agility:
