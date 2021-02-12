@@ -50,8 +50,6 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     var RightPlayerType: PlayerType = .Computer
     var PlayerPasswords: Bool = false
     var UsingPasswords: Bool = false
-    var PlayerOnePassword: String = ""
-    var PlayerTwoPassword: String = ""
     
     
     // MARK: - Loading Functions
@@ -291,8 +289,6 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         newCombatViewController.ScreenHeight = self.view.frame.height
         newCombatViewController.CurrentGameType = determineGameType()
         newCombatViewController.UsingPasswords = UsingPasswords
-        newCombatViewController.HeroParagonPassword = PlayerOnePassword
-        newCombatViewController.VillainParagonPassword = PlayerTwoPassword
         newCombatViewController = swapParagonsIfNeeded(GameViewController: newCombatViewController)
         let transition = getPresentTransitionCombat()
         view.window!.layer.add(transition, forKey: kCATransition)
@@ -303,6 +299,9 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newPlayerPasswordsViewController = storyBoard.instantiateViewController(withIdentifier: "PlayerPasswordsViewController") as! PlayerPasswordsViewController
         newPlayerPasswordsViewController.delegate = self
+        newPlayerPasswordsViewController.PromptType = .paswordSet
+        newPlayerPasswordsViewController.PlayerOneParagon = HeroParagon
+        newPlayerPasswordsViewController.PlayerTwoParagon = VillainParagon
         let transition = getPresentTransitionPlayerPasswords()
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(newPlayerPasswordsViewController, animated: false, completion: nil)
@@ -450,13 +449,12 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     // MARK: - Player Password Delegate Functions
-    func CancelButtonPressed() {
-        
-    }
+    func EnterButtonPressed() {}
+    func CancelButtonPressed() {}
     
     func FightButtonPressed() {
         UsingPasswords = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.showCombatViewController()
         }
     }
@@ -469,8 +467,8 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func PasswordsSet(passwordOne: String, passwordTwo: String) {
-        PlayerOnePassword = passwordOne
-        PlayerTwoPassword = passwordTwo
+        HeroParagon.ParagonPassword = passwordOne
+        VillainParagon.ParagonPassword = passwordTwo
     }
     
     // MARK: - Combat View Delegate Functions

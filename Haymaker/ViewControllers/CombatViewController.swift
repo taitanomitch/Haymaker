@@ -12,7 +12,7 @@ protocol CombatViewDelegate {
     func CombatCompleted()
 }
 
-class CombatViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+class CombatViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, PlayerPasswordDelegate {
     
     enum GameType {
         case pvp
@@ -35,6 +35,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - General IBOutlet Variables
     @IBOutlet weak var ActionLogPickerView: UIPickerView!
+    @IBOutlet weak var ContainerHolderView: UIView!
     
     // MARK: - Card Show Section IBOutlet Variables
     @IBOutlet weak var TotalValueLabel: UILabel!
@@ -49,6 +50,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var CardHandImageView: UIImageView!
     @IBOutlet weak var CardHandBackgroundView: UIView!
     @IBOutlet weak var CombatBackgroundImageView: UIImageView!
+    @IBOutlet weak var PasswordPromptContainerView: UIView!
     
     // MARK: - Villain Sheet IBOutlet Variables
     @IBOutlet weak var HeroImageBackgroundView: UIView!
@@ -176,9 +178,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var HeroAttacking: Bool = false
     var FirstSwap: Bool = false
     var UsingPasswords: Bool = false
-    var HeroParagonPassword: String = ""
-    var VillainParagonPassword: String = ""
-    
+    var PasswordViewController: PlayerPasswordsViewController = PlayerPasswordsViewController()
+
     // MARK: - UI Variables
     var ScreenHeight: CGFloat = 0
     var NewCollectionConstraintConstant: CGFloat = 0
@@ -201,6 +202,11 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewDidLoad()
         setUpEntryTaunts()
         runSetup()
+        if CurrentGameType == .pvp && UsingPasswords {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.promptPasswordEntry(ParagonForPassword: self.HeroParagon)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -228,6 +234,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         setInitialActionSelectorViewPosition()
         setUpCombatBackgroundImageView()
         setUpBackgroundViews()
+        setUpContainerView()
     }
     
     func runSwapSetup() {
@@ -320,6 +327,9 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                 addTextToLog(event: "\(HeroParagon.Name) Attack Value: (\(EnemyTotalAttackValue))")
                 
                 swapParagonSides()
+                if(UsingPasswords) {
+                    promptPasswordEntry(ParagonForPassword: HeroParagon)
+                }
                 
                 CurrentPhase = .edgeDefend
                 setPhaseLabelValue()
@@ -600,6 +610,16 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
             return
         }
+    }
+    
+    @IBAction func pressEnterButton(_ sender: UIButton) {
+        view.endEditing(true)
+        if PasswordViewController.ifPasswordCorrect() {
+            UIView.animate(withDuration: 0.4) {
+                self.ContainerHolderView.alpha = 0.0
+            }
+        }
+        PasswordViewController.clearPasswordAttemptTextfield()
     }
     
     @IBAction func pressSelectStrengthAction(_ sender: UIButton) {
@@ -1407,6 +1427,36 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
 
+    // MARK: - Password Entry Functions
+    func promptPasswordEntry(ParagonForPassword: ParagonOverseer) {
+        PasswordViewController.ParagonForPassword = ParagonForPassword
+        PasswordViewController.PromptType = .passwordTry
+        PasswordViewController.runSetup()
+        UIView.animate(withDuration: 0.4) {
+            self.ContainerHolderView.alpha = 1.0
+        }
+    }
+    
+    func getPresentTransitionPlayerPasswords() -> CATransition {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.moveIn
+        transition.subtype = CATransitionSubtype.fromTop
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        return transition
+    }
+    
+    
+    // MARK: - Player Password Delegate Functions
+    func CancelButtonPressed() {}
+    func FightButtonPressed() {}
+    func FightButtonWithoutPasswords() {}
+    func PasswordsSet(passwordOne: String, passwordTwo: String) {}
+    func EnterButtonPressed() {
+        view.endEditing(true)
+    }
+    
+    
     // MARK: - Hand Redraw Functions
     func redrawCards() {
         let cardsToDraw = HeroParagon.Handsize - DeckController.PlayerHand.count
@@ -2085,8 +2135,46 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         VillainImageBackgroundView.backgroundColor = backgroundColor
         VillainImageBackgroundView.alpha = 1.0
     }
+    
+    func setUpContainerView() {
+        ContainerHolderView.alpha = 0.0
+        PasswordPromptContainerView.layer.cornerRadius = 6.0
+        PasswordPromptContainerView.layer.masksToBounds = true
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newPlayerPasswordsViewController = storyBoard.instantiateViewController(withIdentifier: "PlayerPasswordsViewController") as! PlayerPasswordsViewController
+        newPlayerPasswordsViewController.delegate = self
+        newPlayerPasswordsViewController.PromptType = .passwordTry
+        
+        PasswordViewController = newPlayerPasswordsViewController
+        
+        PasswordViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        PasswordViewController.view.frame = PasswordPromptContainerView.bounds
+        PasswordPromptContainerView.addSubview(PasswordViewController.view)
+        
+        PasswordViewController.PasswordAttemptTextfield.delegate = self
+    }
+    
+    
+    // MARK: - Textfield Functions
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 3
+    }
+    
+    
+    // MARK: - Objc Functions
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
+// MARK: - Extensions
 extension UILabel {
     func fixPickerLabelMargins(margin: CGFloat = 10, _ leftMarginOnly: Bool = true) {
             if let textString = self.text {

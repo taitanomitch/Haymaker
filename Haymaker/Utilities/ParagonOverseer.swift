@@ -17,6 +17,7 @@ class ParagonOverseer {
     }
     
     var Name: String = ""
+    var ParagonPassword: String = ""
     
     // MARK: - Character Stat Variables
     var Strength: Int = 0

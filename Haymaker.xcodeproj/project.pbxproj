@@ -187,8 +187,8 @@
 			children = (
 				A2D56BA2219BC6BB00CACB96 /* HomeScreenViewController.swift */,
 				A2D56BB6219BC90F00CACB96 /* HeroSelectController.swift */,
-				A2D56BCC219FB88200CACB96 /* CombatViewController.swift */,
 				A2EB2FC225CBB3D50019595A /* PlayerPasswordsViewController.swift */,
+				A2D56BCC219FB88200CACB96 /* CombatViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
