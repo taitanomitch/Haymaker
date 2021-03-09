@@ -35,8 +35,13 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var PasswordEntryHolderView: UIView!
     
     @IBOutlet weak var PreviousButton: UIButton!
+    @IBOutlet weak var PreviousButtonImageView: UIImageView!
     @IBOutlet weak var NextButton: UIButton!
+    @IBOutlet weak var NextButtonImageView: UIImageView!
     @IBOutlet weak var CancelButton: UIButton!
+    @IBOutlet weak var CancelButtonImageView: UIImageView!
+    @IBOutlet weak var PlayerOneParagonImageView: UIImageView!
+    @IBOutlet weak var PlayerTwoParagonImageView: UIImageView!
     
     @IBOutlet weak var PlayerOnePasswordLabel: UILabel!
     @IBOutlet weak var PlayerTwoPasswordLabel: UILabel!
@@ -54,6 +59,9 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     var PlayerTwoParagon: ParagonOverseer = ParagonOverseer()
     var ParagonForPassword: ParagonOverseer = ParagonOverseer()
     var PromptType: PasswordEntryType = .none
+    var LabelFont: String = "ActionMan"
+    var LabelFontSize: CGFloat = 20.0
+    var LabelFontSize2: CGFloat = 23.0
     
     
     // MARK: - Loading Functions
@@ -80,6 +88,7 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
             PasswordSetHolderView.alpha = 1.0
             PasswordEntryHolderView.alpha = 0.0
             setUpPasswordSetButtons()
+            setUpParagonImageViewsForPasswordSetting()
         case .passwordTry:
             PasswordSetHolderView.alpha = 0.0
             PasswordEntryHolderView.alpha = 1.0
@@ -110,8 +119,9 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     func setUpPasswordAttemptUI() {
         setUpParagonImageView()
         if let _ = PasswordAttemptLabel {
-            PasswordAttemptLabel.textColor = UIColor.black
-            PasswordAttemptLabel.text = "\(ParagonForPassword.Name): Enter Your Password:"
+            PasswordAttemptLabel.textColor = UIColor.white
+            PasswordAttemptLabel.font = UIFont(name: LabelFont, size: LabelFontSize2)
+            PasswordAttemptLabel.text = "Enter Your Password:"
         }
     }
     
@@ -128,52 +138,74 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setUpLabels() {
+        PlayerOnePasswordLabel.font = UIFont(name: LabelFont, size: LabelFontSize)
+        PlayerTwoPasswordLabel.font = UIFont(name: LabelFont, size: LabelFontSize)
+        AboveTextfieldLabel.font = UIFont(name: LabelFont, size: LabelFontSize)
         switch PasswordPhase {
         case .playerOne:
             PasswordTextfield.isUserInteractionEnabled = true
-            PlayerOnePasswordLabel.text = "\(PlayerOneParagon.Name): Setting Password..."
-            PlayerTwoPasswordLabel.text = "\(PlayerTwoParagon.Name): Up Next"
-            AboveTextfieldLabel.textColor = UIColor.black
+            PlayerOnePasswordLabel.text = "Setting Password"
+            PlayerTwoPasswordLabel.text = "Up Next"
+            PlayerOnePasswordLabel.textColor = UIColor.white
+            PlayerTwoPasswordLabel.textColor = UIColor.white
+            AboveTextfieldLabel.textColor = UIColor.white
             AboveTextfieldLabel.text = "Enter 3-Digit Password:"
+            AboveTextfieldLabel.alpha = 1.0
+            PasswordTextfield.alpha = 1.0
         case .playerTwo:
             PasswordTextfield.isUserInteractionEnabled = true
-            PlayerOnePasswordLabel.text = "\(PlayerOneParagon.Name): Ready To Fight!"
-            PlayerTwoPasswordLabel.text = "\(PlayerTwoParagon.Name): Setting Password..."
-            AboveTextfieldLabel.textColor = UIColor.black
+            PlayerOnePasswordLabel.text = "Ready To Fight!"
+            PlayerTwoPasswordLabel.text = "Setting Password"
+            PlayerOnePasswordLabel.textColor = UIColor.white
+            PlayerTwoPasswordLabel.textColor = UIColor.white
+            AboveTextfieldLabel.textColor = UIColor.white
             AboveTextfieldLabel.text = "Enter 3-Digit Password:"
+            AboveTextfieldLabel.alpha = 1.0
+            PasswordTextfield.alpha = 1.0
         case .complete:
             PasswordTextfield.isUserInteractionEnabled = false
-            PlayerOnePasswordLabel.text = "\(PlayerOneParagon.Name): Ready To Fight!"
-            PlayerTwoPasswordLabel.text = "\(PlayerTwoParagon.Name): Ready To Fight!"
-            AboveTextfieldLabel.textColor = UIColor.black
+            PlayerOnePasswordLabel.text = "Ready To Fight!"
+            PlayerTwoPasswordLabel.text = "Ready To Fight!"
+            PlayerOnePasswordLabel.textColor = UIColor.white
+            PlayerTwoPasswordLabel.textColor = UIColor.white
+            AboveTextfieldLabel.textColor = UIColor.white
             AboveTextfieldLabel.text = "Password Setting Complete!"
+            AboveTextfieldLabel.alpha = 0.0
+            PasswordTextfield.alpha = 0.0
         }
+    }
+    
+    func setUpParagonImageViewsForPasswordSetting() {
+        PlayerOneParagonImageView.image = UIImage(named: PlayerOneParagon.Name)
+        PlayerTwoParagonImageView.image = UIImage(named: PlayerTwoParagon.Name)
     }
     
     func setUpPasswordSetButtons() {
         switch PasswordPhase {
         case .playerOne:
-            NextButton.setTitle("Set Password", for: .normal)
-            NextButton.setBackgroundImage(UIImage(), for: .normal)
-            NextButton.setTitleColor(UIColor.white, for: .normal)
-            NextButton.backgroundColor = UIColor.blue
+            NextButton.setTitle("", for: .normal)
+            NextButton.setTitleColor(UIColor.clear, for: .normal)
+            NextButton.backgroundColor = UIColor.clear
+            NextButtonImageView.image = UIImage(named: "Next")
         case .playerTwo:
-            NextButton.setTitle("Set Password", for: .normal)
-            NextButton.setBackgroundImage(UIImage(), for: .normal)
-            NextButton.setTitleColor(UIColor.white, for: .normal)
-            NextButton.backgroundColor = UIColor.blue
+            NextButton.setTitle("", for: .normal)
+            NextButton.setTitleColor(UIColor.clear, for: .normal)
+            NextButton.backgroundColor = UIColor.clear
+            NextButtonImageView.image = UIImage(named: "Next")
         case .complete:
             NextButton.setTitle("", for: .normal)
             NextButton.setBackgroundImage(UIImage(named: "Fight"), for: .normal)
-            NextButton.setTitleColor(UIColor.white, for: .normal)
+            NextButton.setTitleColor(UIColor.clear, for: .normal)
             NextButton.backgroundColor = UIColor.clear
         }
-        PreviousButton.setTitle("Previous", for: .normal)
-        PreviousButton.setTitleColor(UIColor.white, for: .normal)
-        PreviousButton.backgroundColor = UIColor.blue
-        CancelButton.setTitle("Cancel", for: .normal)
-        CancelButton.setTitleColor(UIColor.darkGray, for: .normal)
-        CancelButton.backgroundColor = UIColor.lightGray
+        PreviousButton.setTitle("", for: .normal)
+        PreviousButton.setTitleColor(UIColor.clear, for: .normal)
+        PreviousButton.backgroundColor = UIColor.clear
+        PreviousButtonImageView.image = UIImage(named: "Back")
+        CancelButton.setTitle("", for: .normal)
+        CancelButton.setTitleColor(UIColor.clear, for: .normal)
+        CancelButton.backgroundColor = UIColor.clear
+        CancelButtonImageView.image = UIImage(named: "Cancel")
         setUpLabels()
     }
     
@@ -235,7 +267,7 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
                         setUpPasswordSetButtons()
                     } else {
                         AboveTextfieldLabel.text = "Enter 3-Digit Password!"
-                        AboveTextfieldLabel.textColor = UIColor.red
+                        AboveTextfieldLabel.textColor = UIColor.yellow
                     }
                 case .playerTwo:
                     if passwordText.count == 3 {
@@ -245,14 +277,14 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
                         setUpPasswordSetButtons()
                     } else {
                         AboveTextfieldLabel.text = "Enter 3-Digit Password!"
-                        AboveTextfieldLabel.textColor = UIColor.red
+                        AboveTextfieldLabel.textColor = UIColor.yellow
                     }
                 case .complete:
                     return
                 }
             } else {
                 AboveTextfieldLabel.text = "Enter 3-Digit Password!"
-                AboveTextfieldLabel.textColor = UIColor.red
+                AboveTextfieldLabel.textColor = UIColor.yellow
             }
         }
     }
@@ -293,8 +325,8 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
         if(PasswordAttemptTextfield.text == ParagonForPassword.ParagonPassword) {
             return true
         } else {
-            PasswordAttemptLabel.textColor = UIColor.red
-            PasswordAttemptLabel.text = "\(ParagonForPassword.Name) Enter Correct Password!"
+            PasswordAttemptLabel.textColor = UIColor.yellow
+            PasswordAttemptLabel.text = "Enter Correct Password!"
             return false
         }
     }
@@ -304,8 +336,8 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
             if(PasswordAttemptTextfield.text == ParagonForPassword.ParagonPassword) {
                 pressFightButton()
             } else {
-                PasswordAttemptLabel.textColor = UIColor.red
-                PasswordAttemptLabel.text = "\(ParagonForPassword.Name) Enter Correct Password!"
+                PasswordAttemptLabel.textColor = UIColor.yellow
+                PasswordAttemptLabel.text = "Enter Correct Password!"
             }
         }
         view.endEditing(true)
