@@ -179,6 +179,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var FirstSwap: Bool = false
     var UsingPasswords: Bool = false
     var PasswordViewController: PlayerPasswordsViewController = PlayerPasswordsViewController()
+    var PlayWithRevives: Bool = true
 
     // MARK: - UI Variables
     var ScreenHeight: CGFloat = 0
@@ -196,6 +197,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     var shadowAlpha: CGFloat = 0.4
     var tauntLabelFont: String = "ActionMan"
     var tauntLabelFontSize: CGFloat = 16.0
+    var reviveIncreaseConstant: Int = 4
     
     // MARK: - Loading Functions
     override func viewDidLoad() {
@@ -510,18 +512,25 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                     }
                     
                     if HandTotal < DamageToHero {
-                        HeroUnconscious = true
-                        flipParagonToUnconscious()
-                        CurrentPhase = .none
-                        addTextToLog(event: "\(HeroParagon.Name) Has Feinted...")
-                        addTextToLog(event: "\(VillainParagon.Name) WINS!")
-                        setPlayCardsButtonText()
-                        for _ in 0..<DeckController.PlayerHand.count {
-                            let _ = DeckController.playerPlayCard(atPosition: DeckController.PlayerHand.count - 1)
+                        if paragonWillpowerRevived(paragon: HeroParagon) {
+                            DeckController.clearPlayerHand()
+                            HeroParagon.Handsize = 2
+                            redrawCards()
+                            CurrentPhase = .selectAttack
+                        } else {
+                            HeroUnconscious = true
+                            flipParagonToUnconscious()
+                            CurrentPhase = .none
+                            addTextToLog(event: "\(HeroParagon.Name) Has Feinted...")
+                            addTextToLog(event: "\(VillainParagon.Name) WINS!")
+                            setPlayCardsButtonText()
+                            for _ in 0..<DeckController.PlayerHand.count {
+                                let _ = DeckController.playerPlayCard(atPosition: DeckController.PlayerHand.count - 1)
+                            }
+                            HeroParagon.Handsize = 0
+                            PlayerCardCollectionView.reloadData()
+                            setHandSizeLabels()
                         }
-                        HeroParagon.Handsize = 0
-                        PlayerCardCollectionView.reloadData()
-                        setHandSizeLabels()
                     }
                 }
             }
@@ -546,8 +555,14 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             setHandSizeLabels()
             
             if HeroParagon.Handsize == 0 {
-                HeroUnconscious = true
-                flipParagonToUnconscious()
+                if paragonWillpowerRevived(paragon: HeroParagon) {
+                    DeckController.clearPlayerHand()
+                    HeroParagon.Handsize = 2
+                    redrawCards()
+                } else {
+                    HeroUnconscious = true
+                    flipParagonToUnconscious()
+                }
             }
             
             if HeroUnconscious {
@@ -942,8 +957,14 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Enemy Damage Functions
     func enemyTakeDamage() {
         if DeckController.EnemyHand.count == 0 {
-            EnemyUnconscious = true
-            flipParagonToUnconscious()
+            if paragonWillpowerRevived(paragon: VillainParagon) {
+                DeckController.clearEnemyHand()
+                VillainParagon.Handsize = 2
+                redrawEnemyCards()
+            } else {
+                EnemyUnconscious = true
+                flipParagonToUnconscious()
+            }
             return
         }
         
@@ -1031,9 +1052,15 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         
         if DeckController.EnemyHand.count == 0 {
-            EnemyUnconscious = true
-            flipParagonToUnconscious()
-            addTextToLog(event: "\(VillainParagon.Name) Has Feinted...")
+            if paragonWillpowerRevived(paragon: VillainParagon) {
+                DeckController.clearEnemyHand()
+                VillainParagon.Handsize = 2
+                redrawEnemyCards()
+            } else {
+                EnemyUnconscious = true
+                flipParagonToUnconscious()
+                addTextToLog(event: "\(VillainParagon.Name) Has Feinted...")
+            }
         } else {
             VillainParagon.Handsize = DeckController.EnemyHand.count
         }
@@ -1685,7 +1712,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     
-    // MARK: - Miscellaneous UI Functions
+    // MARK: - Paragon Functions
     func performParagonPowers(paragon: ParagonOverseer) {
         if paragon.Name == HeroParagon.Name {
             paragon.performAbilityPower()
@@ -1696,6 +1723,21 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         addTextToLog(event: paragon.ParagonAbilityPowerText)
         setUpCharacterSheetViews()
+    }
+    
+    func paragonWillpowerRevived(paragon: ParagonOverseer) -> Bool {
+        let reviveThresholdValue: Int = 10 * (reviveIncreaseConstant * paragon.ReviveAttemptCount)
+        let reviveAttempt: Int = paragon.Willpower + DeckController.drawCardAndPlay().getValue()
+        let WillRevive = PlayWithRevives && (reviveAttempt >= reviveThresholdValue)
+        
+        if WillRevive {
+            addTextToLog(event: "\(paragon.Name) stabalized with willpower! (\(reviveAttempt))")
+            paragon.ReviveAttemptCount = paragon.ReviveAttemptCount + 1
+        } else {
+            addTextToLog(event: "\(paragon.Name) unable to stabalize. (\(reviveAttempt))")
+        }
+        
+        return WillRevive
     }
     
     // MARK: - Miscellaneous UI Functions

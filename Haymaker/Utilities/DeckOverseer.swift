@@ -193,6 +193,22 @@ class DeckOverseer {
         }
     }
     
+    public func clearPlayerHand() {
+        let loops = PlayerHand.count
+        for _ in 0..<loops {
+            let nextCard = PlayerHand.remove(at: 0)
+            DiscardPile.append(nextCard)
+        }
+    }
+    
+    public func clearEnemyHand() {
+        let loops = EnemyHand.count
+        for _ in 0..<loops {
+            let nextCard = EnemyHand.remove(at: 0)
+            DiscardPile.append(nextCard)
+        }
+    }
+    
     // MARK: - Debug Functions
     public func printTop10Cards() {
         for i in 0..<10 {

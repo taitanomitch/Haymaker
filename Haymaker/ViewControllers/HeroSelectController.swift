@@ -20,6 +20,10 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var SelectedOpponentImageView: UIImageView!
     @IBOutlet weak var PlayerPasswordsButton: UIButton!
     @IBOutlet weak var PlayerPasswordImageView: UIImageView!
+    @IBOutlet weak var PlayWithRevivesButton: UIButton!
+    @IBOutlet weak var PlayWithRevivesImageView
+        : UIImageView!
+    @IBOutlet weak var PlayWithRevivesImageView2: UIImageView!
     @IBOutlet weak var LeftPlayerTypeButton: UIButton!
     @IBOutlet weak var RightPlayerTypeButton: UIButton!
     @IBOutlet weak var SelectedParagonsBackgroundView: UIView!
@@ -49,6 +53,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     var LeftPlayerType: PlayerType = .Player
     var RightPlayerType: PlayerType = .Computer
     var PlayerPasswords: Bool = false
+    var PlayWithRevives: Bool = false
     var UsingPasswords: Bool = false
     
     
@@ -98,11 +103,22 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
             case true:
                 PlayerPasswordImageView.alpha = 1.0
             case false:
-                PlayerPasswordImageView.alpha = 0.6
+                PlayerPasswordImageView.alpha = 0.4
             }
         } else {
             PlayerPasswordsButton.alpha = 0
             PlayerPasswordImageView.alpha = 0
+        }
+    }
+    
+    func setUpPlayWithRevivesImage() {
+        switch PlayWithRevives {
+        case true:
+            PlayWithRevivesImageView.alpha = 1.0
+            PlayWithRevivesImageView2.alpha = 1.0
+        case false:
+            PlayWithRevivesImageView.alpha = 0.4
+            PlayWithRevivesImageView2.alpha = 0.4
         }
     }
     
@@ -237,6 +253,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         setUpParagonSelectionUI()
         setUpPlayerTypeButtonUI()
         setUpPlayerPasswordsImage()
+        setUpPlayWithRevivesImage()
     }
     
     func setUpBeginCombatButtonUI() {
@@ -283,12 +300,15 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     func showCombatViewController() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         var newCombatViewController = storyBoard.instantiateViewController(withIdentifier: "CombatViewController") as! CombatViewController
+        HeroParagon.ReviveAttemptCount = 0
+        VillainParagon.ReviveAttemptCount = 0
         newCombatViewController.HeroParagon = HeroParagon
         newCombatViewController.VillainParagon = VillainParagon
         newCombatViewController.DeckController = DeckController
         newCombatViewController.ScreenHeight = self.view.frame.height
         newCombatViewController.CurrentGameType = determineGameType()
         newCombatViewController.UsingPasswords = UsingPasswords
+        newCombatViewController.PlayWithRevives = PlayWithRevives
         newCombatViewController = swapParagonsIfNeeded(GameViewController: newCombatViewController)
         let transition = getPresentTransitionCombat()
         view.window!.layer.add(transition, forKey: kCATransition)
@@ -424,6 +444,10 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         setUpPlayerPasswordsImage()
     }
     
+    @IBAction func pressPlayWithRevivesButton(_ sender: UIButton) {
+        PlayWithRevives = !PlayWithRevives
+        setUpPlayWithRevivesImage()
+    }
     
     @IBAction func pressLeftPlayerTypeButton(_ sender: UIButton) {
         if LeftPlayerType == .Player {

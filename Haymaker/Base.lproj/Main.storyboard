@@ -155,10 +155,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOQ-v9-uH0" userLabel="VersusHolder">
-                                                <rect key="frame" x="140.5" y="63" width="94" height="94"/>
+                                                <rect key="frame" x="140.5" y="83" width="94" height="94"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vs" translatesAutoresizingMaskIntoConstraints="NO" id="Nc3-E4-nZu">
-                                                        <rect key="frame" x="16.5" y="16.5" width="61" height="61"/>
+                                                        <rect key="frame" x="5" y="4.5" width="84" height="84.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Nc3-E4-nZu" secondAttribute="height" multiplier="1:1" id="Eaj-Ue-XaE"/>
                                                         </constraints>
@@ -169,19 +169,33 @@
                                                     <constraint firstItem="Nc3-E4-nZu" firstAttribute="centerY" secondItem="TOQ-v9-uH0" secondAttribute="centerY" id="1tr-kg-J2E"/>
                                                     <constraint firstAttribute="width" secondItem="TOQ-v9-uH0" secondAttribute="height" multiplier="1:1" id="Ov0-th-HYt"/>
                                                     <constraint firstItem="Nc3-E4-nZu" firstAttribute="centerX" secondItem="TOQ-v9-uH0" secondAttribute="centerX" id="bIf-2X-ype"/>
-                                                    <constraint firstItem="Nc3-E4-nZu" firstAttribute="width" secondItem="TOQ-v9-uH0" secondAttribute="width" multiplier="0.65" id="tvj-qw-pLP"/>
+                                                    <constraint firstItem="Nc3-E4-nZu" firstAttribute="width" secondItem="TOQ-v9-uH0" secondAttribute="width" multiplier="0.9" id="tvj-qw-pLP"/>
                                                 </constraints>
                                             </view>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Security" translatesAutoresizingMaskIntoConstraints="NO" id="Ktw-1t-Ngg">
-                                                <rect key="frame" x="166.5" y="5" width="42" height="41.5"/>
+                                                <rect key="frame" x="166.5" y="44.5" width="42" height="42"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMC-p2-Sd4">
-                                                <rect key="frame" x="166.5" y="5" width="42" height="41.5"/>
+                                                <rect key="frame" x="166.5" y="44.5" width="42" height="42"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ZMC-p2-Sd4" secondAttribute="height" multiplier="1:1" id="ZSE-p3-S18"/>
                                                 </constraints>
                                                 <connections>
                                                     <action selector="pressPlayerPasswordsButton:" destination="Ppn-0K-x3x" eventType="touchUpInside" id="WO9-ky-giM"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_Revives" translatesAutoresizingMaskIntoConstraints="NO" id="Y0H-PM-PVN" userLabel="Revives Icon">
+                                                <rect key="frame" x="160.5" y="-1.5" width="54" height="54.5"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_Revives2" translatesAutoresizingMaskIntoConstraints="NO" id="ouF-vR-WC2" userLabel="Revives Icon">
+                                                <rect key="frame" x="160.5" y="-1.5" width="54" height="54.5"/>
+                                                <color key="tintColor" red="0.0" green="0.54509803921568623" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYJ-lY-4P5" userLabel="Revives Button">
+                                                <rect key="frame" x="160.5" y="5" width="54" height="41.5"/>
+                                                <connections>
+                                                    <action selector="pressPlayWithRevivesButton:" destination="Ppn-0K-x3x" eventType="touchUpInside" id="DrA-Os-Zxu"/>
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Square" translatesAutoresizingMaskIntoConstraints="NO" id="Ynw-1K-rqP" userLabel="Left Background Square">
@@ -208,20 +222,28 @@
                                             <constraint firstAttribute="trailing" secondItem="vci-cC-GBy" secondAttribute="trailing" id="0pX-w3-L1W"/>
                                             <constraint firstItem="Ynw-1K-rqP" firstAttribute="height" secondItem="mgB-mu-Lcr" secondAttribute="height" multiplier="1.15" id="22w-aV-vE9"/>
                                             <constraint firstItem="mgB-mu-Lcr" firstAttribute="leading" secondItem="W1b-QU-257" secondAttribute="leading" constant="10" id="2Ia-08-0mo"/>
+                                            <constraint firstItem="VYJ-lY-4P5" firstAttribute="centerX" secondItem="ZMC-p2-Sd4" secondAttribute="centerX" id="4GT-bb-sma"/>
                                             <constraint firstItem="QhF-ET-FNt" firstAttribute="leading" secondItem="HcB-nX-ukr" secondAttribute="leading" id="5Ft-EA-MUB"/>
+                                            <constraint firstItem="Y0H-PM-PVN" firstAttribute="height" secondItem="VYJ-lY-4P5" secondAttribute="height" multiplier="1.3" id="6B9-O3-SoP"/>
+                                            <constraint firstItem="ouF-vR-WC2" firstAttribute="centerX" secondItem="Y0H-PM-PVN" secondAttribute="centerX" id="6wW-bt-8vg"/>
+                                            <constraint firstItem="Y0H-PM-PVN" firstAttribute="centerY" secondItem="VYJ-lY-4P5" secondAttribute="centerY" id="7J7-Sm-oe7"/>
                                             <constraint firstItem="TOQ-v9-uH0" firstAttribute="centerX" secondItem="HcB-nX-ukr" secondAttribute="centerX" id="7uF-hP-3h9"/>
                                             <constraint firstItem="Lbv-3f-eDi" firstAttribute="centerY" secondItem="tpX-5b-ciH" secondAttribute="centerY" id="8BN-TO-bNW"/>
                                             <constraint firstItem="tpX-5b-ciH" firstAttribute="bottom" secondItem="vci-cC-GBy" secondAttribute="bottom" constant="-10" id="8zO-yn-RL6"/>
                                             <constraint firstItem="vci-cC-GBy" firstAttribute="width" secondItem="W1b-QU-257" secondAttribute="width" id="BXf-vM-PVL"/>
+                                            <constraint firstItem="ouF-vR-WC2" firstAttribute="height" secondItem="Y0H-PM-PVN" secondAttribute="height" id="Bqd-ej-nbz"/>
                                             <constraint firstItem="Ktw-1t-Ngg" firstAttribute="centerX" secondItem="ZMC-p2-Sd4" secondAttribute="centerX" id="CDn-HN-BU3"/>
                                             <constraint firstItem="mgB-mu-Lcr" firstAttribute="height" secondItem="W1b-QU-257" secondAttribute="height" multiplier="0.335329" id="CaD-zb-xKm"/>
                                             <constraint firstItem="Lbv-3f-eDi" firstAttribute="centerX" secondItem="tpX-5b-ciH" secondAttribute="centerX" id="D10-bP-7E5"/>
+                                            <constraint firstItem="ouF-vR-WC2" firstAttribute="width" secondItem="Y0H-PM-PVN" secondAttribute="width" id="DoR-Vc-5QW"/>
                                             <constraint firstItem="W1b-QU-257" firstAttribute="leading" secondItem="HcB-nX-ukr" secondAttribute="leading" id="EZi-gJ-fHj"/>
                                             <constraint firstAttribute="bottom" secondItem="vci-cC-GBy" secondAttribute="bottom" id="F3S-Xu-80V"/>
-                                            <constraint firstItem="ZMC-p2-Sd4" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" constant="5" id="FIX-pg-vjO"/>
                                             <constraint firstItem="FhK-iv-nL2" firstAttribute="top" secondItem="5iZ-qy-0fs" secondAttribute="top" id="GzF-p4-iPS"/>
+                                            <constraint firstItem="ZMC-p2-Sd4" firstAttribute="top" secondItem="VYJ-lY-4P5" secondAttribute="bottom" constant="-2" id="I3L-e8-cTD"/>
                                             <constraint firstItem="tpX-5b-ciH" firstAttribute="trailing" secondItem="vci-cC-GBy" secondAttribute="trailing" constant="-10" id="J7A-4K-bqk"/>
                                             <constraint firstAttribute="trailing" secondItem="QhF-ET-FNt" secondAttribute="trailing" id="NWr-cL-SBL"/>
+                                            <constraint firstItem="Y0H-PM-PVN" firstAttribute="width" secondItem="VYJ-lY-4P5" secondAttribute="width" id="NpE-RE-fZz"/>
+                                            <constraint firstItem="Y0H-PM-PVN" firstAttribute="centerX" secondItem="VYJ-lY-4P5" secondAttribute="centerX" id="OmJ-fy-BaX"/>
                                             <constraint firstItem="FhK-iv-nL2" firstAttribute="height" secondItem="5iZ-qy-0fs" secondAttribute="height" id="Psw-M8-WrO"/>
                                             <constraint firstItem="Ktw-1t-Ngg" firstAttribute="width" secondItem="ZMC-p2-Sd4" secondAttribute="width" id="RIT-qF-eev"/>
                                             <constraint firstItem="Ynw-1K-rqP" firstAttribute="width" secondItem="mgB-mu-Lcr" secondAttribute="width" multiplier="1.15" id="SUt-hb-Fje"/>
@@ -229,12 +251,15 @@
                                             <constraint firstItem="Lbv-3f-eDi" firstAttribute="width" secondItem="tpX-5b-ciH" secondAttribute="width" multiplier="1.15" id="TXZ-1o-iSb"/>
                                             <constraint firstAttribute="bottom" secondItem="W1b-QU-257" secondAttribute="bottom" id="Uw8-bM-S2b"/>
                                             <constraint firstItem="Lbv-3f-eDi" firstAttribute="height" secondItem="tpX-5b-ciH" secondAttribute="height" multiplier="1.15" id="V18-BH-q6F"/>
+                                            <constraint firstItem="ouF-vR-WC2" firstAttribute="centerY" secondItem="Y0H-PM-PVN" secondAttribute="centerY" id="VRq-uP-pdq"/>
                                             <constraint firstItem="tpX-5b-ciH" firstAttribute="height" secondItem="vci-cC-GBy" secondAttribute="height" multiplier="0.335329" id="Vwu-TI-Uh0"/>
                                             <constraint firstItem="ZMC-p2-Sd4" firstAttribute="height" secondItem="HcB-nX-ukr" secondAttribute="height" multiplier="1/4" id="W4q-Rq-BOG"/>
+                                            <constraint firstItem="VYJ-lY-4P5" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" constant="5" id="XE9-tc-IcI"/>
                                             <constraint firstItem="ZMC-p2-Sd4" firstAttribute="centerX" secondItem="HcB-nX-ukr" secondAttribute="centerX" id="YoG-8x-lqJ"/>
+                                            <constraint firstItem="VYJ-lY-4P5" firstAttribute="height" secondItem="ZMC-p2-Sd4" secondAttribute="height" id="Zd5-dB-x3s"/>
                                             <constraint firstItem="Ktw-1t-Ngg" firstAttribute="centerY" secondItem="ZMC-p2-Sd4" secondAttribute="centerY" id="aN3-Ve-5yN"/>
                                             <constraint firstItem="W1b-QU-257" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" id="c0g-vR-LDx"/>
-                                            <constraint firstAttribute="bottom" secondItem="TOQ-v9-uH0" secondAttribute="bottom" constant="10" id="eFS-xz-85u"/>
+                                            <constraint firstAttribute="bottom" secondItem="TOQ-v9-uH0" secondAttribute="bottom" constant="-10" id="eFS-xz-85u"/>
                                             <constraint firstItem="Ynw-1K-rqP" firstAttribute="centerY" secondItem="mgB-mu-Lcr" secondAttribute="centerY" id="eiu-x6-59d"/>
                                             <constraint firstItem="QhF-ET-FNt" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" id="f1X-LK-O8l"/>
                                             <constraint firstItem="vci-cC-GBy" firstAttribute="leading" secondItem="W1b-QU-257" secondAttribute="trailing" id="gAa-O1-tFV"/>
@@ -242,6 +267,7 @@
                                             <constraint firstItem="mgB-mu-Lcr" firstAttribute="bottom" secondItem="W1b-QU-257" secondAttribute="bottom" constant="-10" id="hyh-hr-y3L"/>
                                             <constraint firstItem="Ynw-1K-rqP" firstAttribute="centerX" secondItem="mgB-mu-Lcr" secondAttribute="centerX" id="lcE-pR-OUq"/>
                                             <constraint firstItem="TOQ-v9-uH0" firstAttribute="width" secondItem="HcB-nX-ukr" secondAttribute="width" multiplier="1/4" id="os0-f4-I3H"/>
+                                            <constraint firstItem="VYJ-lY-4P5" firstAttribute="width" secondItem="ZMC-p2-Sd4" secondAttribute="width" multiplier="1.3" id="r2K-eG-JkD"/>
                                             <constraint firstItem="vci-cC-GBy" firstAttribute="top" secondItem="HcB-nX-ukr" secondAttribute="top" id="t9i-x3-t0B"/>
                                             <constraint firstAttribute="bottom" secondItem="QhF-ET-FNt" secondAttribute="bottom" id="tDN-Qv-IVt"/>
                                             <constraint firstItem="tpX-5b-ciH" firstAttribute="width" secondItem="vci-cC-GBy" secondAttribute="width" multiplier="0.333333" id="vt8-oA-PTC"/>
@@ -537,6 +563,9 @@
                         <outlet property="LeftPlayerTypeButton" destination="mgB-mu-Lcr" id="wCO-7L-Y4g"/>
                         <outlet property="OpponentsCollectionBackgroundView" destination="bqi-YH-ANc" id="wue-Ol-jtZ"/>
                         <outlet property="OpponentsCollectionView" destination="f8C-M1-jhS" id="bBz-Ok-jBF"/>
+                        <outlet property="PlayWithRevivesButton" destination="VYJ-lY-4P5" id="tjT-qZ-02r"/>
+                        <outlet property="PlayWithRevivesImageView" destination="Y0H-PM-PVN" id="CN6-po-AJI"/>
+                        <outlet property="PlayWithRevivesImageView2" destination="ouF-vR-WC2" id="d4b-SP-fr8"/>
                         <outlet property="PlayerPasswordImageView" destination="Ktw-1t-Ngg" id="L2L-My-ffx"/>
                         <outlet property="PlayerPasswordsButton" destination="ZMC-p2-Sd4" id="zsE-VZ-677"/>
                         <outlet property="RightPlayerTypeButton" destination="tpX-5b-ciH" id="gdf-4B-AT4"/>
@@ -2647,6 +2676,8 @@
         <image name="Icon_Cards" width="200" height="200"/>
         <image name="Icon_CardsHand" width="200" height="200"/>
         <image name="Icon_Intellect" width="255" height="353"/>
+        <image name="Icon_Revives" width="512" height="512"/>
+        <image name="Icon_Revives2" width="512" height="512"/>
         <image name="Icon_Strength" width="394" height="551"/>
         <image name="Icon_Willpower" width="268" height="473"/>
         <image name="Play" width="194" height="105"/>

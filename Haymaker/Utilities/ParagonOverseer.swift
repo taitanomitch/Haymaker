@@ -59,6 +59,7 @@ class ParagonOverseer {
     var ParagonAbilityPower: AbilityPowers = .none
     var ParagonAbilityPowerMultiplier: Int = 1
     var ParagonAbilityPowerText: String = ""
+    var ReviveAttemptCount: Int = 0
     
     // MARK: - Character Status Enum
     enum Status {
