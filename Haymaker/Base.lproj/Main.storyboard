@@ -505,13 +505,13 @@
                                                         </connections>
                                                     </button>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Fight" translatesAutoresizingMaskIntoConstraints="NO" id="scE-et-Jdl">
-                                                        <rect key="frame" x="9.5" y="7.5" width="356" height="81"/>
+                                                        <rect key="frame" x="9.5" y="-2" width="356" height="81"/>
                                                     </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="oP5-Qd-ja4" firstAttribute="width" secondItem="0g4-Dz-5T2" secondAttribute="width" multiplier="95/100" id="DNo-zj-4CM"/>
-                                                    <constraint firstItem="scE-et-Jdl" firstAttribute="centerY" secondItem="0g4-Dz-5T2" secondAttribute="centerY" id="G76-fc-kNP"/>
+                                                    <constraint firstItem="scE-et-Jdl" firstAttribute="centerY" secondItem="0g4-Dz-5T2" secondAttribute="centerY" multiplier="0.8" id="G76-fc-kNP"/>
                                                     <constraint firstItem="scE-et-Jdl" firstAttribute="height" secondItem="0g4-Dz-5T2" secondAttribute="height" multiplier="85/100" id="M2P-a7-4wq"/>
                                                     <constraint firstItem="scE-et-Jdl" firstAttribute="width" secondItem="0g4-Dz-5T2" secondAttribute="width" multiplier="95/100" id="UHL-Li-ctR"/>
                                                     <constraint firstItem="oP5-Qd-ja4" firstAttribute="centerY" secondItem="0g4-Dz-5T2" secondAttribute="centerY" id="Xul-ZG-ics"/>
