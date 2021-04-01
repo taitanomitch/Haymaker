@@ -523,7 +523,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width / 2)  - 10
+        let width = (collectionView.frame.width / 2)  - 2
         let height = width
         return CGSize(width: width, height: height)
     }
