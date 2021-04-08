@@ -33,9 +33,9 @@ class HomeScreenViewController: UIViewController {
     }
     
     // MARK: - Button Functions
-    @IBAction func PressPlayButton(_ sender: UIButton) {
+    @IBAction func pressPlayButton(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "HeroSelectController") as! HeroSelectController
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "MainMenuViewController") as! MainMenuViewController
         self.present(newViewController, animated: true) {
             
         }

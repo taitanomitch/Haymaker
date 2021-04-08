@@ -21,8 +21,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var PlayerPasswordsButton: UIButton!
     @IBOutlet weak var PlayerPasswordImageView: UIImageView!
     @IBOutlet weak var PlayWithRevivesButton: UIButton!
-    @IBOutlet weak var PlayWithRevivesImageView
-        : UIImageView!
+    @IBOutlet weak var PlayWithRevivesImageView: UIImageView!
     @IBOutlet weak var PlayWithRevivesImageView2: UIImageView!
     @IBOutlet weak var LeftPlayerTypeButton: UIButton!
     @IBOutlet weak var RightPlayerTypeButton: UIButton!
