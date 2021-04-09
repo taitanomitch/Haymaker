@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ParagonCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ParagonCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate {
     
     // MARK: - IBOutlet Variables
     @IBOutlet weak var CreateParagonButton: UIButton!
@@ -223,6 +223,11 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
     
     func listOfCustomParagon(characterList: [ParagonOverseer]) -> [ParagonOverseer] {
         return characterList
+    }
+    
+    // MARK: - TextView Functions
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        return false
     }
     
     // MARK: - Button Functions

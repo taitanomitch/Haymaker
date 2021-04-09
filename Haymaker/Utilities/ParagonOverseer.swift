@@ -161,7 +161,7 @@ class ParagonOverseer {
                     AttackType = ""
                 }
                 
-                CombatAbilityText += "\u{2022} (\(AttackType)) \(AttackTypeNames[i]) Attack: \(AttackValues[i])"
+                CombatAbilityText += "\u{2022} [\(AttackType)] \(AttackTypeNames[i]) Attack: \(AttackValues[i])"
                 if DamageBonuses[i] != 0 {
                     CombatAbilityText += "\n\t\u{2023} Bonus Damage: +\(DamageBonuses[i])"
                 }
