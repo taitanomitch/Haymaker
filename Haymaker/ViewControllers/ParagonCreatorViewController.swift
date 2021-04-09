@@ -77,6 +77,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
         setUpParagonImageViewUI()
         setUpBioUI()
         setUpDelegates()
+        updateRemainingPowerPoints()
         updateAllAttributeButtonsUI()
         updateAllAttributeLabels()
     }

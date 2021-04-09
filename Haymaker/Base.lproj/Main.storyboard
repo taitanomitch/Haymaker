@@ -2769,7 +2769,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kpv-SJ-DHZ">
-                                                <rect key="frame" x="268" y="0.0" width="107" height="70"/>
+                                                <rect key="frame" x="253" y="0.0" width="107" height="70"/>
                                                 <state key="normal" title="Create Paragon"/>
                                                 <connections>
                                                     <action selector="pressCreateParagonButton:" destination="aaq-Yb-jTG" eventType="touchUpInside" id="zL9-5w-gAt"/>
@@ -2778,10 +2778,10 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="Kpv-SJ-DHZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sFe-7t-IjW" secondAttribute="leading" symbolic="YES" id="6N3-iG-g77"/>
+                                            <constraint firstItem="Kpv-SJ-DHZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sFe-7t-IjW" secondAttribute="leading" constant="20" symbolic="YES" id="6N3-iG-g77"/>
                                             <constraint firstItem="ySG-K8-5Kq" firstAttribute="leading" secondItem="sFe-7t-IjW" secondAttribute="leading" constant="15" id="DVZ-8w-mXh"/>
                                             <constraint firstItem="ySG-K8-5Kq" firstAttribute="centerY" secondItem="sFe-7t-IjW" secondAttribute="centerY" id="RPf-5e-oB0"/>
-                                            <constraint firstAttribute="trailing" secondItem="Kpv-SJ-DHZ" secondAttribute="trailing" id="gNR-5V-PwZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="Kpv-SJ-DHZ" secondAttribute="trailing" constant="15" id="gNR-5V-PwZ"/>
                                             <constraint firstItem="Kpv-SJ-DHZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ySG-K8-5Kq" secondAttribute="trailing" constant="8" symbolic="YES" id="kRU-fh-cTU"/>
                                             <constraint firstItem="Kpv-SJ-DHZ" firstAttribute="top" secondItem="sFe-7t-IjW" secondAttribute="top" id="l2C-vo-krg"/>
                                             <constraint firstAttribute="height" constant="70" id="tQO-ZQ-Hsy"/>
