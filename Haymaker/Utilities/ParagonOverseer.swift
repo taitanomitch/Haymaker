@@ -12,6 +12,9 @@ class ParagonOverseer {
     
     enum AbilityPowers {
         case strengthIncrease
+        case agilityIncrease
+        case intellectIncrease
+        case willpowerIncrease
         case healingFactor
         case none
     }
@@ -80,62 +83,12 @@ class ParagonOverseer {
         case none
     }
     
+    
     // MARK: - Combat Preparation Functions
     func resetHandSize() {
         Handsize = StartingHandsize
     }
-    
-    // MARK: - Value Calculator Functions
-    func attackValue() -> Int {
-        var attackValue = 0
-        
-        switch CurrentAttackType {
-        case .strength:
-            attackValue = attackValue + Strength
-        case .agility:
-            attackValue = attackValue + Agility
-        case .intellect:
-            attackValue = attackValue + Intellect
-        case .willpower:
-            attackValue = attackValue + Willpower
-        default:
-            return 0
-        }
-        
-        //Add Any Weapon Modifiers
-        if EquippedItem.item != Equipment.EquipmentList.none {
-            if (EquippedItem.determineEquipmentStance(equipment: EquippedItem.item) == Equipment.EquipmentStance.attackAndDamage) {
-                attackValue = attackValue + EquippedItem.determineEquipmentBonusValue(equipment: EquippedItem.item)
-            } else if (Skills.contains(where: { (skill) -> Bool in
-                return skill.skill == Skill.SkillNames.weapons3
-            }) && (EquippedItem.determineEquipmentStance(equipment: EquippedItem.item) == Equipment.EquipmentStance.damage)) {
-                attackValue = attackValue + EquippedItem.determineEquipmentBonusValue(equipment: EquippedItem.item)
-            }
-        }
-        
-        //Add Any Skill Modifiers
-        
-        
-        //Add Any Power Modifiers
-        
-        
-        return attackValue
-    }
-    
-    func damageValue() -> Int {
-        var damageValue = 0
-        
-        //Add Weapon's Base Modifier
-        if EquippedItem.item != Equipment.EquipmentList.none {
-            if (EquippedItem.determineEquipmentStance(equipment: EquippedItem.item) == Equipment.EquipmentStance.damage) ||
-                (EquippedItem.determineEquipmentStance(equipment: EquippedItem.item) == Equipment.EquipmentStance.attackAndDamage) {
-                damageValue = damageValue + EquippedItem.determineEquipmentBonusValue(equipment: EquippedItem.item)
-            }
-        }
-        
-        //Return Sum of Modifiers
-        return damageValue
-    }
+
     
     // MARK: - Paragon Combat Ability String Generator Functions
     public func getParagonCombatAbilityText() -> String {
@@ -175,6 +128,12 @@ class ParagonOverseer {
                 CombatAbilityText += "\u{2022} HEALING FACTOR: \(Name) regenerates up to \(ParagonAbilityPowerMultiplier) lost card(s) after every turn."
             case .strengthIncrease:
                 CombatAbilityText += "\u{2022} STENGTH INCREASE: \(Name)'s Strength increases by \(ParagonAbilityPowerMultiplier) after every turn."
+            case .agilityIncrease:
+                CombatAbilityText += "\u{2022} AGILITY INCREASE: \(Name)'s Agility increases by \(ParagonAbilityPowerMultiplier) after every turn."
+            case .intellectIncrease:
+                CombatAbilityText += "\u{2022} INTELLECT INCREASE: \(Name)'s Intellect increases by \(ParagonAbilityPowerMultiplier) after every turn."
+            case .willpowerIncrease:
+                CombatAbilityText += "\u{2022} WILLPOWER INCREASE: \(Name)'s Willpower increases by \(ParagonAbilityPowerMultiplier) after every turn."
             case .none:
                 CombatAbilityText += ""
             }
@@ -187,10 +146,24 @@ class ParagonOverseer {
     public func performAbilityPower() {
         switch ParagonAbilityPower {
         case .strengthIncrease:
-            self.Strength = self.Strength + (1 * ParagonAbilityPowerMultiplier)
+            self.Strength += (1 * ParagonAbilityPowerMultiplier)
+            if Name == "Hulk" {
+                DamageBonuses[0] += (1 * ParagonAbilityPowerMultiplier)
+            } else {
+                AttackValues[0] += (1 * ParagonAbilityPowerMultiplier)
+            }
+        case .agilityIncrease:
+            self.Agility += (1 * ParagonAbilityPowerMultiplier)
+            AttackValues[1] += (1 * ParagonAbilityPowerMultiplier)
+        case .intellectIncrease:
+            self.Intellect += (1 * ParagonAbilityPowerMultiplier)
+            AttackValues[2] += (1 * ParagonAbilityPowerMultiplier)
+        case .willpowerIncrease:
+            self.Willpower += (1 * ParagonAbilityPowerMultiplier)
+            AttackValues[3] += (1 * ParagonAbilityPowerMultiplier)
         case .healingFactor:
             if self.Handsize < StartingHandsize {
-                self.Handsize = self.Handsize + (1 * ParagonAbilityPowerMultiplier)
+                self.Handsize += (1 * ParagonAbilityPowerMultiplier)
                 if self.Handsize >= self.StartingHandsize {
                     resetHandSize()
                 }

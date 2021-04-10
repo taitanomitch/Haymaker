@@ -275,6 +275,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func displayActionSelectionMenu() {
+        setUpAttackOptions()
         if !AnimatingActionSelectionView {
             AnimatingActionSelectionView = true
             ActionSelectionViewIsDisplayed = !ActionSelectionViewIsDisplayed
@@ -291,15 +292,48 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    
+    // MARK: - Utility Functions
+    func calculateEnemyTotalDamage() {
+        switch VillainParagon.CurrentActionType {
+        case .strength:
+            EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexStr]
+        case .agility:
+            EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexAgi]
+        case .intellect:
+            EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexInt]
+        case .willpower:
+            EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexWil]
+        default:
+            break
+        }
+    }
+    
+    func calculatePlayerTotalDamage() {
+        switch HeroParagon.CurrentActionType {
+        case .strength:
+            TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexStr]
+        case .agility:
+            TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexAgi]
+        case .intellect:
+            TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexInt]
+        case .willpower:
+            TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexWil]
+        default:
+            break
+        }
+    }
+    
+    
     // MARK: - Phase Functions
     func beginSelectAttack() {
         if HeroParagon.CurrentActionType == .strength || HeroParagon.CurrentActionType == .agility || HeroParagon.CurrentActionType == .intellect || HeroParagon.CurrentActionType == .willpower {
             CurrentPhase = .edgeAttack
-            setPhaseLabelValue()
             setPlayCardsButtonText()
+            setAbilityScoreToPlayValue()
             displayActionSelectionMenu()
             setActionIndicatorColor()
-            setAbilityScoreToPlayValue()
+            setPhaseLabelValue()
             updateTotalLabel()
             addTextToLog(event: "\(HeroParagon.Name) Starting Attack: (\(TotalPlayValue))")
         } else if ActionSelectorView.alpha == 0 {
@@ -466,35 +500,24 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
             
             if TotalPlayValue > EnemyTotalAttackValue {
+                addTextToLog(event: "\(HeroParagon.Name) Dodged The Attack!")
                 CurrentPhase = .selectAttack
                 HeroParagon.CurrentActionType = .doom
                 displayActionSelectionMenu()
-                addTextToLog(event: "\(HeroParagon.Name) Dodged The Attack!")
                 setActionIndicatorColor()
                 updateTotalLabel()
                 flipAttackDefenseImages()
             } else {
-                switch VillainParagon.CurrentActionType {
-                case .strength:
-                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexStr]
-                case .agility:
-                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexAgi]
-                case .intellect:
-                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexInt]
-                case .willpower:
-                    EnemyTotalAttackValue = EnemyTotalAttackValue + VillainParagon.DamageBonuses[indexWil]
-                default:
-                    break
-                }
-                
+                calculateEnemyTotalDamage()
                 addTextToLog(event: "\(VillainParagon.Name) Total Attack Damage: (\(EnemyTotalAttackValue))")
                 addTextToLog(event: "\(HeroParagon.Name) Resistance: (\(heroResistance))")
                 
                 if EnemyTotalAttackValue - heroResistance <= 0 {
+                    addTextToLog(event: "\(HeroParagon.Name) Resisted The Damage!")
                     CurrentPhase = .selectAttack
                     HeroParagon.CurrentActionType = .doom
+                    
                     displayActionSelectionMenu()
-                    addTextToLog(event: "\(HeroParagon.Name) Resisted The Damage!")
                     setActionIndicatorColor()
                     updateTotalLabel()
                     flipAttackDefenseImages()
@@ -577,8 +600,8 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
                 setActionIndicatorColor()
                 setPhaseLabelValue()
                 setPlayCardsButtonText()
-                flipAttackDefenseImages()
                 updateTotalLabel()
+                flipAttackDefenseImages()
             }
         }
     }
@@ -1282,8 +1305,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
         //Holds total value of played edge cards to return
         var playValueOfEdgeCards = 0
         
-        
-        //Checks to for an edge card to hold for Play-Card if needed
+        //Checks for an edge card to hold for Play-Card if needed
         if matchingCardTypePositions.count == 1 {
             let valueOfCard = DeckController.EnemyHand[matchingCardTypePositions[0]].getValue()
             if valueOfCard <= VillainParagon.Edge {
@@ -1432,24 +1454,13 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             addTextToLog(event: "\(VillainParagon.Name) Dodged! (\(totalDodgeValue))")
             DamageToEnemy = 0
         } else {
-            switch HeroParagon.CurrentActionType {
-            case .strength:
-                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexStr]
-            case .agility:
-                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexAgi]
-            case .intellect:
-                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexInt]
-            case .willpower:
-                TotalPlayValue = TotalPlayValue + HeroParagon.DamageBonuses[indexWil]
-            default:
-                break
-            }
-            
+            calculatePlayerTotalDamage()
             addTextToLog(event: "\(HeroParagon.Name) Total Attack Damage: (\(TotalPlayValue))")
             addTextToLog(event: "\(VillainParagon.Name) Resistance: (\(opponentResistance))")
             
             DamageToEnemy = TotalPlayValue - opponentResistance
-            if DamageToEnemy <= 0 {
+            let NoDamageToEnemy = DamageToEnemy <= 0
+            if NoDamageToEnemy {
                 addTextToLog(event: "\(VillainParagon.Name) Resisted The Damage!")
             } else {
                 addTextToLog(event: "\(VillainParagon.Name) Hit For \(DamageToEnemy) Damage!")
@@ -1831,10 +1842,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             StrengthAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[0])"
             if HeroParagon.DamageBonuses[indexStr] > 0 {
                 StrengthBonusDamageLabel.alpha = 1.0
-                StrengthBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexStr])"
+                StrengthBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexStr])"
             } else {
                 StrengthBonusDamageLabel.alpha = 0.0
-                StrengthBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexStr])"
+                StrengthBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexStr])"
             }
         } else {
             StrengthSelectorButton.alpha = 0.0
@@ -1849,10 +1860,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             AgilityAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[1])"
             if HeroParagon.DamageBonuses[indexAgi] > 0 {
                 AgilityBonusDamageLabel.alpha = 1.0
-                AgilityBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexAgi])"
+                AgilityBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexAgi])"
             } else {
                 AgilityBonusDamageLabel.alpha = 0.0
-                AgilityBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexAgi])"
+                AgilityBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexAgi])"
             }
         } else {
             AgilitySelectorButton.alpha = 0.0
@@ -1867,10 +1878,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             IntellectAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[2])"
             if HeroParagon.DamageBonuses[indexInt] > 0 {
                 IntellectBonusDamageLabel.alpha = 1.0
-                IntellectBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexInt])"
+                IntellectBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexInt])"
             } else {
                 IntellectBonusDamageLabel.alpha = 0.0
-                IntellectBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexInt])"
+                IntellectBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexInt])"
             }
         } else {
             IntellectSelectorButton.alpha = 0.0
@@ -1885,10 +1896,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             WillpowerAttackValueLabel.text = "Attack: \(HeroParagon.AttackValues[3])"
             if HeroParagon.DamageBonuses[indexWil] > 0 {
                 WillpowerBonusDamageLabel.alpha = 1.0
-                WillpowerBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexWil])"
+                WillpowerBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexWil])"
             } else {
                 WillpowerBonusDamageLabel.alpha = 0.0
-                WillpowerBonusDamageLabel.text = "Damage Bonus: +\(HeroParagon.DamageBonuses[indexWil])"
+                WillpowerBonusDamageLabel.text = "Damage: +\(HeroParagon.DamageBonuses[indexWil])"
             }
         } else {
             WillpowerSelectorButton.alpha = 0.0
