@@ -24,6 +24,8 @@ class HomeScreenViewController: UIViewController {
     
     // MARK: - Setup Functions
     func setupPlayButton() {
+        PlayButton.setImage(UIImage(named: "Play"), for: UIControl.State.normal)
+        PlayButton.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
         PlayButton.layer.cornerRadius = 6.0
         PlayButton.layer.borderWidth = 4.0
         PlayButton.layer.masksToBounds = true

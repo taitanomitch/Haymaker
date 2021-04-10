@@ -256,11 +256,10 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func setUpBeginCombatButtonUI() {
+        BeginCombatButton.setImage(UIImage(named: "Fight"), for: UIControl.State.normal)
+        BeginCombatButton.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
         BeginCombatButton.layer.cornerRadius = 5.0
         BeginCombatButton.layer.masksToBounds = true
-        BeginCombatButton.setTitle("", for: .normal)
-        BeginCombatButton.backgroundColor = UIColor.clear
-        BeginCombatBackgroundView.backgroundColor = UIColor.white
     }
     
     func setUpCollectionViewUI() {

@@ -11,6 +11,8 @@ import UIKit
 class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     // MARK: - IBOutlet Variables
+    @IBOutlet weak var NextButton: UIButton!
+    
     @IBOutlet weak var ParagonImageView: UIImageView!
     @IBOutlet weak var ParagonImageChangeLeftButton: UIButton!
     @IBOutlet weak var ParagonImageChangeRightButton: UIButton!
@@ -74,12 +76,17 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     
     // MARK: - Setup Functions
     func runSetup() {
+        setUpNextButton()
         setUpParagonImageViewUI()
         setUpBioUI()
         setUpDelegates()
         updateRemainingPowerPoints()
         updateAllAttributeButtonsUI()
         updateAllAttributeLabels()
+    }
+    
+    func setUpNextButton() {
+        NextButton.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
     }
     
     func setUpImageOptions() {
@@ -228,6 +235,10 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     
     
     // MARK: - Button Functions
+    @IBAction func pressNextButton(_ sender: UIButton) {
+        
+    }
+    
     @IBAction func pressPreviousImage(_ sender: UIButton) {
         CurrentImageSelection = CurrentImageSelection - 1
         if CurrentImageSelection < 0 {

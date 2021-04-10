@@ -34,12 +34,11 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var PasswordSetHolderView: UIView!
     @IBOutlet weak var PasswordEntryHolderView: UIView!
     
+    @IBOutlet weak var FightWithoutPasswordsButton: UIButton!
     @IBOutlet weak var PreviousButton: UIButton!
-    @IBOutlet weak var PreviousButtonImageView: UIImageView!
     @IBOutlet weak var NextButton: UIButton!
-    @IBOutlet weak var NextButtonImageView: UIImageView!
     @IBOutlet weak var CancelButton: UIButton!
-    @IBOutlet weak var CancelButtonImageView: UIImageView!
+    
     @IBOutlet weak var PlayerOneParagonImageView: UIImageView!
     @IBOutlet weak var PlayerTwoParagonImageView: UIImageView!
     
@@ -78,6 +77,7 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Setup Functions
     func runSetup() {
         setUpTextfield()
+        setUpButtons()
         if PromptType == .paswordSet {
             let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
             view.addGestureRecognizer(tap)
@@ -102,6 +102,29 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
         if ParagonForPassword.Name.count > 0 {
             AttemptParagonImageView.image = UIImage(named: ParagonForPassword.Name)
         }
+    }
+    
+    func setUpButtons() {
+        FightWithoutPasswordsButton.setImage(UIImage(named: "FightNoPasswords"), for: UIControl.State.normal)
+        FightWithoutPasswordsButton.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
+        FightWithoutPasswordsButton.setTitle("", for: .normal)
+        FightWithoutPasswordsButton.setTitleColor(UIColor.clear, for: .normal)
+        FightWithoutPasswordsButton.backgroundColor = UIColor.clear
+        NextButton.setImage(UIImage(named: "Next"), for: UIControl.State.normal)
+        NextButton.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
+        NextButton.setTitle("", for: .normal)
+        NextButton.setTitleColor(UIColor.clear, for: .normal)
+        NextButton.backgroundColor = UIColor.clear
+        PreviousButton.setImage(UIImage(named: "Back"), for: UIControl.State.normal)
+        PreviousButton.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
+        PreviousButton.setTitle("", for: .normal)
+        PreviousButton.setTitleColor(UIColor.clear, for: .normal)
+        PreviousButton.backgroundColor = UIColor.clear
+        CancelButton.setImage(UIImage(named: "Cancel"), for: UIControl.State.normal)
+        CancelButton.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
+        CancelButton.setTitle("", for: .normal)
+        CancelButton.setTitleColor(UIColor.clear, for: .normal)
+        CancelButton.backgroundColor = UIColor.clear
     }
     
     func setUpTextfield() {
@@ -183,29 +206,14 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     func setUpPasswordSetButtons() {
         switch PasswordPhase {
         case .playerOne:
-            NextButton.setTitle("", for: .normal)
-            NextButton.setTitleColor(UIColor.clear, for: .normal)
-            NextButton.backgroundColor = UIColor.clear
-            NextButtonImageView.image = UIImage(named: "Next")
+            NextButton.setImage(UIImage(named: "Next"), for: UIControl.State.normal)
         case .playerTwo:
-            NextButton.setTitle("", for: .normal)
-            NextButton.setTitleColor(UIColor.clear, for: .normal)
-            NextButton.backgroundColor = UIColor.clear
-            NextButtonImageView.image = UIImage(named: "Next")
+            NextButton.setImage(UIImage(named: "Next"), for: UIControl.State.normal)
         case .complete:
-            NextButton.setTitle("", for: .normal)
-            NextButton.setBackgroundImage(UIImage(named: "Fight"), for: .normal)
-            NextButton.setTitleColor(UIColor.clear, for: .normal)
-            NextButton.backgroundColor = UIColor.clear
+            NextButton.setImage(UIImage(named: "Fight"), for: UIControl.State.normal)
         }
-        PreviousButton.setTitle("", for: .normal)
-        PreviousButton.setTitleColor(UIColor.clear, for: .normal)
-        PreviousButton.backgroundColor = UIColor.clear
-        PreviousButtonImageView.image = UIImage(named: "Back")
-        CancelButton.setTitle("", for: .normal)
-        CancelButton.setTitleColor(UIColor.clear, for: .normal)
-        CancelButton.backgroundColor = UIColor.clear
-        CancelButtonImageView.image = UIImage(named: "Cancel")
+        PreviousButton.setImage(UIImage(named: "Back"), for: UIControl.State.normal)
+        CancelButton.setImage(UIImage(named: "Cancel"), for: UIControl.State.normal)
         setUpLabels()
     }
     
@@ -292,7 +300,7 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func pressPreviousButton(_ sender: UIButton) {
         switch PasswordPhase {
         case .playerOne:
-            return
+            pressCancelButton()
         case .playerTwo:
             PasswordPhase = .playerOne
         case .complete:
