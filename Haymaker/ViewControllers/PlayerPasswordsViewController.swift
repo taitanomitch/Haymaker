@@ -100,7 +100,7 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     
     func setUpParagonImageView() {
         if ParagonForPassword.Name.count > 0 {
-            AttemptParagonImageView.image = UIImage(named: ParagonForPassword.Name)
+            AttemptParagonImageView.image = UIImage(named: ParagonForPassword.Image)
         }
     }
     
@@ -199,8 +199,8 @@ class PlayerPasswordsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setUpParagonImageViewsForPasswordSetting() {
-        PlayerOneParagonImageView.image = UIImage(named: PlayerOneParagon.Name)
-        PlayerTwoParagonImageView.image = UIImage(named: PlayerTwoParagon.Name)
+        PlayerOneParagonImageView.image = UIImage(named: PlayerOneParagon.Image)
+        PlayerTwoParagonImageView.image = UIImage(named: PlayerTwoParagon.Image)
     }
     
     func setUpPasswordSetButtons() {

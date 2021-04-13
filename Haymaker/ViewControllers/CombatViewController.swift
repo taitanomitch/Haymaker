@@ -793,8 +793,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     func setUpCharacterSheetViews() {
         setHandSizeLabels()
         
-        HeroImageView.image = UIImage(named: HeroParagon.Name)
-        VillainImageView.image = UIImage(named: VillainParagon.Name)
+        HeroImageView.image = UIImage(named: HeroParagon.Image)
+        HeroImageView.tintColor = UIColor.white
+        VillainImageView.image = UIImage(named: VillainParagon.Image)
+        VillainImageView.tintColor = UIColor.white
         HeroSheetView.layer.cornerRadius = 4.0
         HeroSheetView.layer.masksToBounds = true
         VillainSheetView.layer.cornerRadius = 4.0
@@ -1177,10 +1179,10 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         }
         
-        let boolStrength = VillainParagon.PossibleAttackTypeList.contains(.strength)
-        let boolAgility = VillainParagon.PossibleAttackTypeList.contains(.agility)
-        let boolIntellect = VillainParagon.PossibleAttackTypeList.contains(.intellect)
-        let boolWillpower = VillainParagon.PossibleAttackTypeList.contains(.willpower)
+        let boolStrength = VillainParagon.PossibleAttackTypeList[0] == 1
+        let boolAgility = VillainParagon.PossibleAttackTypeList[1] == 1
+        let boolIntellect = VillainParagon.PossibleAttackTypeList[2] == 1
+        let boolWillpower = VillainParagon.PossibleAttackTypeList[3] == 1
         
         let strengthVal = VillainParagon.Strength + highestStrengthCard
         let agilityVal = VillainParagon.Agility + highestAgilityCard
@@ -1834,7 +1836,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func setUpAttackOptions() {
         setUpSelectorButtonUI()
-        if HeroParagon.PossibleAttackTypeList.contains(.strength) {
+        if HeroParagon.PossibleAttackTypeList[0] == 1 {
             StrengthSelectorButton.alpha = 1.0
             StrengthSelectorLabelsView.alpha = 1.0
             StrengthAttackNameLabel.text = HeroParagon.AttackTypeNames[0]
@@ -1852,7 +1854,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             StrengthSelectorLabelsView.alpha = 0.0
         }
         
-        if HeroParagon.PossibleAttackTypeList.contains(.agility) {
+        if HeroParagon.PossibleAttackTypeList[1] == 1 {
             AgilitySelectorButton.alpha = 1.0
             AgilitySelectorLabelsView.alpha = 1.0
             AgilityAttackNameLabel.text = HeroParagon.AttackTypeNames[1]
@@ -1870,7 +1872,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             AgilitySelectorLabelsView.alpha = 0.0
         }
         
-        if HeroParagon.PossibleAttackTypeList.contains(.intellect) {
+        if HeroParagon.PossibleAttackTypeList[2] == 1 {
             IntellectSelectorButton.alpha = 1.0
             IntellectSelectorLabelsView.alpha = 1.0
             IntellectAttackNameLabel.text = HeroParagon.AttackTypeNames[2]
@@ -1888,7 +1890,7 @@ class CombatViewController: UIViewController, UICollectionViewDelegate, UICollec
             IntellectSelectorLabelsView.alpha = 0.0
         }
         
-        if HeroParagon.PossibleAttackTypeList.contains(.willpower) {
+        if HeroParagon.PossibleAttackTypeList[3] == 1 {
             WillpowerSelectorButton.alpha = 1.0
             WillpowerSelectorLabelsView.alpha = 1.0
             WillpowerAttackNameLabel.text = HeroParagon.AttackTypeNames[3]

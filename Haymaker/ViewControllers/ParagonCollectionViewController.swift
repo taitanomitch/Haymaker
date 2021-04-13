@@ -49,6 +49,7 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
         setUpParagonsList()
         setInitialSelectedParagon()
         setUpViewsUI()
+        setUpSelectedParagonImageView()
     }
     
     func setUpParagonsList() {
@@ -89,6 +90,10 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
         AbilityPowerHolderView.layer.masksToBounds = true
     }
     
+    func setUpSelectedParagonImageView() {
+        SelectedParagonImageView.tintColor = UIColor.black
+    }
+    
     // MARK: - Update Functions
     func updateSelectedParagon() {
         updateSelectedParagonImage()
@@ -108,7 +113,7 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
     }
     
     func updateSelectedParagonImage() {
-        SelectedParagonImageView.image = UIImage(named: "\(SelectedParagon.Name)")
+        SelectedParagonImageView.image = UIImage(named: "\(SelectedParagon.Image)")
     }
     
     func updateCombatAbilityText() {
@@ -222,7 +227,12 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
     }
     
     func listOfCustomParagon(characterList: [ParagonOverseer]) -> [ParagonOverseer] {
-        return characterList
+        let ParagonGenerator = CustomParagonGenerator()
+        let CustomerParagonList = ParagonGenerator.retrieveAllCustomParagons()
+        
+        var list = characterList
+        list.append(contentsOf: CustomerParagonList)
+        return list
     }
     
     // MARK: - TextView Functions

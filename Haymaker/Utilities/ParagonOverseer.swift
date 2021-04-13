@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ParagonOverseer {
+class ParagonOverseer: NSObject {
     
     enum AbilityPowers {
         case strengthIncrease
@@ -20,9 +20,10 @@ class ParagonOverseer {
     }
     
     var Name: String = ""
+    var Image: String = ""
     var ParagonPassword: String = ""
     var Bio: String = ""
-    var CombatAbilities: String = ""
+    var EntryTaunt: String = ""
     
     // MARK: - Character Stat Variables
     var Strength: Int = 0
@@ -33,56 +34,27 @@ class ParagonOverseer {
     var Handsize: Int = 0
     var StartingHandsize: Int = 0
     
-    // MARK: - Character Boolean Variables
-    var HasPower: Bool = false
-    var HasEquipment: Bool = false
-    var HasSkill: Bool = false
-    
-    // MARK: - Character Action Variables
     var CurrentActionType: ActionType = .none
-    var CurrentAttackType: AttackType = .none
-    var AttackPosition: Int = 0
     
-    // MARK: - Character Entry Taunt
-    var EntryTaunt: String = ""
-    
-    // MARK: - Character Skill/Power/Equipment List Variables
-    var CharacterStatus: Status = .none
-    var Powers: [Power] = []
-    var PowerInUse: Power = Power()
-    var Skills: [Skill] = []
-    var SkillInUse: Skill = Skill()
-    var EquipmentList: [Equipment] = []
-    var EquippedItem: Equipment = Equipment()
-    var PossibleAttackTypeList: [ActionType] = []
+    var PossibleAttackTypeList: [Int] = []
     var AttackTypeNames: [String] = []
     var AttackValues: [Int] = []
     var DamageBonuses: [Int] = []
     var DodgeBonus: Int = 0
     var DamageResistance: Int = 0
     var WillpowerResistanceBonus: Int = 0
+    var ReviveAttemptCount: Int = 0
+    
+    // MARK: - Character Ability Powers
     var ParagonAbilityPower: AbilityPowers = .none
     var ParagonAbilityPowerMultiplier: Int = 1
     var ParagonAbilityPowerText: String = ""
-    var ReviveAttemptCount: Int = 0
     
-    // MARK: - Character Status Enum
-    enum Status {
-        case normal
-//        case enraged
-        case stunned
-//        case slept
-//        case prone
-//        case burned
-//        case poisoned
-        case falling
-        case grappled
-        case defenseless
-        case vulnerable
-        case noAttack
-        case none
-    }
-    
+    // MARK: - Character Training Variables
+    var PowerPoints: Int = 0
+    var XP: Double = 0
+    var Gems: Int = 0
+
     
     // MARK: - Combat Preparation Functions
     func resetHandSize() {
@@ -145,6 +117,7 @@ class ParagonOverseer {
     // MARK: - Hero Power Abilities
     public func performAbilityPower() {
         switch ParagonAbilityPower {
+        
         case .strengthIncrease:
             self.Strength += (1 * ParagonAbilityPowerMultiplier)
             if Name == "Hulk" {
@@ -152,15 +125,19 @@ class ParagonOverseer {
             } else {
                 AttackValues[0] += (1 * ParagonAbilityPowerMultiplier)
             }
+            
         case .agilityIncrease:
             self.Agility += (1 * ParagonAbilityPowerMultiplier)
             AttackValues[1] += (1 * ParagonAbilityPowerMultiplier)
+            
         case .intellectIncrease:
             self.Intellect += (1 * ParagonAbilityPowerMultiplier)
             AttackValues[2] += (1 * ParagonAbilityPowerMultiplier)
+            
         case .willpowerIncrease:
             self.Willpower += (1 * ParagonAbilityPowerMultiplier)
             AttackValues[3] += (1 * ParagonAbilityPowerMultiplier)
+            
         case .healingFactor:
             if self.Handsize < StartingHandsize {
                 self.Handsize += (1 * ParagonAbilityPowerMultiplier)
@@ -168,8 +145,43 @@ class ParagonOverseer {
                     resetHandSize()
                 }
             }
+            
         case .none:
             return
+        }
+    }
+    
+    func convertAbilityPowerToNumber(AbilityPower: AbilityPowers) -> Int {
+        switch AbilityPower {
+        case .strengthIncrease:
+            return 0
+        case .agilityIncrease:
+            return 1
+        case .intellectIncrease:
+            return 2
+        case .willpowerIncrease:
+            return 3
+        case .healingFactor:
+            return 4
+        case .none:
+            return -1
+        }
+    }
+    
+    func convertNumbertoAbilityPower(AbilityPowerNumber: Int) -> AbilityPowers {
+        switch AbilityPowerNumber {
+        case 0:
+            return .strengthIncrease
+        case 1:
+            return .agilityIncrease
+        case 2:
+            return .intellectIncrease
+        case 3:
+            return .willpowerIncrease
+        case 4:
+            return .healingFactor
+        default:
+            return .none
         }
     }
     
@@ -186,6 +198,8 @@ class ParagonOverseer {
     }
 }
 
+// MARK: - Paragon Generator
+
 class HeroGenerator {
     
     var numberOfHeroes: Int = 15
@@ -193,6 +207,7 @@ class HeroGenerator {
     func theThing() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "The Thing"
+        hero.Image = "The Thing"
         hero.EntryTaunt = "It's clobberin' time!"
         hero.Strength = 18
         hero.Agility = 5
@@ -201,11 +216,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Clobber", "Charge", "", ""]
         hero.AttackValues = [18,5,0,0]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -219,6 +230,7 @@ class HeroGenerator {
     func ironMan() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Iron Man"
+        hero.Image = "Iron Man"
         hero.EntryTaunt = "I am Iron Man!"
         hero.Strength = 16
         hero.Agility = 6
@@ -227,11 +239,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+        hero.PossibleAttackTypeList = [1, 1, 1, 0]
         hero.AttackTypeNames = ["Uppercut", "Charge", "Uni-Beam", ""]
         hero.AttackValues = [16, 6, 16, 0]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -245,6 +253,7 @@ class HeroGenerator {
     func spiderman() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Spiderman"
+        hero.Image = "Spiderman"
         hero.EntryTaunt = "Spider-senses are tingling!"
         hero.Strength = 14
         hero.Agility = 14
@@ -253,11 +262,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+        hero.PossibleAttackTypeList = [1, 1, 1, 0]
         hero.AttackTypeNames = ["Uppercut", "Sweep Kick", "Web-shooters", ""]
         hero.AttackValues = [14, 14, 16, 0]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -271,6 +276,7 @@ class HeroGenerator {
     func wolverine() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Wolverine"
+        hero.Image = "Wolverine"
         hero.EntryTaunt = "Let's go bub!"
         hero.Strength = 8
         hero.Agility = 10
@@ -279,11 +285,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Claw Jab", "Claw Slash", "", ""]
         hero.AttackValues = [8, 10, 0, 0]
         hero.DamageBonuses = [5, 5, 0, 0]
@@ -300,6 +302,7 @@ class HeroGenerator {
     func hulk() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Hulk"
+        hero.Image = "Hulk"
         hero.EntryTaunt = "HULK SMASH!"
         hero.Strength = 20
         hero.Agility = 3
@@ -308,11 +311,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Smash", "Charge", "", ""]
         hero.AttackValues = [3, 3, 0, 0]
         hero.DamageBonuses = [20, 0, 0, 0]
@@ -329,6 +328,7 @@ class HeroGenerator {
     func captainAmerica() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Captain America"
+        hero.Image = "Captain America"
         hero.EntryTaunt = "Freedom will prevail!"
         hero.Strength = 10
         hero.Agility = 10
@@ -337,11 +337,7 @@ class HeroGenerator {
         hero.Handsize = 6
         hero.StartingHandsize = 6
         hero.Edge = 4
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Uppercut", "Charge", "", ""]
         hero.AttackValues = [10, 10, 0, 0]
         hero.DamageBonuses = [5, 5, 0, 0]
@@ -355,6 +351,7 @@ class HeroGenerator {
     func daredevil() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Daredevil"
+        hero.Image = "Daredevil"
         hero.EntryTaunt = "I know no fear!"
         hero.Strength = 8
         hero.Agility = 10
@@ -363,11 +360,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Boxing", "Dive", "", ""]
         hero.AttackValues = [8, 10, 0, 0]
         hero.DamageBonuses = [2, 2, 0, 0]
@@ -381,6 +374,7 @@ class HeroGenerator {
     func doctorStrange() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Doctor Strange"
+        hero.Image = "Doctor Strange"
         hero.EntryTaunt = "I shall defend our world!"
         hero.Strength = 3
         hero.Agility = 4
@@ -389,11 +383,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .willpower]
+        hero.PossibleAttackTypeList = [1, 1, 0, 1]
         hero.AttackTypeNames = ["Punch", "Kick", "", "Magic"]
         hero.AttackValues = [3, 4, 0, 16]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -407,6 +397,7 @@ class HeroGenerator {
     func humanTorch() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Human Torch"
+        hero.Image = "Human Torch"
         hero.EntryTaunt = "Flame on!"
         hero.Strength = 4
         hero.Agility = 8
@@ -415,11 +406,7 @@ class HeroGenerator {
         hero.Handsize = 4
         hero.StartingHandsize = 4
         hero.Edge = 2
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+        hero.PossibleAttackTypeList = [1, 1, 1, 0]
         hero.AttackTypeNames = ["Punch", "Dive Bomb", "Fire Blast", ""]
         hero.AttackValues = [4, 8, 18, 0]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -433,6 +420,7 @@ class HeroGenerator {
     func invisibleWoman() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Invisible Woman"
+        hero.Image = "Invisible Woman"
         hero.EntryTaunt = "What you can't see will hurt you!"
         hero.Strength = 4
         hero.Agility = 6
@@ -441,11 +429,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+        hero.PossibleAttackTypeList = [1, 1, 1, 0]
         hero.AttackTypeNames = ["Punch", "Martial Arts", "Force Blast", ""]
         hero.AttackValues = [4, 6, 15, 0]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -459,6 +443,7 @@ class HeroGenerator {
     func misterFantastic() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Mister Fantastic"
+        hero.Image = "Mister Fantastic"
         hero.EntryTaunt = "I've calculated your demise!"
         hero.Strength = 3
         hero.Agility = 4
@@ -467,11 +452,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Punch", "Telescopic Kick", "", ""]
         hero.AttackValues = [3, 15, 0, 0]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -485,6 +466,7 @@ class HeroGenerator {
     func nightcrawler() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Nightcrawler"
+        hero.Image = "Nightcrawler"
         hero.EntryTaunt = "Have faith that this will be swift!"
         hero.Strength = 6
         hero.Agility = 12
@@ -493,11 +475,7 @@ class HeroGenerator {
         hero.Handsize = 4
         hero.StartingHandsize = 4
         hero.Edge = 2
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Punch", "Sweep Kick", "", ""]
         hero.AttackValues = [6, 12, 0, 0]
         hero.DamageBonuses = [0, 4, 0, 0]
@@ -511,6 +489,7 @@ class HeroGenerator {
     func silverSurfer() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Silver Surfer"
+        hero.Image = "Silver Surfer"
         hero.EntryTaunt = "The power cosmic will finish this!"
         hero.Strength = 20
         hero.Agility = 20
@@ -519,11 +498,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+        hero.PossibleAttackTypeList = [1, 1, 1, 0]
         hero.AttackTypeNames = ["Pummel", "Dive Kick", "Cosmic Blast", ""]
         hero.AttackValues = [20, 20, 20, 0]
         hero.DamageBonuses = [0, 0, 0, 0]
@@ -537,6 +512,7 @@ class HeroGenerator {
     func thor() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Thor"
+        hero.Image = "Thor"
         hero.EntryTaunt = "Behold the god of thunder!"
         hero.Strength = 19
         hero.Agility = 5
@@ -545,11 +521,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+        hero.PossibleAttackTypeList = [1, 1, 1, 0]
         hero.AttackTypeNames = ["Smash", "Kick", "Lightning Bolt", ""]
         hero.AttackValues = [19, 5, 18, 0]
         hero.DamageBonuses = [7, 7, 0, 0]
@@ -563,6 +535,7 @@ class HeroGenerator {
     func blackPanther() -> ParagonOverseer {
         let hero = ParagonOverseer()
         hero.Name = "Black Panther"
+        hero.Image = "Black Panther"
         hero.EntryTaunt = "Wakanda forever!"
         hero.Strength = 9
         hero.Agility = 10
@@ -571,11 +544,7 @@ class HeroGenerator {
         hero.Handsize = 5
         hero.StartingHandsize = 5
         hero.Edge = 3
-        hero.CharacterStatus = .none
-        hero.EquipmentList = []
-        hero.Powers = []
-        hero.Skills = []
-        hero.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+        hero.PossibleAttackTypeList = [1, 1, 0, 0]
         hero.AttackTypeNames = ["Garrotes", "Energy Dagger", "", ""]
         hero.AttackValues = [9, 10, 0, 0]
         hero.DamageBonuses = [3, 3, 0, 0]
@@ -596,6 +565,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Dr. Doom"
+        enemy.Image = "Dr. Doom"
         enemy.EntryTaunt = "Now is doom!"
         enemy.Handsize = 6
         enemy.StartingHandsize = 6
@@ -605,12 +575,8 @@ class EnemyGenerator {
         enemy.Agility = 6
         enemy.Intellect = 12
         enemy.Willpower = 12
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 0]
         enemy.AttackTypeNames = ["Uppercut", "Strike", "Power Blast", "Magic"]
         enemy.AttackValues = [14, 6, 14, 8]
         enemy.DamageBonuses = [0, 4, 0, 0]
@@ -625,6 +591,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Annihilus"
+        enemy.Image = "Annihilus"
         enemy.EntryTaunt = "Annihilation!"
         enemy.Handsize = 5
         enemy.StartingHandsize = 5
@@ -634,12 +601,8 @@ class EnemyGenerator {
         enemy.Agility = 7
         enemy.Intellect = 8
         enemy.Willpower = 8
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 0]
         enemy.AttackTypeNames = ["Bash", "Sweep", "Cosmic Control Rod", ""]
         enemy.AttackValues = [16, 7, 18, 0]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -654,6 +617,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Galactus"
+        enemy.Image = "Galactus"
         enemy.EntryTaunt = "I am the Devourer of Worlds!"
         enemy.Handsize = 7
         enemy.StartingHandsize = 7
@@ -663,12 +627,8 @@ class EnemyGenerator {
         enemy.Agility = 10
         enemy.Intellect = 30
         enemy.Willpower = 30
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 0]
         enemy.AttackTypeNames = ["Smash", "Stomp", "Cosmic Energy Blast", ""]
         enemy.AttackValues = [30, 10, 30, 0]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -683,6 +643,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Juggernaut"
+        enemy.Image = "Juggernaut"
         enemy.EntryTaunt = "I'm Juggernaut!"
         enemy.Handsize = 4
         enemy.StartingHandsize = 4
@@ -692,12 +653,8 @@ class EnemyGenerator {
         enemy.Agility = 2
         enemy.Intellect = 3
         enemy.Willpower = 4
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 0, 0]
         enemy.AttackTypeNames = ["Haymaker", "Charge", "", ""]
         enemy.AttackValues = [19, 2, 0, 0]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -712,6 +669,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Loki"
+        enemy.Image = "Loki"
         enemy.EntryTaunt = "Beware the god of mischief!"
         enemy.Handsize = 5
         enemy.StartingHandsize = 5
@@ -721,12 +679,8 @@ class EnemyGenerator {
         enemy.Agility = 6
         enemy.Intellect = 8
         enemy.Willpower = 15
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .willpower]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 1]
         enemy.AttackTypeNames = ["Punch", "Charge", "Illusion Attack", "Magic"]
         enemy.AttackValues = [16, 6, 14, 15]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -741,6 +695,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Magneto"
+        enemy.Image = "Magneto"
         enemy.EntryTaunt = "I reign supreme!"
         enemy.Handsize = 6
         enemy.StartingHandsize = 6
@@ -750,12 +705,8 @@ class EnemyGenerator {
         enemy.Agility = 6
         enemy.Intellect = 10
         enemy.Willpower = 12
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 0]
         enemy.AttackTypeNames = ["Punch", "Kick", "Magnetic Blast", ""]
         enemy.AttackValues = [7, 6, 18, 0]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -770,6 +721,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Rhino"
+        enemy.Image = "Rhino"
         enemy.EntryTaunt = "I'll stomp you into the dirt!"
         enemy.Handsize = 3
         enemy.StartingHandsize = 3
@@ -779,12 +731,8 @@ class EnemyGenerator {
         enemy.Agility = 2
         enemy.Intellect = 2
         enemy.Willpower = 2
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 0, 0]
         enemy.AttackTypeNames = ["Smash", "Charge", "", ""]
         enemy.AttackValues = [17, 2, 0, 0]
         enemy.DamageBonuses = [5, 5, 0, 0]
@@ -799,6 +747,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Sabertooth"
+        enemy.Image = "Sabertooth"
         enemy.EntryTaunt = "I'll tear you to shreds!"
         enemy.Handsize = 4
         enemy.StartingHandsize = 4
@@ -808,12 +757,8 @@ class EnemyGenerator {
         enemy.Agility = 10
         enemy.Intellect = 4
         enemy.Willpower = 9
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 0, 0]
         enemy.AttackTypeNames = ["Claw", "Slash", "", ""]
         enemy.AttackValues = [10, 10, 0, 0]
         enemy.DamageBonuses = [2, 2, 0, 0]
@@ -828,6 +773,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Super-Skrull"
+        enemy.Image = "Super-Skrull"
         enemy.EntryTaunt = "My powers will destroy you!"
         enemy.Handsize = 5
         enemy.StartingHandsize = 5
@@ -837,12 +783,8 @@ class EnemyGenerator {
         enemy.Agility = 6
         enemy.Intellect = 5
         enemy.Willpower = 6
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 0]
         enemy.AttackTypeNames = ["Clobber", "Telescoping Kick", "Fire Blast", ""]
         enemy.AttackValues = [16, 16, 16, 0]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -857,6 +799,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Thanos"
+        enemy.Image = "Thanos"
         enemy.EntryTaunt = "I am inevitable!"
         enemy.Handsize = 5
         enemy.StartingHandsize = 5
@@ -866,12 +809,8 @@ class EnemyGenerator {
         enemy.Agility = 5
         enemy.Intellect = 16
         enemy.Willpower = 17
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .willpower]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 1]
         enemy.AttackTypeNames = ["Smash", "Charge", "Cosmic Blast", "Psychic Blast"]
         enemy.AttackValues = [19, 5, 24, 16]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -886,6 +825,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Ultron"
+        enemy.Image = "Ultron"
         enemy.EntryTaunt = "I will make this world my own!"
         enemy.Handsize = 5
         enemy.StartingHandsize = 5
@@ -895,12 +835,8 @@ class EnemyGenerator {
         enemy.Agility = 6
         enemy.Intellect = 9
         enemy.Willpower = 14
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 0]
         enemy.AttackTypeNames = ["Pummel", "Charge", "Laser Beam", ""]
         enemy.AttackValues = [16, 6, 16, 0]
         enemy.DamageBonuses = [0, 0, 0, 0]
@@ -915,6 +851,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Venom"
+        enemy.Image = "Venom"
         enemy.EntryTaunt = "We are Venom!"
         enemy.Handsize = 4
         enemy.StartingHandsize = 4
@@ -924,13 +861,9 @@ class EnemyGenerator {
         enemy.Agility = 11
         enemy.Intellect = 4
         enemy.Willpower = 9
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .intellect, .none]
-        enemy.AttackTypeNames = ["Claw", "Slash", "", ""]
+
+        enemy.PossibleAttackTypeList = [1, 1, 1, 0]
+        enemy.AttackTypeNames = ["Claw", "Slash", "Symbiote Web", ""]
         enemy.AttackValues = [16, 11, 14, 0]
         enemy.DamageBonuses = [1, 1, 0, 0]
         enemy.DodgeBonus = 0
@@ -944,6 +877,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Thug"
+        enemy.Image = "Thug"
         enemy.EntryTaunt = "I'ma smash you up!"
         enemy.Handsize = 3
         enemy.StartingHandsize = 3
@@ -953,12 +887,8 @@ class EnemyGenerator {
         enemy.Agility = 2
         enemy.Intellect = 1
         enemy.Willpower = 2
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 0, 0]
         enemy.AttackTypeNames = ["Punch", "Knife", "", ""]
         enemy.AttackValues = [3, 2, 0, 0]
         enemy.DamageBonuses = [0, 1, 0, 0]
@@ -973,6 +903,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Brute"
+        enemy.Image = "Brute"
         enemy.EntryTaunt = "I'ma crush you!"
         enemy.Handsize = 4
         enemy.StartingHandsize = 4
@@ -982,12 +913,8 @@ class EnemyGenerator {
         enemy.Agility = 2
         enemy.Intellect = 1
         enemy.Willpower = 5
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 0, 0]
         enemy.AttackTypeNames = ["Hammer Slam", "Kick", "", ""]
         enemy.AttackValues = [6, 2, 0, 0]
         enemy.DamageBonuses = [2, 0, 0, 0]
@@ -1002,6 +929,7 @@ class EnemyGenerator {
         let enemy = ParagonOverseer()
         
         enemy.Name = "Ninja"
+        enemy.Image = "Ninja"
         enemy.EntryTaunt = "The dark is my ally!"
         enemy.Handsize = 3
         enemy.StartingHandsize = 3
@@ -1011,12 +939,8 @@ class EnemyGenerator {
         enemy.Agility = 6
         enemy.Intellect = 3
         enemy.Willpower = 4
-        
-        enemy.CharacterStatus = .none
-        enemy.EquipmentList = []
-        enemy.Powers = []
-        enemy.Skills = []
-        enemy.PossibleAttackTypeList = [.strength, .agility, .none, .none]
+
+        enemy.PossibleAttackTypeList = [1, 1, 0, 0]
         enemy.AttackTypeNames = ["Jab", "Martial Arts", "", ""]
         enemy.AttackValues = [3, 6, 0, 0]
         enemy.DamageBonuses = [1, 2, 0, 0]
@@ -1025,5 +949,155 @@ class EnemyGenerator {
         enemy.WillpowerResistanceBonus = 0
         enemy.Bio = "Unknown"
         return enemy
+    }
+}
+
+
+class CustomParagonGenerator {
+    func incrementNumberOfCustomParagons() {
+        let ParagonCount = UserDefaults.standard.integer(forKey: "ParagonCount")
+        UserDefaults.standard.set(ParagonCount + 1, forKey: "ParagonCount")
+    }
+    
+    func setNumberOfCustomParagonsToZero() {
+        UserDefaults.standard.set(0, forKey: "ParagonCount")
+    }
+    
+    func setNumberOfCustomParagonsToValue(Value: Int) {
+        UserDefaults.standard.set(Value, forKey: "ParagonCount")
+    }
+    
+    func decrementNumberOfCustomParagons() {
+        let ParagonCount = UserDefaults.standard.integer(forKey: "ParagonCount")
+        UserDefaults.standard.set(ParagonCount - 1, forKey: "ParagonCount")
+    }
+    
+    func getNumberOfCustomParagons() -> Int {
+        let ParagonCount = UserDefaults.standard.integer(forKey: "ParagonCount")
+        return ParagonCount
+    }
+    
+    func storeParagon(ParagonNumber: Int, Paragon: ParagonOverseer) {
+        var StorePosition = ParagonNumber
+        if ParagonNumber < 0 {
+            StorePosition = getNumberOfCustomParagons()
+        }
+        
+        incrementNumberOfCustomParagons()
+        UserDefaults.standard.set(Paragon.Name, forKey: "Paragon\(StorePosition)_Name")
+        UserDefaults.standard.set(Paragon.Image, forKey: "Paragon\(StorePosition)_Image")
+        UserDefaults.standard.set(Paragon.Bio, forKey: "Paragon\(StorePosition)_Bio")
+        UserDefaults.standard.set(Paragon.EntryTaunt, forKey: "Paragon\(StorePosition)_EntryTaunt")
+        
+        UserDefaults.standard.set(Paragon.Strength, forKey: "Paragon\(StorePosition)_Strength")
+        UserDefaults.standard.set(Paragon.Agility, forKey: "Paragon\(StorePosition)_Agility")
+        UserDefaults.standard.set(Paragon.Intellect, forKey: "Paragon\(StorePosition)_Intellect")
+        UserDefaults.standard.set(Paragon.Willpower, forKey: "Paragon\(StorePosition)_Willpower")
+
+        UserDefaults.standard.set(Paragon.Edge, forKey: "Paragon\(StorePosition)_Edge")
+        UserDefaults.standard.set(Paragon.Handsize, forKey: "Paragon\(StorePosition)_Handsize")
+        UserDefaults.standard.set(Paragon.StartingHandsize, forKey: "Paragon\(StorePosition)_StartingHandSize")
+        
+        UserDefaults.standard.set(Paragon.PossibleAttackTypeList, forKey: "Paragon\(StorePosition)_PossibleAttackTypeList")
+        UserDefaults.standard.set(Paragon.AttackTypeNames, forKey: "Paragon\(StorePosition)_AttackTypeNames")
+        UserDefaults.standard.set(Paragon.AttackValues, forKey: "Paragon\(StorePosition)_AttackValues")
+        UserDefaults.standard.set(Paragon.DamageBonuses, forKey: "Paragon\(StorePosition)_DamageBonuses")
+        UserDefaults.standard.set(Paragon.DodgeBonus, forKey: "Paragon\(StorePosition)_DodgeBonus")
+        UserDefaults.standard.set(Paragon.DamageResistance, forKey: "Paragon\(StorePosition)_DamageResistance")
+        UserDefaults.standard.set(Paragon.WillpowerResistanceBonus, forKey: "Paragon\(StorePosition)_WillpowerResistanceBonus")
+        
+        UserDefaults.standard.set(Paragon.convertAbilityPowerToNumber(AbilityPower: Paragon.ParagonAbilityPower), forKey: "Paragon\(StorePosition)_ParagonAbilityPower")
+        UserDefaults.standard.set(Paragon.ParagonAbilityPowerMultiplier, forKey: "Paragon\(StorePosition)_ParagonAbilityPowerMultiplier")
+        UserDefaults.standard.set(Paragon.ParagonAbilityPowerText, forKey: "Paragon\(StorePosition)_ParagonAbilityPowerText")
+
+        UserDefaults.standard.set(Paragon.PowerPoints, forKey: "Paragon\(StorePosition)_PowerPoints")
+        UserDefaults.standard.set(Paragon.XP, forKey: "Paragon\(StorePosition)_XP")
+        UserDefaults.standard.set(Paragon.Gems, forKey: "Paragon\(StorePosition)_Gems")
+    }
+    
+    func retrieveAllCustomParagons() -> [ParagonOverseer] {
+        var collection: [ParagonOverseer] = []
+        
+        let numberOfParagons = getNumberOfCustomParagons()
+        for i in 0..<numberOfParagons {
+            let nextParagon = retrieveParagon(ParagonNumber: i)
+            collection.append(nextParagon)
+        }
+        
+        return collection
+    }
+    
+    func retrieveParagon(ParagonNumber: Int) -> ParagonOverseer {
+        let paragon = ParagonOverseer()
+        paragon.Name = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_Name")!
+        paragon.Image = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_Image")!
+        paragon.EntryTaunt = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_EntryTaunt")!
+        paragon.Strength = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_Strength")
+        paragon.Agility = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_Agility")
+        paragon.Intellect = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_Intellect")
+        paragon.Willpower = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_Willpower")
+        paragon.Handsize = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_Handsize")
+        paragon.StartingHandsize = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_StartingHandSize")
+        paragon.Edge = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_Edge")
+        paragon.PossibleAttackTypeList = UserDefaults.standard.array(forKey: "Paragon\(ParagonNumber)_PossibleAttackTypeList") as! [Int]
+        paragon.AttackTypeNames = UserDefaults.standard.array(forKey: "Paragon\(ParagonNumber)_AttackTypeNames") as! [String]
+        paragon.AttackValues = UserDefaults.standard.array(forKey: "Paragon\(ParagonNumber)_AttackValues") as! [Int]
+        paragon.DamageBonuses = UserDefaults.standard.array(forKey: "Paragon\(ParagonNumber)_DamageBonuses") as! [Int]
+        paragon.DodgeBonus = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_DodgeBonus")
+        paragon.DamageResistance = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_DamageResistance")
+        paragon.WillpowerResistanceBonus = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_WillpowerResistanceBonus")
+        paragon.ParagonAbilityPower = paragon.convertNumbertoAbilityPower(AbilityPowerNumber: UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_ParagonAbilityPower"))
+        paragon.ParagonAbilityPowerMultiplier = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_ParagonAbilityPowerMultiplier")
+        paragon.ParagonAbilityPowerText = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_ParagonAbilityPowerText")!
+        paragon.Bio = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_Bio")!
+        return paragon
+    }
+    
+    func deleteParagon(ParagonNumber: Int) {
+        let TotalParagons = getNumberOfCustomParagons()
+        var DeleteNumber = ParagonNumber
+        
+        if ParagonNumber == TotalParagons - 1 {
+            decrementNumberOfCustomParagons()
+        } else {
+            for i in (ParagonNumber+1)..<TotalParagons {
+                let nextParagon = retrieveParagon(ParagonNumber: i)
+                storeParagon(ParagonNumber: i-1, Paragon: nextParagon)
+            }
+            DeleteNumber = TotalParagons - 1
+            decrementNumberOfCustomParagons()
+        }
+        
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Name")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Image")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_EntryTaunt")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Strength")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Agility")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Intellect")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Willpower")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Handsize")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_StartingHandSize")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Edge")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_PossibleAttackTypeList")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_AttackTypeNames")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_AttackValues")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_DamageBonuses")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_DodgeBonus")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_DamageResistance")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_WillpowerResistanceBonus")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_ParagonAbilityPower")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_ParagonAbilityPowerMultiplier")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_ParagonAbilityPowerText")
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Bio")
+    }
+    
+    func deleteAllParagons() {
+        let TotalParagons = getNumberOfCustomParagons()
+        if TotalParagons > 0 {
+            for _ in 0..<TotalParagons {
+                deleteParagon(ParagonNumber: 0)
+            }
+        }
+        setNumberOfCustomParagonsToZero()
     }
 }

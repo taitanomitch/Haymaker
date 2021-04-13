@@ -14,7 +14,8 @@ class ParagonOptionCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var CellBackgroundView: UIView!
     
     func setUpParagonOptionCell(paragon: ParagonOverseer) {
-        ParagonIconImageView.image = UIImage(named: "\(paragon.Name)")
+        ParagonIconImageView.image = UIImage(named: "\(paragon.Image)")
+        ParagonIconImageView.tintColor = UIColor.black
         ParagonIconImageView.backgroundColor = UIColor.clear
         CellBackgroundView.backgroundColor = UIColor.clear
         CellBackgroundView.layer.cornerRadius = 4.0

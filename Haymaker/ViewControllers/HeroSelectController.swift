@@ -85,6 +85,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     func setUpCharactersList() {
         setUpParagonsList()
         setUpOppoentsList()
+        updateParagonCount()
     }
     
     func setUpParagonsList() {
@@ -93,6 +94,10 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     func setUpOppoentsList() {
         OpponentChoices = listOfCharacaters()
+    }
+    
+    func updateParagonCount() {
+        NumberOfParagons = ParagonChoices.count
     }
     
     func setUpPlayerPasswordsImage() {
@@ -126,6 +131,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         availableCharaters = listOfHeroes(characterList: availableCharaters)
         availableCharaters = listOfVillains(characterList: availableCharaters)
         availableCharaters = listOfHenchmen(characterList: availableCharaters)
+        availableCharaters = listOfCustomParagons(characterList: availableCharaters)
         return availableCharaters
     }
     
@@ -225,6 +231,16 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
         return list
     }
     
+    func listOfCustomParagons(characterList: [ParagonOverseer]) -> [ParagonOverseer] {
+        let ParagonGenerator = CustomParagonGenerator()
+        let CustomerParagonList = ParagonGenerator.retrieveAllCustomParagons()
+        
+        var list = characterList
+        list.append(contentsOf: CustomerParagonList)
+        return list
+    }
+    
+    
     func setUpParagons() {
         selectRandomInitialParagons()
     }
@@ -270,8 +286,10 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     func setUpParagonSelectionUI() {
         SelectedHeroImageView.layer.cornerRadius = 5.0
         SelectedHeroImageView.layer.masksToBounds = true
+        SelectedHeroImageView.tintColor = UIColor.black
         SelectedOpponentImageView.layer.cornerRadius = 5.0
         SelectedOpponentImageView.layer.masksToBounds = true
+        SelectedOpponentImageView.tintColor = UIColor.black
         SelectedParagonsBackgroundView.backgroundColor = UIColor.white
     }
     
@@ -373,12 +391,12 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Hero Selection Functions
     func updateSelectedParagonImageView() {
-        SelectedHeroImageView.image = UIImage(named: "\(SelectedHero.Name)")
+        SelectedHeroImageView.image = UIImage(named: "\(SelectedHero.Image)")
         UIView.transition(with: SelectedHeroImageView, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
     }
     
     func updateSelectedOpponectImageView() {
-        SelectedOpponentImageView.image = UIImage(named: "\(SelectedOpponent.Name)")
+        SelectedOpponentImageView.image = UIImage(named: "\(SelectedOpponent.Image)")
         UIView.transition(with: SelectedOpponentImageView, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
     }
     
