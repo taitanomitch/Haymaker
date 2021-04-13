@@ -973,7 +973,12 @@ class CustomParagonGenerator {
     }
     
     func getNumberOfCustomParagons() -> Int {
-        let ParagonCount = UserDefaults.standard.integer(forKey: "ParagonCount")
+        var ParagonCount = 0
+        if UserDefaults.standard.object(forKey: "ParagonCount") != nil {
+            ParagonCount = UserDefaults.standard.integer(forKey: "ParagonCount")
+        } else {
+            setNumberOfCustomParagonsToZero()
+        }
         return ParagonCount
     }
     
