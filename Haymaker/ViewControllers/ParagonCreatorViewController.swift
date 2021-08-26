@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ParagonCreatorDelegate {
+    func CreationCompleted()
+}
+
 class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     // MARK: - IBOutlet Variables
@@ -81,6 +85,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     var EnableAttackCost: [Int] = [2,2,2,2]
     var ParagonImageOptions:[UIImage] = []
     var CurrentImageSelection: Int = 0
+    var TotalNumberOfImageOptions: Int = 8
     var RemainingPowerPoints: Int = 14
     var StengthValue: Int = 0
     var AgilityValue: Int = 0
@@ -99,6 +104,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     var ParagonNameFontSize: CGFloat = 27.0
     var AttackEnabledFont: String = "ActionMan"
     var AttackEnabledFontSize: CGFloat = 13.0
+    public var delegate: ParagonCreatorDelegate?
     
     // MARK: - Loading Functions
     override func viewDidLoad() {
@@ -130,7 +136,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     }
     
     func setUpImageOptions() {
-        for i in 1...8 {
+        for i in 0..<TotalNumberOfImageOptions {
             let nextImage = UIImage(named: "Option" + String(i))
             if !ParagonImageOptions.contains(nextImage!) {
                 ParagonImageOptions.append(nextImage!)
@@ -493,7 +499,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     func buildCreatedParagon() -> ParagonOverseer {
         let CreatedParagon = ParagonOverseer()
         CreatedParagon.Name = FinalNameLabel.text!
-        CreatedParagon.Image = "Option\(CurrentImageSelection-1)"
+        CreatedParagon.Image = "Option\(CurrentImageSelection)"
         CreatedParagon.Bio = FinalBioTextView.text
         CreatedParagon.EntryTaunt = ""
         
@@ -574,11 +580,12 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
             let AgilityText = AgilityAttackTextField.text
             let IntellecText = IntellectAttackTextField.text
             let WillpowerText = WillpowerAttackTextField.text
-            
             if ((StrengthSelected && StrengthText != "") || !StrengthSelected) && ((AgilitySelected && AgilityText != "") || !AgilitySelected) && ((IntellectSelected && IntellecText != "") || !IntellectSelected) && ((WillpowerSelected && WillpowerText != "") || !WillpowerSelected) {
                 let createdParagon = buildCreatedParagon()
                 let ParagonGenerator = CustomParagonGenerator()
                 ParagonGenerator.storeParagon(ParagonNumber: -1, Paragon: createdParagon)
+                delegate?.CreationCompleted()
+                self.dismiss(animated: true) {}
             }
         } else {
             FinalBioTextView.text = BioTextView.text

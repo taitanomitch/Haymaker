@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ParagonCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate {
+class ParagonCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate, ParagonCreatorDelegate {
+    
     
     // MARK: - IBOutlet Variables
     @IBOutlet weak var CreateParagonButton: UIButton!
@@ -240,10 +241,17 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
         return false
     }
     
+    // MARK: - ParagonCreatorDelegate Functions
+    func CreationCompleted() {
+        setUp()
+        ParagonsCollectionView.reloadData()
+    }
+    
     // MARK: - Button Functions
     @IBAction func pressCreateParagonButton(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "ParagonCreatorViewController") as! ParagonCreatorViewController
+        newViewController.delegate = self
         self.present(newViewController, animated: true) {
             
         }

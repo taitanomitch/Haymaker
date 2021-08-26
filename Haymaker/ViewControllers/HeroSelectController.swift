@@ -392,6 +392,7 @@ class HeroSelectController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Hero Selection Functions
     func updateSelectedParagonImageView() {
         SelectedHeroImageView.image = UIImage(named: "\(SelectedHero.Image)")
+        print(SelectedHero.Image)
         UIView.transition(with: SelectedHeroImageView, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
     }
     
