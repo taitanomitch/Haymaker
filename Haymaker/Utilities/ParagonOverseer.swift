@@ -44,6 +44,7 @@ class ParagonOverseer: NSObject {
     var DamageResistance: Int = 0
     var WillpowerResistanceBonus: Int = 0
     var ReviveAttemptCount: Int = 0
+    var isCustom: Bool = false
     
     // MARK: - Character Ability Powers
     var ParagonAbilityPower: AbilityPowers = .none
@@ -1055,6 +1056,7 @@ class CustomParagonGenerator {
         paragon.ParagonAbilityPowerMultiplier = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_ParagonAbilityPowerMultiplier")
         paragon.ParagonAbilityPowerText = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_ParagonAbilityPowerText")!
         paragon.Bio = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_Bio")!
+        paragon.isCustom = true
         return paragon
     }
     

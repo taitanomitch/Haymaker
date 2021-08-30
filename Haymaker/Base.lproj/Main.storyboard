@@ -2829,6 +2829,13 @@
                                                             <constraint firstAttribute="width" secondItem="icg-4j-WzO" secondAttribute="height" multiplier="1:1" id="toR-uY-IfA"/>
                                                         </constraints>
                                                     </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dcy-x2-Rdt">
+                                                        <rect key="frame" x="110" y="141.5" width="50" height="50"/>
+                                                        <state key="normal" image="Icon_Upgrade"/>
+                                                        <connections>
+                                                            <action selector="pressUpgradeButton:" destination="aaq-Yb-jTG" eventType="touchUpInside" id="qhb-d6-nUM"/>
+                                                        </connections>
+                                                    </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsi-7v-Npb" userLabel="Name">
                                                         <rect key="frame" x="160" y="0.0" width="215" height="40"/>
                                                         <subviews>
@@ -3148,16 +3155,20 @@
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="bsi-7v-Npb" secondAttribute="trailing" id="1Zh-vZ-VI2"/>
                                                     <constraint firstAttribute="trailing" secondItem="Mzg-fA-lse" secondAttribute="trailing" constant="10" id="2kj-IY-qZy"/>
+                                                    <constraint firstItem="Dcy-x2-Rdt" firstAttribute="width" secondItem="icg-4j-WzO" secondAttribute="width" multiplier="1/3" id="Ai8-fG-N1y"/>
                                                     <constraint firstItem="Mzg-fA-lse" firstAttribute="top" secondItem="H7E-QM-vWv" secondAttribute="bottom" constant="10" id="GfF-nR-7cp"/>
                                                     <constraint firstItem="H7E-QM-vWv" firstAttribute="top" secondItem="8In-4m-u2p" secondAttribute="bottom" constant="10" id="JBO-Mo-hjb"/>
                                                     <constraint firstItem="H7E-QM-vWv" firstAttribute="height" secondItem="Kfs-nb-krd" secondAttribute="height" multiplier="1/4" id="Jag-bc-JcP"/>
+                                                    <constraint firstItem="Dcy-x2-Rdt" firstAttribute="trailing" secondItem="icg-4j-WzO" secondAttribute="trailing" id="JfF-U4-nCZ"/>
                                                     <constraint firstItem="bsi-7v-Npb" firstAttribute="leading" secondItem="icg-4j-WzO" secondAttribute="trailing" id="Lcw-9A-Zjf"/>
                                                     <constraint firstItem="8In-4m-u2p" firstAttribute="top" secondItem="bsi-7v-Npb" secondAttribute="bottom" id="OQS-nT-SjW"/>
                                                     <constraint firstAttribute="trailing" secondItem="8In-4m-u2p" secondAttribute="trailing" constant="10" id="Orv-dW-5Hm"/>
+                                                    <constraint firstItem="Dcy-x2-Rdt" firstAttribute="height" secondItem="icg-4j-WzO" secondAttribute="height" multiplier="1/3" id="bJL-E7-OaL"/>
                                                     <constraint firstAttribute="bottom" secondItem="Mzg-fA-lse" secondAttribute="bottom" constant="10" id="gX7-f0-uDu"/>
                                                     <constraint firstItem="bsi-7v-Npb" firstAttribute="top" secondItem="Kfs-nb-krd" secondAttribute="top" id="iYR-qQ-0r0"/>
                                                     <constraint firstItem="8In-4m-u2p" firstAttribute="leading" secondItem="icg-4j-WzO" secondAttribute="trailing" constant="15" id="jQu-t4-mxG"/>
                                                     <constraint firstItem="Mzg-fA-lse" firstAttribute="leading" secondItem="Kfs-nb-krd" secondAttribute="leading" constant="10" id="jij-TP-RxC"/>
+                                                    <constraint firstItem="Dcy-x2-Rdt" firstAttribute="bottom" secondItem="icg-4j-WzO" secondAttribute="bottom" id="kNe-Rf-oTp"/>
                                                     <constraint firstItem="icg-4j-WzO" firstAttribute="width" secondItem="Kfs-nb-krd" secondAttribute="width" multiplier="4/10" id="llQ-HH-sZ1"/>
                                                     <constraint firstItem="8In-4m-u2p" firstAttribute="height" secondItem="Kfs-nb-krd" secondAttribute="height" multiplier="3/10" id="qOn-5S-Z8a"/>
                                                     <constraint firstItem="H7E-QM-vWv" firstAttribute="leading" secondItem="Kfs-nb-krd" secondAttribute="leading" constant="10" id="tYO-VQ-2TO"/>
@@ -3216,6 +3227,7 @@
                         <outlet property="SelectedParagonNameLabel" destination="3Tc-NW-Q4f" id="JCo-Nq-xpO"/>
                         <outlet property="SelectedParagonStrengthLabel" destination="uGN-W2-YEQ" id="f9o-Db-9Ig"/>
                         <outlet property="SelectedParagonWillpowerLabel" destination="FeJ-cj-IIZ" id="ZsS-fB-40t"/>
+                        <outlet property="UpgradeParagonButton" destination="Dcy-x2-Rdt" id="jsr-df-AU7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4hm-xa-ftV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4249,6 +4261,7 @@
         <image name="Icon_Revives" width="512" height="512"/>
         <image name="Icon_Revives2" width="512" height="512"/>
         <image name="Icon_Strength" width="394" height="551"/>
+        <image name="Icon_Upgrade" width="400" height="400"/>
         <image name="Icon_Willpower" width="268" height="473"/>
         <image name="Next" width="209" height="121"/>
         <image name="Play" width="194" height="105"/>

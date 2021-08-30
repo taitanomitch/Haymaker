@@ -536,6 +536,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
             AttackNames[3] = WillpowerAttackTextField.text!
             AttackValues[3] = CreatedParagon.Willpower
         }
+        CreatedParagon.isCustom = true
         CreatedParagon.PossibleAttackTypeList = AttackOptions
         CreatedParagon.AttackTypeNames = AttackNames
         CreatedParagon.AttackValues = AttackValues

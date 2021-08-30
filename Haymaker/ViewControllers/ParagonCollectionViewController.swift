@@ -24,6 +24,7 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
     @IBOutlet weak var SelectedParagonWillpowerLabel: UILabel!
     @IBOutlet weak var SelectedParagonCombatAbilitiesTextView: UITextView!
     @IBOutlet weak var SelectedParagonBioTextView: UITextView!
+    @IBOutlet weak var UpgradeParagonButton: UIButton!
     
     @IBOutlet weak var AttributesHolderView: UIView!
     @IBOutlet weak var AbilityPowerHolderView: UIView!
@@ -51,6 +52,7 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
         setInitialSelectedParagon()
         setUpViewsUI()
         setUpSelectedParagonImageView()
+        setUpUpgradeButton()
     }
     
     func setUpParagonsList() {
@@ -95,11 +97,20 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
         SelectedParagonImageView.tintColor = UIColor.black
     }
     
+    func setUpUpgradeButton() {
+        if SelectedParagon.isCustom {
+            UpgradeParagonButton.alpha = 1.0
+        } else {
+            UpgradeParagonButton.alpha = 0.0
+        }
+    }
+    
     // MARK: - Update Functions
     func updateSelectedParagon() {
         updateSelectedParagonImage()
         updateSelectedParagonLabels()
         updateCombatAbilityText()
+        setUpUpgradeButton()
     }
     
     func updateSelectedParagonLabels() {
@@ -259,6 +270,15 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
     
     @IBAction func pressBackButton(_ sender: UIButton) {
         self.dismiss(animated: true) {}
+    }
+    
+    
+    @IBAction func pressUpgradeButton(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "ParagonImprovementViewController") as! ParagonImprovementViewController
+        self.present(newViewController, animated: true) {
+            
+        }
     }
     
     
