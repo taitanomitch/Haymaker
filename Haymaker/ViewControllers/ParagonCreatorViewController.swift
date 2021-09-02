@@ -87,7 +87,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     var CurrentImageSelection: Int = 0
     var TotalNumberOfImageOptions: Int = 8
     var RemainingPowerPoints: Int = 14
-    var StengthValue: Int = 0
+    var StrengthValue: Int = 0
     var AgilityValue: Int = 0
     var IntellectValue: Int = 0
     var WillpowerValue: Int = 0
@@ -366,8 +366,8 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     }
     
     func updateStengthLabel() {
-        StrengthNumberLabel.text = String(StengthValue)
-        FinalStrengthNumberLabel.text = String(StengthValue)
+        StrengthNumberLabel.text = String(StrengthValue)
+        FinalStrengthNumberLabel.text = String(StrengthValue)
     }
     
     func updateAgilityLabel() {
@@ -439,13 +439,13 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     }
     
     func updateStrengthButtonsUI() {
-        if StengthValue == 0 {
+        if StrengthValue == 0 {
             StrengthLeftButton.alpha = 0.0
         } else {
             StrengthLeftButton.alpha = 1.0
         }
         
-        if calculatePowerPointsChange(StartingNumber: StengthValue, EndingNumber: StengthValue + 1) > RemainingPowerPoints {
+        if calculatePowerPointsChange(StartingNumber: StrengthValue, EndingNumber: StrengthValue + 1) > RemainingPowerPoints {
             StrengthRightButton.alpha = 0.0
         } else {
             StrengthRightButton.alpha = 1.0
@@ -548,7 +548,7 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
         CreatedParagon.ParagonAbilityPowerMultiplier = 0
         CreatedParagon.ParagonAbilityPowerText = ""
         
-        CreatedParagon.PowerPoints = Int(FinalRemainingPowerPointsLabel.text!)!
+        CreatedParagon.PowerPoints = RemainingPowerPoints
         CreatedParagon.XP = 0
         CreatedParagon.Gems = 0
         
@@ -690,10 +690,10 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
     }
     
     @IBAction func pressDecreaseStrength(_ sender: UIButton) {
-        let newValue = StengthValue - 1
-        let cost = calculatePowerPointsChange(StartingNumber: StengthValue, EndingNumber: newValue)
+        let newValue = StrengthValue - 1
+        let cost = calculatePowerPointsChange(StartingNumber: StrengthValue, EndingNumber: newValue)
         if newValue >= 0 {
-            StengthValue = newValue
+            StrengthValue = newValue
             RemainingPowerPoints += cost
         }
         updateStengthLabel()
@@ -702,10 +702,10 @@ class ParagonCreatorViewController: UIViewController, UITextViewDelegate, UIText
         updateRemainingPowerPoints()
     }
     @IBAction func pressIncreaseStrength(_ sender: UIButton) {
-        let newValue = StengthValue + 1
-        let cost = calculatePowerPointsChange(StartingNumber: StengthValue, EndingNumber: newValue)
+        let newValue = StrengthValue + 1
+        let cost = calculatePowerPointsChange(StartingNumber: StrengthValue, EndingNumber: newValue)
         if cost <= RemainingPowerPoints {
-            StengthValue = newValue
+            StrengthValue = newValue
             RemainingPowerPoints -= cost
         }
         updateStengthLabel()

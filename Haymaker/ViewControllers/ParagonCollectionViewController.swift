@@ -276,6 +276,7 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
     @IBAction func pressUpgradeButton(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "ParagonImprovementViewController") as! ParagonImprovementViewController
+        newViewController.ParagonToUpgrade = SelectedParagon
         self.present(newViewController, animated: true) {
             
         }

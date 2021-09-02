@@ -1056,6 +1056,9 @@ class CustomParagonGenerator {
         paragon.ParagonAbilityPowerMultiplier = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_ParagonAbilityPowerMultiplier")
         paragon.ParagonAbilityPowerText = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_ParagonAbilityPowerText")!
         paragon.Bio = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_Bio")!
+        paragon.PowerPoints = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_PowerPoints")
+        paragon.XP = UserDefaults.standard.double(forKey: "Paragon\(ParagonNumber)_XP")
+        paragon.Gems = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_Gems")
         paragon.isCustom = true
         return paragon
     }
