@@ -19,6 +19,7 @@ class ParagonOverseer: NSObject {
         case none
     }
     
+    var SavePosition: Int = -1
     var Name: String = ""
     var Image: String = ""
     var ParagonPassword: String = ""
@@ -55,6 +56,7 @@ class ParagonOverseer: NSObject {
     var PowerPoints: Int = 0
     var XP: Double = 0
     var Gems: Int = 0
+    var XPReward: Double = 0
 
     
     // MARK: - Combat Preparation Functions
@@ -983,13 +985,23 @@ class CustomParagonGenerator {
         return ParagonCount
     }
     
+    func updateParagon(ParagonNumber: Int, Paragon: ParagonOverseer) {
+        let StorePosition = ParagonNumber
+        putParagonInUserDefaults(StorePosition: StorePosition, Paragon: Paragon)
+    }
+    
     func storeParagon(ParagonNumber: Int, Paragon: ParagonOverseer) {
         var StorePosition = ParagonNumber
         if ParagonNumber < 0 {
             StorePosition = getNumberOfCustomParagons()
         }
-        
+        Paragon.SavePosition = StorePosition
         incrementNumberOfCustomParagons()
+        putParagonInUserDefaults(StorePosition: StorePosition, Paragon: Paragon)
+    }
+    
+    func putParagonInUserDefaults(StorePosition: Int, Paragon: ParagonOverseer) {
+        UserDefaults.standard.set(Paragon.SavePosition, forKey: "Paragon\(StorePosition)_SavePosition")
         UserDefaults.standard.set(Paragon.Name, forKey: "Paragon\(StorePosition)_Name")
         UserDefaults.standard.set(Paragon.Image, forKey: "Paragon\(StorePosition)_Image")
         UserDefaults.standard.set(Paragon.Bio, forKey: "Paragon\(StorePosition)_Bio")
@@ -1035,6 +1047,7 @@ class CustomParagonGenerator {
     
     func retrieveParagon(ParagonNumber: Int) -> ParagonOverseer {
         let paragon = ParagonOverseer()
+        paragon.SavePosition = UserDefaults.standard.integer(forKey: "Paragon\(ParagonNumber)_SavePosition")
         paragon.Name = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_Name")!
         paragon.Image = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_Image")!
         paragon.EntryTaunt = UserDefaults.standard.string(forKey: "Paragon\(ParagonNumber)_EntryTaunt")!
@@ -1078,6 +1091,7 @@ class CustomParagonGenerator {
             decrementNumberOfCustomParagons()
         }
         
+        UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_SavePosition")
         UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Name")
         UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_Image")
         UserDefaults.standard.removeObject(forKey: "Paragon\(DeleteNumber)_EntryTaunt")

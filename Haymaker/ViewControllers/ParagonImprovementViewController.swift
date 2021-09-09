@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol ParagonImprovementDelegate {
+    func ImprovementCompleted()
+}
+
 class ParagonImprovementViewController: UIViewController {
     
     @IBOutlet weak var BackButton: UIButton!
     @IBOutlet weak var SaveButton: UIButton!
+    @IBOutlet weak var UndoButton: UIButton!
     @IBOutlet weak var EditButton: UIButton!
     
     @IBOutlet weak var ParagonNameLabel: UILabel!
@@ -45,6 +50,11 @@ class ParagonImprovementViewController: UIViewController {
     @IBOutlet weak var IntellectIconBackgroundImageView: UIImageView!
     @IBOutlet weak var WillpowerIconBackgroundImageView: UIImageView!
     
+    @IBOutlet weak var StrengthActivationButton: UIButton!
+    @IBOutlet weak var AgilityActivationButton: UIButton!
+    @IBOutlet weak var IntellectActivationButton: UIButton!
+    @IBOutlet weak var WillpowerActivationButton: UIButton!
+    
     @IBOutlet weak var StrengthValueLabel: UILabel!
     @IBOutlet weak var AgilityValueLabel: UILabel!
     @IBOutlet weak var IntellectValueLabel: UILabel!
@@ -70,13 +80,14 @@ class ParagonImprovementViewController: UIViewController {
     @IBOutlet weak var IntellectPowerGemCostLabel: UILabel!
     @IBOutlet weak var WillpowerPowerGemCostLabel: UILabel!
     
-    @IBOutlet weak var ResetPointAllocationButton: UIButton!
-    
     var HandSizeCosts: [Int] = [0,0,0,0,20,50,100,500,1000,2000,5000]
     var EdgeCosts: [Int] = [0,0,10,50,100,5000,6000,7000,8000,9000,10000]
     var PowerPointCosts: [Int] = [0,1,1,1,2,2,3,3,4,4,5,6,7,8,9,10,11,12,13,14,15]
+    var EnableAttackCost: [Int] = [2,2,2,2]
     
+    public var delegate: ParagonImprovementDelegate?
     public var ParagonToUpgrade: ParagonOverseer = ParagonOverseer()
+    public var ParagonSavePosition: Int = -1
     var NameValue: String = ""
     var StrengthCost: Int = 0
     var AgilityCost: Int = 0
@@ -97,6 +108,11 @@ class ParagonImprovementViewController: UIViewController {
     var IntellectValue: Int = 0
     var WillpowerValue: Int = 0
     
+    var StrengthSelected: Bool = false
+    var AgilitySelected: Bool = false
+    var IntellectSelected: Bool = false
+    var WillpowerSelected: Bool = false
+    
     // MARK: - Loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,18 +123,23 @@ class ParagonImprovementViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.ImprovementCompleted()
+    }
+    
     
     // MARK: - Setup Functions
     func runSetUp() {
-        setUpPowerPointIndexes()
+        setUpInitialValuesForLabels()
         setUpParagonImageUI()
+        setUpPowerPointIndexes()
         setUpHandSizeUI()
         setUpEdgeUI()
         setUpIncreaseCostsUI()
-        setUpAbilityUI()
         setUpPowerGemBorderViewUI()
-        setUpInitialValuesForLabels()
         setUpAllLabels()
+        setUpAbilityUI()
     }
     
     func setUpParagonImageUI() {
@@ -150,6 +171,10 @@ class ParagonImprovementViewController: UIViewController {
         IncreaseCostLabel.text = ""
     }
     
+    func setUpInsufficientPowerGemsLabel(ValueForLabel: String) {
+        IncreaseCostLabel.text = ValueForLabel
+    }
+    
     func setUpAbilityUI() {
         StrengthIconImageView.image = UIImage(named: "Icon_Strength")
         StrengthIconImageView.tintColor = UIColor.white
@@ -164,18 +189,38 @@ class ParagonImprovementViewController: UIViewController {
         StrengthIconBackgroundImageView.layer.cornerRadius = 4.0
         StrengthIconBackgroundImageView.layer.masksToBounds = true
         StrengthIconBackgroundImageView.contentMode = .scaleAspectFill
+        if StrengthSelected {
+            StrengthIconBackgroundImageView.alpha = 1.0
+        } else {
+            StrengthIconBackgroundImageView.alpha = 0.5
+        }
         AgilityIconBackgroundImageView.image = UIImage(named: "SelectRed")
         AgilityIconBackgroundImageView.layer.cornerRadius = 4.0
         AgilityIconBackgroundImageView.layer.masksToBounds = true
         AgilityIconBackgroundImageView.contentMode = .scaleAspectFill
+        if AgilitySelected {
+            AgilityIconBackgroundImageView.alpha = 1.0
+        } else {
+            AgilityIconBackgroundImageView.alpha = 0.5
+        }
         IntellectIconBackgroundImageView.image = UIImage(named: "SelectBlue")
         IntellectIconBackgroundImageView.layer.cornerRadius = 4.0
         IntellectIconBackgroundImageView.layer.masksToBounds = true
         IntellectIconBackgroundImageView.contentMode = .scaleAspectFill
+        if IntellectSelected {
+            IntellectIconBackgroundImageView.alpha = 1.0
+        } else {
+            IntellectIconBackgroundImageView.alpha = 0.5
+        }
         WillpowerIconBackgroundImageView.image = UIImage(named: "SelectPurple")
         WillpowerIconBackgroundImageView.layer.cornerRadius = 4.0
         WillpowerIconBackgroundImageView.layer.masksToBounds = true
         WillpowerIconBackgroundImageView.contentMode = .scaleAspectFill
+        if WillpowerSelected {
+            WillpowerIconBackgroundImageView.alpha = 1.0
+        } else {
+            WillpowerIconBackgroundImageView.alpha = 0.5
+        }
         
         StrengthValueLabel.text = "\(ParagonToUpgrade.Strength)"
         AgilityValueLabel.text = "\(ParagonToUpgrade.Agility)"
@@ -203,9 +248,16 @@ class ParagonImprovementViewController: UIViewController {
         AgilityCost = 0
         IntellectCost = 0
         WillpowerCost = 0
+        HandSizeEdgeCost = 0
+        
+        StrengthSelected = ParagonToUpgrade.PossibleAttackTypeList[0] == 1
+        AgilitySelected = ParagonToUpgrade.PossibleAttackTypeList[1] == 1
+        IntellectSelected = ParagonToUpgrade.PossibleAttackTypeList[2] == 1
+        WillpowerSelected = ParagonToUpgrade.PossibleAttackTypeList[3] == 1
     }
     
     func setUpAllLabels() {
+        setUpInsufficientPowerGemsLabel(ValueForLabel: "")
         PowerGemLabel.text = String(RemainingPowerGems)
         
         ParagonNameLabel.text = "\(NameValue)"
@@ -279,7 +331,6 @@ class ParagonImprovementViewController: UIViewController {
         }
     }
     
-    
     // MARK: - Utility Functions
     func setUpPowerPointIndexes() {
         
@@ -308,6 +359,62 @@ class ParagonImprovementViewController: UIViewController {
             return EdgeCosts[EndingNumber]
         }
     }
+    
+    func buildImprovedParagon() -> ParagonOverseer {
+        var ImprovedParagon = ParagonOverseer()
+        ImprovedParagon = ParagonToUpgrade
+        
+        ImprovedParagon.Strength = StrengthValue
+        ImprovedParagon.Agility = AgilityValue
+        ImprovedParagon.Intellect = IntellectValue
+        ImprovedParagon.Willpower = WillpowerValue
+        
+        ImprovedParagon.Handsize = HandSizeValue
+        ImprovedParagon.StartingHandsize = HandSizeValue
+        ImprovedParagon.Edge = EdgeValue
+        
+        var AttackOptions: [Int] = [0, 0, 0, 0]
+        var AttackNames: [String] = ImprovedParagon.AttackTypeNames
+        var AttackValues: [Int] = [0, 0, 0, 0]
+        let DamageBonuses: [Int] = [0, 0, 0, 0]
+
+        if StrengthSelected {
+            AttackOptions[0] = 1
+            AttackValues[0] = ImprovedParagon.Strength
+            if AttackNames[0] == "" {
+                AttackNames[0] = "Punch"
+            }
+        }
+        if AgilitySelected {
+            AttackOptions[1] = 1
+            AttackValues[1] = ImprovedParagon.Agility
+            if AttackNames[1] == "" {
+                AttackNames[1] = "Kick"
+            }
+        }
+        if IntellectSelected {
+            AttackOptions[2] = 1
+            AttackValues[2] = ImprovedParagon.Intellect
+            if AttackNames[2] == "" {
+                AttackNames[2] = "Energy Blast"
+            }
+        }
+        if WillpowerSelected {
+            AttackOptions[3] = 1
+            AttackValues[3] = ImprovedParagon.Willpower
+            if AttackNames[3] == "" {
+                AttackNames[3] = "Mindblast"
+            }
+        }
+        ImprovedParagon.PossibleAttackTypeList = AttackOptions
+        ImprovedParagon.AttackTypeNames = AttackNames
+        ImprovedParagon.AttackValues = AttackValues
+        ImprovedParagon.DamageBonuses = DamageBonuses
+        
+        ImprovedParagon.PowerPoints = RemainingPowerGems
+        
+        return ImprovedParagon
+    }
 
     
     // MARK: - Button Functions
@@ -318,8 +425,10 @@ class ParagonImprovementViewController: UIViewController {
             HandSizeValue = newValue
             RemainingPowerGems -= cost
             HandSizeEdgeCost += cost
+            setUpAllLabels()
+        } else {
+            setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(cost) Gems")
         }
-        setUpAllLabels()
     }
     @IBAction func pressHandsizeDecreaseButton(_ sender: UIButton) {
         let newValue = HandSizeValue - 1
@@ -328,8 +437,8 @@ class ParagonImprovementViewController: UIViewController {
             HandSizeValue = newValue
             RemainingPowerGems += cost
             HandSizeEdgeCost -= cost
+            setUpAllLabels()
         }
-        setUpAllLabels()
     }
     @IBAction func pressEdgeIncreaseButton(_ sender: UIButton) {
         let newValue = EdgeValue + 1
@@ -338,8 +447,10 @@ class ParagonImprovementViewController: UIViewController {
             EdgeValue = newValue
             RemainingPowerGems -= cost
             HandSizeEdgeCost += cost
+            setUpAllLabels()
+        } else {
+            setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(cost) Gems")
         }
-        setUpAllLabels()
     }
     @IBAction func pressEdgeDecreaseButton(_ sender: UIButton) {
         let newValue = EdgeValue - 1
@@ -359,8 +470,10 @@ class ParagonImprovementViewController: UIViewController {
             StrengthChangeValue += 1
             StrengthCost += cost
             RemainingPowerGems -= cost
+            setUpAllLabels()
+        } else {
+            setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(cost) Gems")
         }
-        setUpAllLabels()
     }
     @IBAction func pressStengthDecreaseButton(_ sender: UIButton) {
         let newValue = StrengthValue - 1
@@ -381,8 +494,10 @@ class ParagonImprovementViewController: UIViewController {
             AgilityChangeValue += 1
             AgilityCost += cost
             RemainingPowerGems -= cost
+            setUpAllLabels()
+        } else {
+            setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(cost) Gems")
         }
-        setUpAllLabels()
     }
     @IBAction func pressAgilityDecreaseButton(_ sender: UIButton) {
         let newValue = AgilityValue - 1
@@ -403,8 +518,11 @@ class ParagonImprovementViewController: UIViewController {
             IntellectChangeValue += 1
             IntellectCost += cost
             RemainingPowerGems -= cost
+            setUpAllLabels()
+        } else {
+            setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(cost) Gems")
         }
-        setUpAllLabels()
+        
     }
     @IBAction func pressIntellectDecreaseButton(_ sender: UIButton) {
         let newValue = IntellectValue - 1
@@ -425,8 +543,10 @@ class ParagonImprovementViewController: UIViewController {
             WillpowerChangeValue += 1
             WillpowerCost += cost
             RemainingPowerGems -= cost
+            setUpAllLabels()
+        } else {
+            setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(cost) Gems")
         }
-        setUpAllLabels()
     }
     @IBAction func pressWillpowerDecreaseButton(_ sender: UIButton) {
         let newValue = WillpowerValue - 1
@@ -439,7 +559,101 @@ class ParagonImprovementViewController: UIViewController {
         }
         setUpAllLabels()
     }
-    @IBAction func pressResetPointAllocationButton(_ sender: UIButton) {
+    
+    @IBAction func pressStrengthActivationButton(_ sender: UIButton) {
+        if StrengthSelected {
+            RemainingPowerGems += EnableAttackCost[0]
+            StrengthSelected = !StrengthSelected
+            setUpAbilityUI()
+            setUpAllLabels()
+        } else {
+            if RemainingPowerGems >= EnableAttackCost[0] {
+                RemainingPowerGems -= EnableAttackCost[0]
+                StrengthSelected = !StrengthSelected
+                setUpAbilityUI()
+                setUpAllLabels()
+            } else {
+                setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(EnableAttackCost[0]) Gems")
+            }
+        }
     }
+    @IBAction func pressAgilityActivationButton(_ sender: UIButton) {
+        if AgilitySelected {
+            RemainingPowerGems += EnableAttackCost[1]
+            AgilitySelected = !AgilitySelected
+            setUpAbilityUI()
+            setUpAllLabels()
+        } else {
+            if RemainingPowerGems >= EnableAttackCost[1] {
+                RemainingPowerGems -= EnableAttackCost[1]
+                AgilitySelected = !AgilitySelected
+                setUpAbilityUI()
+                setUpAllLabels()
+            } else {
+                setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(EnableAttackCost[1]) Gems")
+            }
+        }
+    }
+    @IBAction func pressIntellectActivationButton(_ sender: UIButton) {
+        if IntellectSelected {
+            RemainingPowerGems += EnableAttackCost[2]
+            IntellectSelected = !IntellectSelected
+            setUpAbilityUI()
+            setUpAllLabels()
+        } else {
+            if RemainingPowerGems >= EnableAttackCost[2] {
+                RemainingPowerGems -= EnableAttackCost[2]
+                IntellectSelected = !IntellectSelected
+                setUpAbilityUI()
+                setUpAllLabels()
+            } else {
+                setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(EnableAttackCost[2]) Gems")
+            }
+        }
+    }
+    @IBAction func pressWillpowerActivationButton(_ sender: UIButton) {
+        if WillpowerSelected {
+            RemainingPowerGems += EnableAttackCost[3]
+            WillpowerSelected = !WillpowerSelected
+            setUpAbilityUI()
+            setUpAllLabels()
+        } else {
+            if RemainingPowerGems >= EnableAttackCost[3] {
+                RemainingPowerGems -= EnableAttackCost[3]
+                WillpowerSelected = !WillpowerSelected
+                setUpAbilityUI()
+                setUpAllLabels()
+            } else {
+                setUpInsufficientPowerGemsLabel(ValueForLabel: "Insufficient Gems - Cost: \(EnableAttackCost[2]) Gems")
+            }
+        }
+    }
+    
+    @IBAction func pressBackButton(_ sender: UIButton) {
+        self.dismiss(animated: true) {}
+    }
+    
+    @IBAction func pressEditButton(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func pressUndoButton(_ sender: UIButton) {
+        setUpInitialValuesForLabels()
+        setUpAllLabels()
+    }
+    
+    @IBAction func pressSaveButton(_ sender: UIButton) {
+        if StrengthSelected || AgilitySelected || IntellectSelected || WillpowerSelected {
+            let ImprovedParagon = buildImprovedParagon()
+            let ParagonGenerator = CustomParagonGenerator()
+            ParagonGenerator.updateParagon(ParagonNumber: ImprovedParagon.SavePosition, Paragon: ImprovedParagon)
+            ParagonToUpgrade = ImprovedParagon
+            setUpInitialValuesForLabels()
+            setUpAllLabels()
+        } else {
+            
+        }
+    }
+    
     
 }

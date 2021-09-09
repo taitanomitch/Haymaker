@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ParagonCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate, ParagonCreatorDelegate {
+class ParagonCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate, ParagonCreatorDelegate, ParagonImprovementDelegate {
     
     
     // MARK: - IBOutlet Variables
@@ -42,14 +42,22 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUp()
+        firstSetUp()
     }
     
     
     // MARK: - Setup Functions
-    func setUp() {
+    func firstSetUp() {
         setUpParagonsList()
         setInitialSelectedParagon()
+        setUpViewsUI()
+        setUpSelectedParagonImageView()
+        setUpUpgradeButton()
+    }
+    
+    func setUp() {
+        setUpParagonsList()
+        updateSelectedParagon()
         setUpViewsUI()
         setUpSelectedParagonImageView()
         setUpUpgradeButton()
@@ -258,6 +266,12 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
         ParagonsCollectionView.reloadData()
     }
     
+    // MARK: - ParagonImprovementDelegate Functions
+    func ImprovementCompleted() {
+        setUp()
+        ParagonsCollectionView.reloadData()
+    }
+    
     // MARK: - Button Functions
     @IBAction func pressCreateParagonButton(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -277,6 +291,7 @@ class ParagonCollectionViewController: UIViewController, UICollectionViewDelegat
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "ParagonImprovementViewController") as! ParagonImprovementViewController
         newViewController.ParagonToUpgrade = SelectedParagon
+        newViewController.delegate = self
         self.present(newViewController, animated: true) {
             
         }
