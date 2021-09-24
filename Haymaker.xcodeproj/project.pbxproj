@@ -47,6 +47,7 @@
 		A2D56BCB219E5CBD00CACB96 /* Equipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCA219E5CBD00CACB96 /* Equipment.swift */; };
 		A2D56BCD219FB88200CACB96 /* CombatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCC219FB88200CACB96 /* CombatViewController.swift */; };
 		A2D56BCF21A25A1A00CACB96 /* ColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D56BCE21A25A1A00CACB96 /* ColorUtilities.swift */; };
+		A2EB16E526F43C040009342D /* ParagonEditNamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EB16E426F43C040009342D /* ParagonEditNamesViewController.swift */; };
 		A2EB2FC325CBB3D50019595A /* PlayerPasswordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EB2FC225CBB3D50019595A /* PlayerPasswordsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,7 @@
 		A2D56BCA219E5CBD00CACB96 /* Equipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equipment.swift; sourceTree = "<group>"; };
 		A2D56BCC219FB88200CACB96 /* CombatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombatViewController.swift; sourceTree = "<group>"; };
 		A2D56BCE21A25A1A00CACB96 /* ColorUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtilities.swift; sourceTree = "<group>"; };
+		A2EB16E426F43C040009342D /* ParagonEditNamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagonEditNamesViewController.swift; sourceTree = "<group>"; };
 		A2EB2FC225CBB3D50019595A /* PlayerPasswordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPasswordsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,6 +201,7 @@
 				A200D1D0261DF09B00B41D74 /* ParagonCollectionViewController.swift */,
 				A200D1C4261D41BB00B41D74 /* ParagonImprovementViewController.swift */,
 				A2EB2FC225CBB3D50019595A /* PlayerPasswordsViewController.swift */,
+				A2EB16E426F43C040009342D /* ParagonEditNamesViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				A2D56BB7219BC90F00CACB96 /* HeroSelectController.swift in Sources */,
 				A29DCF1B21B6215A000AC072 /* ParagonOptionCollectionViewCell.swift in Sources */,
 				A2D56BC1219D17DC00CACB96 /* CardCollectionViewCell.swift in Sources */,
+				A2EB16E526F43C040009342D /* ParagonEditNamesViewController.swift in Sources */,
 				A2EB2FC325CBB3D50019595A /* PlayerPasswordsViewController.swift in Sources */,
 				A2AAB78C25C66C660070FE54 /* ImageUtilities.swift in Sources */,
 				A2D56BA1219BC6BB00CACB96 /* AppDelegate.swift in Sources */,

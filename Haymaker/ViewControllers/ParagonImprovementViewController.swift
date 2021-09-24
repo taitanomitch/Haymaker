@@ -140,6 +140,7 @@ class ParagonImprovementViewController: UIViewController {
         setUpPowerGemBorderViewUI()
         setUpAllLabels()
         setUpAbilityUI()
+        setUpEditButtonUI()
     }
     
     func setUpParagonImageUI() {
@@ -158,6 +159,10 @@ class ParagonImprovementViewController: UIViewController {
     func setUpEdgeUI() {
         EdgeImageView.image = UIImage(named: "Icon_Edge2")
         EdgeImageView.tintColor = UIColor.black
+    }
+    
+    func setUpEditButtonUI() {
+        EditButton.setTitle("Edit Names", for: .normal)
     }
     
     func setUpPowerGemBorderViewUI() {
