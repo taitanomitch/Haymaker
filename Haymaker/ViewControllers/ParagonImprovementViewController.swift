@@ -14,10 +14,14 @@ protocol ParagonImprovementDelegate {
 
 class ParagonImprovementViewController: UIViewController {
     
+    @IBOutlet weak var TopAreaHolderView: UIView!
+    @IBOutlet weak var ParagonHolderView: UIView!
+    
     @IBOutlet weak var BackButton: UIButton!
     @IBOutlet weak var SaveButton: UIButton!
     @IBOutlet weak var UndoButton: UIButton!
     @IBOutlet weak var EditButton: UIButton!
+    @IBOutlet weak var EditBioButton: UIButton!
     
     @IBOutlet weak var ParagonNameLabel: UILabel!
     @IBOutlet weak var ParagonImageView: UIImageView!
@@ -80,6 +84,18 @@ class ParagonImprovementViewController: UIViewController {
     @IBOutlet weak var IntellectPowerGemCostLabel: UILabel!
     @IBOutlet weak var WillpowerPowerGemCostLabel: UILabel!
     
+    @IBOutlet weak var CancelEditingScreenButton: UIButton!
+    @IBOutlet weak var SaveEditingScreenButton: UIButton!
+    
+    @IBOutlet weak var EditParagonNameTextfield: UITextField!
+    @IBOutlet weak var EditStrengthAttackTextfield: UITextField!
+    @IBOutlet weak var EditAgilityAttackTextfield: UITextField!
+    @IBOutlet weak var EditIntellectAttackTextfield: UITextField!
+    @IBOutlet weak var EditWillpowerAttackTextfield: UITextField!
+    
+    @IBOutlet weak var EditNamesHolderView: UIView!
+    @IBOutlet weak var EditNamesBackgroundView: UIView!
+    
     var HandSizeCosts: [Int] = [0,0,0,0,20,50,100,500,1000,2000,5000]
     var EdgeCosts: [Int] = [0,0,10,50,100,5000,6000,7000,8000,9000,10000]
     var PowerPointCosts: [Int] = [0,1,1,1,2,2,3,3,4,4,5,6,7,8,9,10,11,12,13,14,15]
@@ -112,6 +128,7 @@ class ParagonImprovementViewController: UIViewController {
     var AgilitySelected: Bool = false
     var IntellectSelected: Bool = false
     var WillpowerSelected: Bool = false
+    var EditingName: Bool = false
     
     // MARK: - Loading Functions
     override func viewDidLoad() {
@@ -141,6 +158,7 @@ class ParagonImprovementViewController: UIViewController {
         setUpAllLabels()
         setUpAbilityUI()
         setUpEditButtonUI()
+        setUpEditViewUI()
     }
     
     func setUpParagonImageUI() {
@@ -336,6 +354,10 @@ class ParagonImprovementViewController: UIViewController {
         }
     }
     
+    func setUpEditViewUI() {
+        hideEditNamesView()
+    }
+    
     // MARK: - Utility Functions
     func setUpPowerPointIndexes() {
         
@@ -421,6 +443,25 @@ class ParagonImprovementViewController: UIViewController {
         return ImprovedParagon
     }
 
+    func showEditNamesView() {
+        EditingName = true
+        UIView.animate(withDuration: 0.5) {
+            self.EditNamesHolderView.alpha = 1.0
+        }
+        BackButton.setTitle("", for: .normal)
+        EditBioButton.alpha = 0.0
+        EditButton.setTitle("", for: .normal)
+    }
+    
+    func hideEditNamesView() {
+        EditingName = false
+        UIView.animate(withDuration: 0.5) {
+            self.EditNamesHolderView.alpha = 0.0
+        }
+        BackButton.setTitle("Back", for: .normal)
+        EditBioButton.alpha = 1.0
+        EditButton.setTitle("Edit Names", for: .normal)
+    }
     
     // MARK: - Button Functions
     @IBAction func pressHandsizeIncreaseButton(_ sender: UIButton) {
@@ -635,10 +676,23 @@ class ParagonImprovementViewController: UIViewController {
     }
     
     @IBAction func pressBackButton(_ sender: UIButton) {
-        self.dismiss(animated: true) {}
+        if EditingName {
+            pressCancelEditingScreenButton(sender)
+        } else {
+            self.dismiss(animated: true) {}
+        }
     }
     
     @IBAction func pressEditButton(_ sender: UIButton) {
+        if EditingName {
+            pressSaveEditingScreenButton(sender)
+        } else {
+            showEditNamesView()
+        }
+        
+    }
+    
+    @IBAction func pressEditBioButton(_ sender: UIButton) {
         
     }
     
@@ -660,5 +714,11 @@ class ParagonImprovementViewController: UIViewController {
         }
     }
     
+    @IBAction func pressCancelEditingScreenButton(_ sender: UIButton) {
+        hideEditNamesView()
+    }
     
+    @IBAction func pressSaveEditingScreenButton(_ sender: UIButton) {
+        
+    }
 }
